@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XJTLU 升学寻宝图 (QS Top 100 Edition)</title>
+    
+    <!-- Leaflet 地图库 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; }
+        #map { height: 100vh; width: 100vw; z-index: 1; }
+        
+        /* 右上角悬浮信息面板 */
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background: rgba(26, 26, 46, 0.9);
+            color: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            border: 2px solid #00ffcc;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        h2 { margin-top: 0; color: #00ffcc; font-size: 22px; border-bottom: 1px solid #00ffcc; padding-bottom: 10px;}
+        .stat-box { background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .stat-title { font-size: 12px; color: #aaa; text-transform: uppercase; }
+        .stat-value { font-size: 18px; font-weight: bold; color: #fff; }
+        .fun-fact { font-style: italic; color: #ff9e00; margin-top: 15px; font-size: 14px; line-height: 1.5; }
+        
+        /* 加载动画 */
+        #loading { display: none; color: #00ffcc; font-weight: bold; text-align: center; margin-top: 20px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- AI 结果展示面板 -->
+    <div id="info-panel">
+        <h2 id="uni-name">选择一个大学</h2>
+        <div id="stats-container" style="display: none;">
+            <div class="stat-box">
+                <div class="stat-title">QS 世界排名 (最新)</div>
+                <div class="stat-value" id="qs-rank">--</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">西浦录取门槛预估 (GPA/语言)</div>
+                <div class="stat-value" id="gpa-req">--</div>
+            </div>
+            <div class="fun-fact" id="fun-fact"></div>
+        </div>
+        <div id="loading">AI 学长正在疯狂查询资料... 🔮</div>
+    </div>
+
+    <script>
+        let API_KEY = prompt("欢迎使用 XJTLU 升学寻宝图！\n\n请输入您的 DeepSeek API Key 以解锁 AI 功能：");
+        
+        if (!API_KEY) {
+            alert("⚠️ 您没有输入 API Key，地图可以正常浏览，但 AI 功能将无法使用哦！");
+        }
+
+        // 1. 初始化暗黑风格地图 (稍微调整了初始视角以便看到全球)
+        const map = L.map('map').setView([25, 15], 2);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '© OpenStreetMap contributors © CARTO',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        // 2. 扩充后的 QS Top 100 预设大学数据
+        const universities = [
+            // 🇬🇧 英国 (G5 & 王者红砖)
+            { name: "牛津大学 (Oxford)", lat: 51.7548, lng: -1.2544 },
+            { name: "剑桥大学 (Cambridge)", lat: 52.2053, lng: 0.1192 },
+            { name: "帝国理工学院 (ICL)", lat: 51.4988, lng: -0.1749 },
+            { name: "伦敦大学学院 (UCL)", lat: 51.5246, lng: -0.1340 },
+            { name: "伦敦国王学院 (KCL)", lat: 51.5115, lng: -0.1160 },
+            { name: "伦敦政治经济学院 (LSE)", lat: 51.5144, lng: -0.1165 },
+            { name: "爱丁堡大学 (Edinburgh)", lat: 55.9445, lng: -3.1892 },
+            { name: "曼彻斯特大学 (Manchester)", lat: 53.4668, lng: -2.2339 },
+            { name: "布里斯托大学 (Bristol)", lat: 51.4584, lng: -2.6030 },
+            { name: "华威大学 (Warwick)", lat: 52.3793, lng: -1.5615 },
+            { name: "格拉斯哥大学 (Glasgow)", lat: 55.8715, lng: -4.2887 },
+            { name: "伯明翰大学 (Birmingham)", lat: 52.4508, lng: -1.9305 },
+            { name: "南安普顿大学 (Southampton)", lat: 50.9351, lng: -1.3961 },
+            { name: "利兹大学 (Leeds)", lat: 53.8055, lng: -1.5549 },
+            { name: "谢菲尔德大学 (Sheffield)", lat: 53.3811, lng: -1.4883 },
+            
+            // 🇺🇸 美国 (藤校 & 顶尖名校)
+            { name: "麻省理工学院 (MIT)", lat: 42.3601, lng: -71.0942 },
+            { name: "哈佛大学 (Harvard)", lat: 42.3770, lng: -71.1167 },
+            { name: "斯坦福大学 (Stanford)", lat: 37.4275, lng: -122.1697 },
+            { name: "加州理工学院 (Caltech)", lat: 34.1377, lng: -118.1253 },
+            { name: "芝加哥大学 (UChicago)", lat: 41.7897, lng: -87.5997 },
+            { name: "宾夕法尼亚大学 (UPenn)", lat: 39.9522, lng: -75.1932 },
+            { name: "普林斯顿大学 (Princeton)", lat: 40.3440, lng: -74.6514 },
+            { name: "耶鲁大学 (Yale)", lat: 41.3163, lng: -72.9223 },
+            { name: "哥伦比亚大学 (Columbia)", lat: 40.8075, lng: -73.9626 },
+            { name: "康奈尔大学 (Cornell)", lat: 42.4534, lng: -76.4735 },
+            { name: "加州大学伯克利分校 (UCB)", lat: 37.8719, lng: -122.2585 },
+            { name: "加州大学洛杉矶分校 (UCLA)", lat: 34.0689, lng: -118.4452 },
+            { name: "纽约大学 (NYU)", lat: 40.7295, lng: -73.9965 },
+            { name: "密歇根大学 (UMich)", lat: 42.2780, lng: -83.7382 },
+            { name: "约翰霍普金斯大学 (JHU)", lat: 39.3299, lng: -76.6205 },
+            { name: "杜克大学 (Duke)", lat: 36.0014, lng: -78.9382 },
+            { name: "西北大学 (Northwestern)", lat: 42.0565, lng: -87.6753 },
+            { name: "华盛顿大学 (UW)", lat: 47.6553, lng: -122.3035 },
+
+            // 🇦🇺 澳大利亚 (澳洲八大)
+            { name: "墨尔本大学 (UniMelb)", lat: -37.7983, lng: 144.9610 },
+            { name: "悉尼大学 (USYD)", lat: -33.8886, lng: 151.1873 },
+            { name: "新南威尔士大学 (UNSW)", lat: -33.9173, lng: 151.2313 },
+            { name: "澳大利亚国立大学 (ANU)", lat: -35.2777, lng: 149.1185 },
+            { name: "蒙纳士大学 (Monash)", lat: -37.9105, lng: 145.1362 },
+            { name: "昆士兰大学 (UQ)", lat: -27.4975, lng: 153.0137 },
+            { name: "西澳大学 (UWA)", lat: -31.9803, lng: 115.8183 },
+            { name: "阿德莱德大学 (Adelaide)", lat: -34.9205, lng: 138.6062 },
+
+            // 🇭🇰 中国香港 & 🇲🇴 澳门
+            { name: "香港大学 (HKU)", lat: 22.2830, lng: 114.1371 },
+            { name: "香港中文大学 (CUHK)", lat: 22.4195, lng: 114.2066 },
+            { name: "香港科技大学 (HKUST)", lat: 22.3364, lng: 114.2655 },
+            { name: "香港理工大学 (PolyU)", lat: 22.3040, lng: 114.1802 },
+            { name: "香港城市大学 (CityU)", lat: 22.3365, lng: 114.1722 },
+
+            // 🇸🇬 新加坡
+            { name: "新加坡国立大学 (NUS)", lat: 1.2966, lng: 103.7764 },
+            { name: "南洋理工大学 (NTU)", lat: 1.3483, lng: 103.6831 },
+
+            // 🇨🇦 加拿大
+            { name: "多伦多大学 (UofT)", lat: 43.6629, lng: -79.3957 },
+            { name: "麦吉尔大学 (McGill)", lat: 45.5048, lng: -73.5772 },
+            { name: "不列颠哥伦比亚大学 (UBC)", lat: 49.2606, lng: -123.2460 },
+
+            // 🇪🇺 欧洲大陆 (瑞士、法国、德国等)
+            { name: "苏黎世联邦理工学院 (ETH Zurich)", lat: 47.3763, lng: 8.5477 },
+            { name: "洛桑联邦理工学院 (EPFL)", lat: 46.5191, lng: 6.5668 },
+            { name: "巴黎文理研究大学 (PSL)", lat: 48.8465, lng: 2.3444 },
+            { name: "慕尼黑工业大学 (TUM)", lat: 48.1493, lng: 11.5684 },
+            { name: "阿姆斯特丹大学 (UvA)", lat: 52.3690, lng: 4.8922 },
+            { name: "代尔夫特理工大学 (TU Delft)", lat: 52.0016, lng: 4.3725 },
+
+            // 🇯🇵 🇰🇷 亚洲其他地区
+            { name: "清华大学 (Tsinghua)", lat: 40.0000, lng: 116.3265 },
+            { name: "北京大学 (PKU)", lat: 39.9915, lng: 116.3056 },
+            { name: "东京大学 (UTokyo)", lat: 35.7128, lng: 139.7596 },
+            { name: "京都大学 (KyotoU)", lat: 35.0262, lng: 135.7808 },
+            { name: "首尔大学 (SNU)", lat: 37.4599, lng: 126.9519 }
+        ];
+
+        // 3. 渲染地图标记点 (为了防止重叠，缩小了半径，降低了透明度)
+        universities.forEach(uni => {
+            const marker = L.circleMarker([uni.lat, uni.lng], {
+                radius: 6,
+                fillColor: "#00ffcc",
+                color: "#fff",
+                weight: 1.5,
+                opacity: 1,
+                fillOpacity: 0.7
+            }).addTo(map);
+
+            marker.bindTooltip(uni.name, { permanent: false, direction: "top", className: 'custom-tooltip' });
+
+            marker.on('click', () => {
+                map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5 });
+                fetchUniversityInfoFromAI(uni.name);
+            });
+        });
+
+        // 4. 调用大模型 API 获取相关信息
+        async function fetchUniversityInfoFromAI(uniName) {
+            const panel = document.getElementById('info-panel');
+            const statsContainer = document.getElementById('stats-container');
+            const loading = document.getElementById('loading');
+            
+            panel.style.display = 'block';
+            statsContainer.style.display = 'none';
+            loading.style.display = 'block';
+            document.getElementById('uni-name').innerText = uniName;
+
+            if (!API_KEY || API_KEY.trim() === "") {
+                loading.innerText = "❌ 缺少 API Key，AI 学长拒绝工作！请刷新页面重新输入。";
+                return; 
+            }
+
+            // 【修改点】：重写了 Prompt，限制了“脱发”，并给出了更多的吐槽维度
+            const prompt = `
+                你现在扮演一位西浦(XJTLU)毕业的毒舌但热心的学长。学弟学妹在地图上点击了【${uniName}】。
+                请提供该学校的申研信息。
+                必须严格按照以下JSON格式返回，绝对不要任何多余的废话和 markdown 格式（不要输出 \`\`\`json）：
+                {
+                    "qs": "填写最新QS排名，只写数字或数字区间",
+                    "req": "简短的西浦申研GPA和语言要求预估，如：均分65+，雅思7.0",
+                    "comment": "一句幽默、接地气的吐槽或建议。请根据该地区和学校的实际情况发散思维！可以聊聊：奇葩的天气（比如妖风、下雨）、离谱的物价/房租、当地的美食（或者是美食荒漠）、校园动物（比如鹅、狐狸）、找工难度、口音梗、单身率、村镇生活等。⚠️注意：绝对不要再提“脱发”了，发挥你的创意！"
+                }
+            `;
+
+            try {
+                const response = await fetch('https://api.deepseek.com/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages:[
+                            {"role": "system", "content": "你是一个只输出严格JSON格式数据的助手。"},
+                            {"role": "user", "content": prompt}
+                        ],
+                        response_format: { type: "json_object" },
+                        temperature: 0.8 // 稍微调高一点temperature，让AI的吐槽更多样化
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("API 请求被拒绝，可能是 Key 填错了或者欠费了？");
+                }
+
+                const data = await response.json();
+                const aiResult = JSON.parse(data.choices[0].message.content);
+
+                document.getElementById('qs-rank').innerText = aiResult.qs;
+                document.getElementById('gpa-req').innerText = aiResult.req;
+                document.getElementById('fun-fact').innerText = `💬 学长留言："${aiResult.comment}"`;
+
+                loading.style.display = 'none';
+                statsContainer.style.display = 'block';
+
+            } catch (error) {
+                console.error("API请求失败:", error);
+                loading.innerText = "网络有点卡，或者 API Key 异常... 📡";
+            }
+        }
+    </script>
+</body>
+</html>
