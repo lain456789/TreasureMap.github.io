@@ -6,1170 +6,784 @@
     <title>XJTLU 升学寻宝图 - 智能升学规划平台</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--primary:#00d4aa;--primary-dark:#00b894;--bg-dark:#0a0a14;--bg-card:#12121f;--bg-hover:#1a1a2e;--text-primary:#ffffff;--text-secondary:#8b8b9a;--border-color:#2a2a3e;--accent:#ff6b9d;--accent2:#a78bfa;--success:#10b981;--warning:#f59e0b}
-        body,html{height:100%;width:100%;font-family:'Segoe UI','Microsoft YaHei',sans-serif;background:var(--bg-dark);color:var(--text-primary);overflow:hidden}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* 响应式变量系统 */
+        :root {
+            /* 浅色模式变量 (Swiss Spa Light) */
+            --bg-body: #F9FAFB;
+            --bg-surface: #FFFFFF;
+            --bg-hover: #F3F4F6;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --primary: #000000;
+            --primary-hover: #374151;
+            --marker-fill: #1E3A8A; /* 海军蓝 */
+            --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
+            --shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --success-bg: #ECFDF5;
+            --success-text: #10B981;
+            --danger-bg: #FEF2F2;
+            --danger-text: #EF4444;
+        }
+
+        [data-theme="dark"] {
+            /* 深色模式变量 (Midnight Minimalist) */
+            --bg-body: #050505;
+            --bg-surface: #0F0F0F;
+            --bg-hover: #1A1A1A;
+            --text-main: #FAFAFA;
+            --text-muted: #A1A1AA;
+            --border: #262626;
+            --primary: #FFFFFF;
+            --primary-hover: #E5E5E5;
+            --marker-fill: #3B82F6; /* 亮蓝 */
+            --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.2);
+            --shadow-modal: 0 10px 50px rgba(0, 0, 0, 0.4);
+            --nav-bg: rgba(10, 10, 10, 0.85);
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --success-text: #34D399;
+            --danger-bg: rgba(239, 68, 68, 0.1);
+            --danger-text: #F87171;
+        }
+
+        body, html {
+            height: 100%; width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            overflow: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+        }
 
         /* 顶部导航栏 */
-        #navbar{position:fixed;top:0;left:0;right:0;height:64px;background:linear-gradient(135deg,rgba(10,10,20,0.98) 0%,rgba(18,18,31,0.95) 100%);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-color);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 24px;box-shadow:0 2px 20px rgba(0,0,0,0.15)}
-        .nav-brand{font-size:18px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:10px;letter-spacing:0.5px}
-        .nav-brand::before{content:'🎓';font-size:22px}
-        .nav-brand span{background:linear-gradient(90deg,var(--primary),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .nav-divider{width:1px;height:28px;background:linear-gradient(180deg,transparent,var(--border-color),transparent)}
-        .nav-links{display:flex;gap:4px;flex:1}
-        .nav-link{background:transparent;border:none;color:var(--text-secondary);padding:10px 16px;border-radius:8px;cursor:pointer;transition:all 0.3s;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
-        .nav-link:hover{color:var(--primary);background:rgba(0,212,170,0.08)}
-        .nav-link.active{color:var(--primary);background:rgba(0,212,170,0.12)}
-        .nav-right{display:flex;align-items:center;gap:10px}
-        .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;cursor:pointer;transition:transform 0.3s}
-        .user-avatar:hover{transform:scale(1.05)}
-        .icon-btn{background:var(--bg-hover);border:1px solid var(--border-color);color:var(--text-secondary);width:38px;height:38px;border-radius:10px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;font-size:16px}
-        .icon-btn:hover{background:var(--primary);color:var(--bg-dark);border-color:var(--primary)}
+        #navbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 64px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav-brand {
+            font-size: 16px; font-weight: 600; color: var(--text-main);
+            display: flex; align-items: center; gap: 12px; letter-spacing: -0.2px;
+        }
+
+        .nav-links { display: flex; gap: 8px; flex: 1; margin-left: 48px;}
+        .nav-link {
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s; font-size: 14px; font-weight: 500;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text-main); background: var(--bg-hover); }
+
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .icon-btn {
+            background: transparent; border: 1px solid transparent; color: var(--text-muted);
+            width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--border); }
 
         /* 主容器 */
-        #main-container{position:fixed;top:60px;left:0;right:0;bottom:0;display:flex}
+        #main-container { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; display: flex; }
 
         /* 左侧边栏 */
-        #left-sidebar{width:380px;background:linear-gradient(180deg,var(--bg-card) 0%,rgba(15,15,25,0.98) 100%);border-right:1px solid var(--border-color);display:flex;flex-direction:column;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+        #left-sidebar {
+            width: 380px; background: var(--bg-surface); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; z-index: 900;
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
 
         /* 地图区域 */
-        #map-container{flex:1;position:relative;overflow:hidden}
-        #map{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg-dark);}
-        .map-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 50%,rgba(0,212,170,0.05) 0%,rgba(10,10,20,0.8) 100%);pointer-events:none;z-index:100}
-        .map-grid{position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:50}
-        .treasure-glow{position:absolute;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,170,0.3) 0%,rgba(0,212,170,0) 70%);animation:pulse 2s infinite ease-in-out;pointer-events:none;z-index:200}
-        @keyframes pulse{
-            0%,100%{transform:scale(1);opacity:0.7}
-            50%{transform:scale(1.2);opacity:0.3}
+        #map-container { flex: 1; position: relative; background: var(--bg-body); }
+        #map { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
+
+        /* 内容板块样式 */
+        .sidebar-panel { height: 100%; display: flex; flex-direction: column; }
+        .panel-header { padding: 24px 32px 16px; }
+        .panel-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+
+        .panel-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 32px; gap: 24px; }
+        .panel-tab {
+            background: none; border: none; color: var(--text-muted); padding: 12px 0;
+            cursor: pointer; font-size: 14px; font-weight: 500; position: relative;
         }
-        .map-toggle{position:absolute;bottom:20px;right:20px;z-index:500;background:linear-gradient(135deg,var(--bg-card),rgba(20,20,35,0.9));border:1px solid var(--border-color);border-radius:12px;padding:12px 20px;color:var(--text-secondary);cursor:pointer;transition:all 0.3s;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-        .map-toggle:hover{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--bg-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.4)}
+        .panel-tab.active { color: var(--text-main); }
+        .panel-tab.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: var(--text-main);
+        }
 
-        /* 侧边栏面板 */
-        .sidebar-panel{display:flex;flex-direction:column;height:100%}
-        .panel-header{padding:20px 24px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center}
-        .panel-header h3{color:var(--primary);font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
-        .panel-content{flex:1;overflow-y:auto;padding:20px}
-        .panel-tabs{display:flex;border-bottom:1px solid var(--border-color);padding:0 16px}
-        .panel-tab{flex:1;background:none;border:none;color:var(--text-secondary);padding:14px 8px;cursor:pointer;transition:all 0.3s;font-size:13px;font-weight:500;position:relative}
-        .panel-tab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--primary);border-radius:3px 3px 0 0;transform:scaleX(0);transition:transform 0.3s}
-        .panel-tab:hover{color:var(--text-primary)}
-        .panel-tab.active{color:var(--primary)}
-        .panel-tab.active::after{transform:scaleX(1)}
-        .tab-content{display:none;flex:1;overflow-y:auto;padding:16px}
-        .tab-content.active{display:block}
+        .tab-content { display: none; flex: 1; overflow-y: auto; padding: 24px 32px; }
+        .tab-content.active { display: block; }
 
-        /* 用户信息区 */
-        .user-section{background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(167,139,250,0.08));border:1px solid rgba(0,212,170,0.2);border-radius:14px;padding:16px;margin-bottom:16px}
-        .user-info{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-        .user-avatar-large{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
-        .user-details h4{font-size:15px;font-weight:600;margin-bottom:2px}
-        .user-details p{font-size:12px;color:var(--text-secondary)}
-        .user-stats{display:flex;gap:16px}
-        .stat-item{text-align:center;flex:1}
-        .stat-num{font-size:20px;font-weight:700;color:var(--primary)}
-        .stat-label{font-size:11px;color:var(--text-secondary)}
+        /* 统一卡片样式 */
+        .user-section, .api-section, .fav-item, .ach-node-content, .uni-stat, .ai-senior-section, .emotion-response, .quiz-option {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 20px; margin-bottom: 20px;
+            box-shadow: var(--shadow-subtle); transition: all 0.4s ease;
+        }
 
-        /* API Key区域 */
-        .api-section{background:var(--bg-hover);border:1px solid var(--border-color);border-radius:12px;padding:16px;margin-bottom:16px}
-        .api-section h4{font-size:12px;color:var(--text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-        .api-input{width:100%;padding:12px 14px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:8px;color:var(--text-primary);font-size:13px;transition:all 0.3s;margin-bottom:10px}
-        .api-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,212,170,0.1)}
-        .api-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border:none;border-radius:8px;color:var(--bg-dark);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.3s}
-        .api-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(0,212,170,0.3)}
-        .api-status{margin-top:10px;padding:8px;border-radius:6px;font-size:12px;text-align:center}
-        .status-success{background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.2)}
-        .status-error{background:rgba(255,107,157,0.1);color:var(--accent);border:1px solid rgba(255,107,157,0.2)}
+        /* 按钮样式 */
+        .btn-primary {
+            width: 100%; padding: 12px; background: var(--primary); border: none;
+            border-radius: 8px; color: var(--bg-surface); font-weight: 500; font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.85; }
+        
+        .btn-secondary {
+            width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text-main); font-weight: 500; font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: var(--bg-hover); }
 
-        /* 大学信息卡片 */
-        .uni-card{background:var(--bg-hover);border:1px solid var(--border-color);border-radius:12px;padding:16px;margin-bottom:12px;transition:all 0.3s}
-        .uni-card:hover{border-color:rgba(0,212,170,0.3)}
-        .uni-card h4{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-        .uni-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-        .uni-stat{background:var(--bg-dark);border-radius:8px;padding:10px;text-align:center}
-        .uni-stat-label{font-size:10px;color:var(--text-secondary);text-transform:uppercase;margin-bottom:4px}
-        .uni-stat-value{font-size:16px;font-weight:700;color:var(--primary)}
-        .uni-fact{background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(255,107,157,0.08));border:1px solid rgba(167,139,250,0.2);border-radius:8px;padding:10px;font-size:12px;color:var(--text-secondary);line-height:1.5}
-        .fav-btn{width:100%;margin-top:10px;padding:10px;background:linear-gradient(135deg,var(--accent),#ff8fab);border:none;border-radius:20px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;transition:all 0.3s}
-        .fav-btn:hover{transform:scale(1.02)}
+        .btn-link { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; text-decoration: underline; }
+        .btn-link:hover { color: var(--text-main); }
 
-        /* 大学详情模态框 */
-        .uni-header{display:flex;align-items:center;gap:12px;padding:20px 0;border-bottom:1px solid var(--border-color);margin-bottom:20px}
-        .uni-logo{font-size:32px}
-        .uni-title{font-size:18px;font-weight:700;color:var(--text-primary)}
-        .uni-stats{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px}
-        .uni-stat{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-hover);border:1px solid var(--border-color);border-radius:12px;transition:all 0.3s}
-        .uni-stat:hover{background:var(--bg-card);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-        .uni-stat-icon{font-size:18px}
-        .uni-stat-info{flex:1}
-        .uni-stat-label{font-size:12px;color:var(--text-secondary);margin-bottom:2px}
-        .uni-stat-value{font-size:14px;font-weight:600;color:var(--text-primary)}
-        .ai-senior-section{background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(167,139,250,0.08));border:1px solid rgba(0,212,170,0.2);border-radius:16px;padding:16px;margin-bottom:20px}
-        .ai-senior-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-        .ai-senior-avatar{font-size:20px}
-        .ai-senior-title{font-size:14px;font-weight:600;color:var(--primary)}
-        .ai-senior-comment{font-size:13px;line-height:1.5;color:var(--text-primary);padding:12px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:10px}
-        .uni-actions{text-align:center}
-        .fav-btn{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;padding:12px 24px;color:var(--bg-dark);font-weight:600;font-size:14px;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 12px rgba(167,139,250,0.3)}
-        .fav-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(167,139,250,0.4)}
-        .fav-btn:disabled{background:var(--bg-hover);color:var(--text-secondary);cursor:not-allowed;transform:none;box-shadow:none}
-        .fav-icon{font-size:16px}
-        .loading-spinner{display:inline-block;width:30px;height:30px;border:3px solid rgba(0,212,170,0.3);border-radius:50%;border-top-color:var(--primary);animation:spin 1s ease-in-out infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
+        /* 表单输入 */
+        input, select {
+            width: 100%; padding: 12px 16px; background: var(--bg-body);
+            border: 1px solid var(--border); border-radius: 8px; color: var(--text-main);
+            font-size: 14px; transition: all 0.2s; font-family: inherit; margin-bottom: 16px;
+        }
+        input:focus { outline: none; border-color: var(--text-muted); }
+        .form-group label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 13px; font-weight: 500; }
 
-        /* 聊天区域 */
-        .chat-box{background:var(--bg-dark);border-radius:12px;height:280px;overflow-y:auto;padding:12px;margin-bottom:10px}
-        .chat-msg{margin-bottom:10px;animation:fadeIn 0.3s ease}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        .chat-user{text-align:right}
-        .chat-user .msg{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--bg-dark);padding:8px 12px;border-radius:14px 14px 4px 14px;display:inline-block;max-width:85%;font-size:13px}
-        .chat-ai{text-align:left}
-        .chat-ai .msg{background:var(--bg-hover);color:var(--text-primary);padding:8px 12px;border-radius:14px 14px 14px 4px;display:inline-block;max-width:85%;font-size:13px;line-height:1.5}
-        .chat-input{display:flex;gap:8px}
-        .chat-input input{flex:1;padding:12px 16px;background:var(--bg-hover);border:1px solid var(--border-color);border-radius:24px;color:var(--text-primary);font-size:13px;transition:all 0.3s}
-        .chat-input input:focus{outline:none;border-color:var(--primary)}
-        .chat-send{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border:none;border-radius:24px;padding:10px 18px;color:var(--bg-dark);font-weight:600;cursor:pointer;transition:all 0.3s}
-
-        /* 成就树 */
-        .achievement-tree{position:relative;padding:10px 0}
-        .ach-node{position:relative;padding-left:30px;margin-bottom:12px}
-        .ach-node::before{content:'';position:absolute;left:10px;top:20px;width:1px;height:calc(100% + 12px);background:linear-gradient(180deg,var(--primary),var(--border-color))}
-        .ach-node:last-child::before{display:none}
-        .ach-node-content{background:var(--bg-hover);border:1px solid var(--border-color);border-radius:10px;padding:12px 14px;transition:all 0.3s}
-        .ach-node-content:hover{border-color:rgba(0,212,170,0.3)}
-        .ach-node-content.locked{opacity:0.5}
-        .ach-node-content.unlocked{border-color:rgba(0,212,170,0.4);background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(0,212,170,0.02))}
-        .ach-icon{position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:var(--bg-card);border:2px solid var(--border-color);display:flex;align-items:center;justify-content:center;font-size:14px}
-        .ach-node-content.unlocked .ach-icon{background:linear-gradient(135deg,var(--primary),var(--accent2));border-color:var(--primary)}
-        .ach-title{font-weight:600;font-size:13px;margin-bottom:2px}
-        .ach-date{font-size:11px;color:var(--text-secondary)}
-        .ach-add{display:flex;gap:8px;margin-top:12px}
-        .ach-add input{flex:1;padding:10px 12px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:8px;color:var(--text-primary);font-size:13px}
-        .ach-add input:focus{outline:none;border-color:var(--primary)}
-        .ach-add button{padding:10px 16px;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:8px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;transition:all 0.3s}
-
-        /* 收藏列表 */
-        .fav-list{}
-        .fav-item{background:var(--bg-hover);border:1px solid var(--border-color);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
-        .fav-item:hover{border-color:rgba(255,107,157,0.3)}
-        .fav-info{}
-        .fav-name{font-weight:500;font-size:14px;margin-bottom:4px}
-        .fav-meta{font-size:11px;color:var(--text-secondary)}
-        .fav-remove{background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px 10px;border-radius:6px;transition:all 0.3s;font-size:12px}
-        .fav-remove:hover{background:rgba(255,107,157,0.1);color:var(--accent)}
-
-        /* 答题闯关 */
-        .quiz-container{}
-        .quiz-progress{margin-bottom:20px}
-        .progress-bar{width:100%;height:8px;background:var(--bg-dark);border-radius:4px;overflow:hidden}
-        .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent2));transition:width 0.5s ease;border-radius:4px}
-        .quiz-level{text-align:center;margin-top:10px;font-size:13px;color:var(--text-secondary)}
-        .quiz-level span{color:var(--primary);font-weight:600}
-        .quiz-question{font-size:16px;line-height:1.6;margin-bottom:20px;color:var(--text-primary)}
-        .quiz-options{display:flex;flex-direction:column;gap:10px}
-        .quiz-option{padding:14px 16px;background:var(--bg-hover);border:2px solid var(--border-color);border-radius:10px;cursor:pointer;transition:all 0.3s;color:var(--text-primary);font-size:13px;text-align:left}
-        .quiz-option:hover{background:var(--bg-dark);border-color:var(--primary)}
-        .quiz-option.selected{background:rgba(0,212,170,0.1);border-color:var(--primary)}
-        .quiz-option.correct{background:rgba(16,185,129,0.15);border-color:var(--success)}
-        .quiz-option.incorrect{background:rgba(255,107,157,0.15);border-color:var(--accent)}
-        .quiz-submit{width:100%;margin-top:20px;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border:none;border-radius:10px;color:var(--bg-dark);font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
-        .quiz-submit:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.35)}
-        .quiz-result{text-align:center;padding:30px}
-        .quiz-result-icon{font-size:56px;margin-bottom:16px}
-        .quiz-result h4{font-size:22px;margin-bottom:8px}
-        .quiz-result p{color:var(--text-secondary);margin-bottom:16px}
-        .quiz-action{margin-top:16px;display:flex;gap:10px;justify-content:center}
-        .quiz-next,.quiz-retry{padding:12px 24px;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;transition:all 0.3s}
-
-        /* 情感疏导 */
-        .emotion-container{}
-        .emotion-moods{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-        .emotion-mood{text-align:center;padding:20px 12px;background:var(--bg-hover);border:2px solid var(--border-color);border-radius:12px;cursor:pointer;transition:all 0.3s}
-        .emotion-mood:hover{border-color:var(--accent);transform:translateY(-2px)}
-        .emotion-mood.active{border-color:var(--accent);background:rgba(255,107,157,0.1)}
-        .emotion-emoji{font-size:36px;margin-bottom:8px}
-        .emotion-label{font-size:12px;color:var(--text-secondary)}
-        .emotion-response{background:linear-gradient(135deg,rgba(255,107,157,0.08),rgba(167,139,250,0.08));border:1px solid rgba(255,107,157,0.2);border-radius:12px;padding:20px;margin-bottom:20px}
-        .emotion-response h4{color:var(--accent);margin-bottom:10px;font-size:15px}
-        .emotion-response p{color:var(--text-secondary);font-size:13px;line-height:1.6}
-        .emotion-quote{background:var(--bg-hover);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;margin-bottom:20px}
-        .emotion-quote p{font-size:15px;color:var(--text-primary);line-height:1.6;font-style:italic}
-        .emotion-new-quote{width:100%;padding:12px;background:transparent;border:1px solid var(--primary);border-radius:8px;color:var(--primary);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.3s}
-        .emotion-new-quote:hover{background:rgba(0,212,170,0.1)}
+        /* 聊天气泡 */
+        .chat-box { background: var(--bg-body); border-radius: 8px; height: 320px; padding: 20px; overflow-y: auto; margin-bottom: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px;}
+        .chat-msg { display: flex; flex-direction: column; }
+        .chat-user { align-items: flex-end; }
+        .chat-ai { align-items: flex-start; }
+        .msg { padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.5; }
+        .chat-user .msg { background: var(--primary); color: var(--bg-surface); border-radius: 12px 12px 4px 12px;}
+        .chat-ai .msg { background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 12px 12px 12px 4px; box-shadow: var(--shadow-subtle);}
 
         /* 模态框 */
-        .modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);animation:fadeIn 0.3s ease}
-        .modal-content{background:linear-gradient(135deg,var(--bg-card) 0%,#0f0f1a 100%);margin:5% auto;padding:0;border-radius:16px;border:1px solid var(--border-color);width:92%;max-width:440px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.5);animation:slideUp 0.4s ease}
-        @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        .modal-header{padding:20px 24px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center}
-        .modal-header h3{color:var(--primary);margin:0;font-size:18px;font-weight:700}
-        .modal-close{background:var(--bg-hover);border:none;color:var(--text-secondary);width:34px;height:34px;border-radius:8px;cursor:pointer;transition:all 0.3s;font-size:18px;display:flex;align-items:center;justify-content:center}
-        .modal-close:hover{background:var(--accent);color:#fff}
-        .modal-body{padding:24px}
-        .form-group{margin-bottom:16px}
-        .form-group label{display:block;color:var(--text-secondary);margin-bottom:6px;font-size:12px;font-weight:500}
-        .form-group input,.form-group select{width:100%;padding:12px 14px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:10px;color:var(--text-primary);font-size:13px;transition:all 0.3s}
-        .form-group input:focus,.form-group select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,212,170,0.1)}
-        .form-group input::placeholder{color:var(--text-secondary)}
-        .btn-primary{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border:none;border-radius:10px;color:var(--bg-dark);font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
-        .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,212,170,0.35)}
-        .btn-secondary{width:100%;padding:14px;background:transparent;border:1px solid var(--primary);border-radius:10px;color:var(--primary);font-weight:600;font-size:14px;cursor:pointer;transition:all 0.3s;margin-top:10px}
-        .btn-secondary:hover{background:rgba(0,212,170,0.1)}
-        .btn-link{background:none;border:none;color:var(--primary);cursor:pointer;font-size:12px;padding:6px 0}
-        .btn-link:hover{text-decoration:underline}
-        .form-links{display:flex;justify-content:space-between;margin-top:8px}
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--bg-surface); margin: 6vh auto; border-radius: 12px;
+            border: 1px solid var(--border); width: 90%; max-width: 480px;
+            box-shadow: var(--shadow-modal); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;
+        }
+        .modal-header { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .modal-body { padding: 32px; overflow-y: auto; }
 
-        /* 空状态 */
-        .empty-state{text-align:center;padding:40px 20px;color:var(--text-secondary)}
-        .empty-icon{font-size:42px;margin-bottom:12px;opacity:0.5}
-        .empty-state h4{font-size:15px;color:var(--text-primary);margin-bottom:6px}
+        /* 特定业务组件细化 */
+        .user-info { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .user-avatar-large { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+        .user-stats { display: flex; gap: 24px; border-top: 1px solid var(--border); padding-top: 20px; }
+        .stat-item { flex: 1; }
+        .stat-num { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; }
 
-        /* 滚动条 */
-        ::-webkit-scrollbar{width:6px}
-        ::-webkit-scrollbar-track{background:transparent}
-        ::-webkit-scrollbar-thumb{background:var(--border-color);border-radius:3px}
-        ::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+        .fav-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; margin-bottom: 12px;}
+        .fav-item:hover { border-color: var(--text-muted); }
+        .fav-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+        .fav-meta { font-size: 12px; color: var(--text-muted); }
+        
+        .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
 
+        /* 答题系统 */
+        .progress-bar { width: 100%; height: 6px; background: var(--bg-hover); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+        .progress-fill { height: 100%; background: var(--text-main); transition: width 0.3s ease; }
+        .quiz-option { cursor: pointer; padding: 16px 20px; font-weight: 500; font-size: 14px; margin-bottom: 12px;}
+        .quiz-option:hover { border-color: var(--text-muted); }
+        .quiz-option.selected { border-color: var(--text-main); background: var(--bg-hover); }
+        .quiz-option.correct { border-color: var(--success-text); color: var(--success-text); background: var(--success-bg); }
+        .quiz-option.incorrect { border-color: var(--danger-text); color: var(--danger-text); background: var(--danger-bg); }
+
+        /* 情感系统 */
+        .emotion-moods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .emotion-mood { text-align: center; padding: 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .emotion-mood:hover { border-color: var(--text-muted); }
+        .emotion-mood.active { border-color: var(--text-main); background: var(--bg-hover); }
+
+        /* Map Popup */
+        .treasure-tooltip { background: var(--bg-surface) !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 8px 12px !important; color: var(--text-main) !important; font-size: 13px !important; font-family: inherit !important; font-weight: 500 !important; box-shadow: var(--shadow-subtle) !important; }
+        .treasure-tooltip::after { display: none !important; }
+        
         /* 响应式 */
-        @media(max-width:1024px){#left-sidebar{position:fixed;left:-380px;top:60px;bottom:0;z-index:999}#left-sidebar.open{left:0}#map-container{width:100%}}
+        @media(max-width: 1024px) {
+            #left-sidebar { position: fixed; left: -380px; top: 64px; bottom: 0; }
+            #left-sidebar.open { left: 0; box-shadow: var(--shadow-modal); }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
-<body>
-    <!-- 导航栏 -->
+<body data-theme="light">
     <nav id="navbar">
-        <div class="nav-brand">🎓 XJTLU <span>升学寻宝图</span></div>
-        <div class="nav-divider"></div>
+        <div class="nav-brand">
+            <i data-lucide="compass"></i> XJTLU 升学寻宝图
+        </div>
         <div class="nav-links">
-            <button class="nav-link active" data-panel="home">🏠 首页</button>
-            <button class="nav-link" data-panel="quiz">🎯 闯关</button>
-            <button class="nav-link" data-panel="emotion">💝 心灵</button>
+            <button class="nav-link active" data-panel="home"><i data-lucide="layout-grid" style="width:16px;"></i> 探索</button>
+            <button class="nav-link" data-panel="quiz"><i data-lucide="target" style="width:16px;"></i> 挑战</button>
+            <button class="nav-link" data-panel="emotion"><i data-lucide="heart" style="width:16px;"></i> 疏导</button>
         </div>
         <div class="nav-right">
-            <button class="icon-btn" id="toggle-sidebar" title="菜单">☰</button>
-            <button class="icon-btn" id="achievement-btn" title="成就">🏆</button>
-            <div class="user-avatar" id="user-avatar">访客</div>
+            <button class="icon-btn" id="theme-toggle" title="切换模式"><i data-lucide="moon"></i></button>
+            <button class="icon-btn" id="achievement-btn" title="成就"><i data-lucide="trophy"></i></button>
+            <button class="icon-btn" id="user-avatar" title="账户"><i data-lucide="user"></i></button>
+            <button class="icon-btn" id="toggle-sidebar" style="display:none;"><i data-lucide="menu"></i></button>
         </div>
     </nav>
 
-    <!-- 主容器 -->
     <div id="main-container">
-        <!-- 左侧边栏 -->
         <aside id="left-sidebar">
             <div class="sidebar-panel">
                 <div class="panel-header">
-                    <h3 id="panel-title">🎓 升学助手</h3>
+                    <h3><i data-lucide="library"></i> 指南针</h3>
                 </div>
-                <div class="panel-tabs" id="panel-tabs">
-                    <button class="panel-tab active" data-tab="user-tab">用户</button>
-                    <button class="panel-tab" data-tab="chat-tab">AI</button>
-                    <button class="panel-tab" data-tab="fav-tab">收藏</button>
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-tab="user-tab">账户</button>
+                    <button class="panel-tab" data-tab="chat-tab">顾问 AI</button>
+                    <button class="panel-tab" data-tab="fav-tab">清单</button>
                 </div>
 
-                <!-- 用户面板 -->
                 <div id="user-tab" class="tab-content active">
-                    <div id="user-info-section">
-                        <div class="user-section">
-                            <div class="user-info">
-                                <div class="user-avatar-large" id="user-avatar-large">访客</div>
-                                <div class="user-details">
-                                    <h4 id="user-name">未登录用户</h4>
-                                    <p id="user-status">点击登录解锁全部功能</p>
-                                </div>
-                            </div>
-                            <div class="user-stats">
-                                <div class="stat-item"><div class="stat-num" id="stat-achievements">0</div><div class="stat-label">成就</div></div>
-                                <div class="stat-item"><div class="stat-num" id="stat-favorites">0</div><div class="stat-label">收藏</div></div>
+                    <div class="user-section">
+                        <div class="user-info">
+                            <div class="user-avatar-large"><i data-lucide="user"></i></div>
+                            <div>
+                                <h4 id="user-name" style="font-size:16px; font-weight:600; margin-bottom:4px;">未验证身份</h4>
+                                <p id="user-status" style="font-size:13px; color:var(--text-muted)">登录以同步进度</p>
                             </div>
                         </div>
+                        <div class="user-stats">
+                            <div class="stat-item"><div class="stat-num" id="stat-achievements">0</div><div class="stat-label">成就</div></div>
+                            <div class="stat-item"><div class="stat-num" id="stat-favorites">0</div><div class="stat-label">清单</div></div>
+                        </div>
                     </div>
+                    
                     <div class="api-section" id="api-section">
-                        <h4>🔑 API Key</h4>
-                        <input type="text" class="api-input" id="api-key-input" placeholder="sk-...">
-                        <button class="api-btn" id="submit-api">解锁 AI 功能</button>
-                        <div class="api-status" id="api-status"></div>
+                        <h4 style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase;">配置 API</h4>
+                        <input type="password" id="api-key-input" placeholder="输入 API Key...">
+                        <button class="btn-primary" id="submit-api"><i data-lucide="key" style="width:16px;"></i> 验证并连接</button>
                     </div>
-                    <div id="api-unlocked-section" style="display:none">
-                        <div class="user-section">
-                            <div class="user-info">
-                                <div class="user-avatar-large">🤖</div>
-                                <div class="user-details">
-                                    <h4>AI 功能已解锁</h4>
-                                    <p>可以开始使用地图探索和 AI 聊天功能</p>
-                                </div>
-                            </div>
-                            <button class="btn-secondary" id="reset-api">重置 API Key</button>
-                        </div>
+                    
+                    <div id="api-unlocked-section" class="user-section" style="display:none; display:flex; align-items:center; justify-content:space-between; padding: 16px 20px;">
+                        <div style="display:flex; align-items:center; gap:8px;"><i data-lucide="check-circle" style="color:var(--success-text); width:18px;"></i><span style="font-size:14px; font-weight:500;">AI 已连接</span></div>
+                        <button class="btn-link" id="reset-api">断开</button>
                     </div>
+                    
                     <div id="login-section">
-                        <button class="btn-primary" id="show-login">登录 / 注册</button>
+                        <button class="btn-primary" id="show-login">登录系统</button>
                     </div>
                 </div>
 
-                <!-- AI聊天面板 -->
                 <div id="chat-tab" class="tab-content">
                     <div class="chat-box" id="chat-box">
-                        <div class="chat-msg chat-ai"><div class="msg">👋 你好！我是 AI 学长，输入 API Key 后可以开始聊天，了解更多升学信息！</div></div>
+                        <div class="chat-msg chat-ai"><div class="msg">您好。我是您的升学规划助理。配置 API 后即可随时向我提问。</div></div>
                     </div>
-                    <div class="chat-input">
-                        <input type="text" id="chat-input" placeholder="输入问题...">
-                        <button class="chat-send" id="chat-send">→</button>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="chat-input" placeholder="输入问题..." style="margin-bottom:0; border-radius:24px;">
+                        <button class="btn-primary" id="chat-send" style="width:48px; border-radius:50%; padding:0; flex-shrink:0;"><i data-lucide="send" style="width:18px; margin-left:-2px;"></i></button>
                     </div>
                 </div>
 
-                <!-- 收藏面板 -->
                 <div id="fav-tab" class="tab-content">
                     <div id="favorites-list"></div>
                 </div>
             </div>
         </aside>
 
-        <!-- 地图区域 -->
         <div id="map-container">
             <div id="map"></div>
-            <div class="map-overlay"></div>
-            <div class="map-grid"></div>
         </div>
     </div>
 
-    <!-- 登录弹窗 -->
     <div id="login-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>🔐 登录 / 注册</h3>
-                <button class="modal-close">×</button>
-            </div>
+            <div class="modal-header"><h3><i data-lucide="log-in"></i> 账户访问</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
             <div class="modal-body">
                 <div id="login-form-container">
-                    <div class="form-group"><label>账号</label><input type="text" id="login-account" placeholder="输入账号"></div>
+                    <div class="form-group"><label>账户名</label><input type="text" id="login-account" placeholder="输入账户"></div>
                     <div class="form-group"><label>密码</label><input type="password" id="login-password" placeholder="输入密码"></div>
-                    <div class="form-links"><button class="btn-link" id="show-register">注册账号</button><button class="btn-link" id="show-forgot">忘记密码？</button></div>
-                    <button class="btn-primary" id="login-submit">登录</button>
+                    <button class="btn-primary" id="login-submit" style="margin-top:8px;">登 录</button>
+                    <div style="display:flex; justify-content:space-between; margin-top:16px;">
+                        <button class="btn-link" id="show-register">创建新账户</button>
+                        <button class="btn-link">找回密码</button>
+                    </div>
                 </div>
                 <div id="register-form-container" style="display:none">
-                    <div class="form-group"><label>用户名</label><input type="text" id="reg-username" placeholder="输入用户名"></div>
-                    <div class="form-group"><label>学号</label><input type="text" id="reg-student-id" placeholder="输入学号"></div>
-                    <div class="form-group"><label>账号</label><input type="text" id="reg-account" placeholder="输入账号"></div>
-                    <div class="form-group"><label>密码</label><input type="password" id="reg-password" placeholder="输入密码"></div>
-                    <button class="btn-primary" id="register-submit">注册</button>
-                    <button class="btn-secondary" id="back-to-login">返回登录</button>
+                    <div class="form-group"><label>姓名</label><input type="text" id="reg-username"></div>
+                    <div class="form-group"><label>学号</label><input type="text" id="reg-student-id"></div>
+                    <div class="form-group"><label>账户名</label><input type="text" id="reg-account"></div>
+                    <div class="form-group"><label>密码</label><input type="password" id="reg-password"></div>
+                    <button class="btn-primary" id="register-submit" style="margin-top:8px;">注 册</button>
+                    <button class="btn-secondary" id="back-to-login" style="margin-top:12px;">返回登录</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 成就弹窗 -->
     <div id="achievement-modal" class="modal">
-        <div class="modal-content" style="max-width:500px">
-            <div class="modal-header">
-                <h3>🏆 成就树</h3>
-                <button class="modal-close">×</button>
-            </div>
-            <div class="modal-body" style="max-height:60vh;overflow-y:auto">
-                <div class="achievement-tree" id="achievement-tree"></div>
-                <div class="ach-add">
-                    <input type="text" id="new-achievement" placeholder="添加新成就...">
-                    <button id="add-achievement">添加</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header"><h3><i data-lucide="award"></i> 成就记录</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
+            <div class="modal-body">
+                <div id="achievement-tree"></div>
             </div>
         </div>
     </div>
 
-    <!-- 闯关弹窗 -->
     <div id="quiz-modal" class="modal">
-        <div class="modal-content" style="max-width:560px">
-            <div class="modal-header">
-                <h3>🎯 升学知识闯关</h3>
-                <button class="modal-close">×</button>
-            </div>
+        <div class="modal-content">
+            <div class="modal-header"><h3><i data-lucide="check-square"></i> 知识库测验</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
             <div class="modal-body">
-                <div id="quiz-start">
-                    <div class="quiz-result">
-                        <div class="quiz-result-icon">🎓</div>
-                        <h4>升学知识闯关</h4>
-                        <p>共10关，每关3题<br>全部通关解锁"申研新兵"成就</p>
-                        <button class="btn-primary" id="start-quiz" style="width:auto;padding:14px 40px">开始闯关</button>
-                    </div>
+                <div id="quiz-start" style="text-align:center; padding: 20px 0;">
+                    <i data-lucide="book-open" style="width:48px; height:48px; color:var(--text-muted); margin-bottom:16px;"></i>
+                    <h4 style="font-size:20px; margin-bottom:8px;">升学准备测验</h4>
+                    <p style="color:var(--text-muted); margin-bottom:32px; font-size:14px;">包含30道核心测试题，完成以验证您的准备度。</p>
+                    <button class="btn-primary" id="start-quiz">开始测验</button>
                 </div>
                 <div id="quiz-game" style="display:none">
-                    <div class="quiz-progress"><div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div><p class="quiz-level">第 <span id="quiz-level-num">1</span>/10 关</p></div>
-                    <div class="quiz-question" id="quiz-question"></div>
-                    <div class="quiz-options" id="quiz-options"></div>
-                    <button class="quiz-submit" id="quiz-submit">提交答案</button>
+                    <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
+                    <p style="text-align:right; font-size:12px; color:var(--text-muted); margin-bottom:24px;">进度 <span id="quiz-level-num">1</span> / 30</p>
+                    <div id="quiz-question" style="font-size:18px; font-weight:500; line-height:1.5; margin-bottom:24px;"></div>
+                    <div id="quiz-options"></div>
+                    <button class="btn-primary" id="quiz-submit" style="margin-top:16px;">确认提交</button>
                 </div>
-                <div id="quiz-result" style="display:none">
-                    <div class="quiz-result">
-                        <div class="quiz-result-icon" id="quiz-result-icon">🎉</div>
-                        <h4 id="quiz-result-title">通关成功！</h4>
-                        <p id="quiz-result-msg"></p>
-                        <div class="quiz-action">
-                            <button class="quiz-next btn-primary" id="quiz-next">下一关</button>
-                            <button class="quiz-retry btn-secondary" id="quiz-retry">重新挑战</button>
-                        </div>
+                <div id="quiz-result" style="display:none; text-align:center; padding:20px 0;">
+                    <div id="quiz-result-icon-container" style="margin-bottom:16px; display:flex; justify-content:center;"></div>
+                    <h4 id="quiz-result-title" style="font-size:20px; margin-bottom:8px;"></h4>
+                    <p id="quiz-result-msg" style="color:var(--text-muted); margin-bottom:32px; font-size:14px;"></p>
+                    <div style="display:flex; gap:12px;">
+                        <button class="btn-secondary" id="quiz-retry" style="flex:1;">返回重试</button>
+                        <button class="btn-primary" id="quiz-next" style="flex:1;">继续下一题</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 情感弹窗 -->
     <div id="emotion-modal" class="modal">
-        <div class="modal-content" style="max-width:520px">
-            <div class="modal-header">
-                <h3>💝 情感加油站</h3>
-                <button class="modal-close">×</button>
-            </div>
+        <div class="modal-content">
+            <div class="modal-header"><h3><i data-lucide="coffee"></i> 状态调节</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
             <div class="modal-body">
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">记录您当前的备考状态：</p>
                 <div class="emotion-moods">
-                    <div class="emotion-mood" data-mood="great"><div class="emotion-emoji">😊</div><div class="emotion-label">很棒</div></div>
-                    <div class="emotion-mood" data-mood="okay"><div class="emotion-emoji">😐</div><div class="emotion-label">一般</div></div>
-                    <div class="emotion-mood" data-mood="stressed"><div class="emotion-emoji">😰</div><div class="emotion-label">压力大</div></div>
-                    <div class="emotion-mood" data-mood="anxious"><div class="emotion-emoji">😟</div><div class="emotion-label">焦虑</div></div>
+                    <div class="emotion-mood" data-mood="great"><i data-lucide="sun" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:14px; font-weight:500;">状态极佳</div></div>
+                    <div class="emotion-mood" data-mood="okay"><i data-lucide="minus" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:14px; font-weight:500;">平稳前行</div></div>
+                    <div class="emotion-mood" data-mood="stressed"><i data-lucide="cloud-lightning" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:14px; font-weight:500;">感到压力</div></div>
+                    <div class="emotion-mood" data-mood="anxious"><i data-lucide="cloud-rain" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:14px; font-weight:500;">有些焦虑</div></div>
                 </div>
                 <div class="emotion-response" id="emotion-response" style="display:none">
-                    <h4 id="emotion-title"></h4>
-                    <p id="emotion-text"></p>
-                </div>
-                <div class="emotion-quote" id="emotion-quote">
-                    <p id="quote-text">"每一次努力都在为梦想铺路，坚持就是胜利！"</p>
-                    <button class="emotion-new-quote" id="new-quote">换一句</button>
+                    <h4 id="emotion-title" style="font-size:16px; font-weight:600; margin-bottom:8px;"></h4>
+                    <p id="emotion-text" style="font-size:14px; color:var(--text-muted); line-height:1.6;"></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 大学详情弹窗 -->
     <div id="uni-modal" class="modal">
-        <div class="modal-content" style="max-width:420px">
-            <div class="modal-header">
-                <h3 id="uni-modal-title">大学详情</h3>
-                <button class="modal-close">×</button>
-            </div>
-            <div class="modal-body">
-                <div id="uni-modal-content"></div>
-            </div>
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="uni-modal-title">院校档案</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
+            <div class="modal-body" id="uni-modal-content"></div>
         </div>
     </div>
 
     <script>
-        // ===== 数据存储 =====
+        // ==================== 1. 基础配置与主题管理 ====================
+        lucide.createIcons();
+        function refreshIcons() { lucide.createIcons(); }
+
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            currentTheme = theme;
+            localStorage.setItem('theme', theme);
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = theme === 'light' ? '<i data-lucide="moon"></i>' : '<i data-lucide="sun"></i>';
+                refreshIcons();
+            }
+            updateMapStyle();
+        }
+        document.getElementById('theme-toggle').onclick = () => setTheme(currentTheme === 'light' ? 'dark' : 'light');
+
+        // 响应式处理
+        function checkResize() {
+            const btn = document.getElementById('toggle-sidebar');
+            if(window.innerWidth <= 1024) { btn.style.display = 'flex'; } else { btn.style.display = 'none'; document.getElementById('left-sidebar').classList.remove('open');}
+        }
+        window.addEventListener('resize', checkResize);
+        checkResize();
+
+        // ==================== 2. 数据存储与用户系统 ====================
         let API_KEY = localStorage.getItem('xjlu_api_key') || null;
         let currentUser = JSON.parse(localStorage.getItem('xjlu_user')) || null;
         let favorites = JSON.parse(localStorage.getItem('xjlu_favorites')) || [];
         let achievements = JSON.parse(localStorage.getItem('xjlu_achievements')) || [];
-        let exploredUnis = JSON.parse(localStorage.getItem('xjlu_explored')) || [];
-        let quizProgress = JSON.parse(localStorage.getItem('xjlu_quiz_progress')) || {level:1,correct:0,completed:[]};
-
-        // ===== 数据库接口预留 =====
-        const DB_CONFIG = {
-            host: 'localhost',
-            port: 3306,
-            database: 'xjtl u_app',
-            user: 'root',
-            password: '',
-            tables: {
-                users: 'users',
-                achievements: 'achievements',
-                favorites: 'favorites',
-                quiz_progress: 'quiz_progress'
-            }
-        };
-        const API_BASE = '/api/v1';
-
-        async function dbQuery(endpoint, method = 'GET', data = null) {
-            // TODO: 连接真实数据库
-            // return fetch(`${API_BASE}${endpoint}`, {method, headers:{'Content-Type':'application/json'}, body:data?JSON.stringify(data):null});
-            console.log(`[DB Mock] ${method} ${endpoint}`, data);
-            return {ok: true, json: () => Promise.resolve({success: true})};
-        }
-
-        // ===== 用户系统 =====
-        function saveUsersTXT(users) {
-            localStorage.setItem('xjlu_users', JSON.stringify(users));
-        }
-
-        function loadUsersTXT() {
-            return JSON.parse(localStorage.getItem('xjlu_users')) || [];
-        }
-
-        function registerUser(username, studentId, account, password) {
-            const users = loadUsersTXT();
-            if (users.find(u => u.account === account)) {
-                alert('账号已存在');
-                return false;
-            }
-            const newUser = {id: Date.now(), username, studentId, account, password, createdAt: new Date().toISOString()};
-            users.push(newUser);
-            saveUsersTXT(users);
-            return true;
-        }
-
-        function loginUser(account, password) {
-            const users = loadUsersTXT();
-            const user = users.find(u => u.account === account && u.password === password);
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('xjlu_user', JSON.stringify(user));
-                updateUserUI();
-                return true;
-            }
-            return false;
-        }
-
-        function logoutUser() {
-            currentUser = null;
-            localStorage.removeItem('xjlu_user');
-            updateUserUI();
-        }
+        let quizProgress = JSON.parse(localStorage.getItem('xjlu_quiz_progress')) || {completed:[]};
 
         function updateUserUI() {
             if (currentUser) {
                 document.getElementById('user-name').textContent = currentUser.username;
-                document.getElementById('user-status').textContent = '已登录';
-                document.getElementById('user-avatar').textContent = currentUser.username[0].toUpperCase();
-                document.getElementById('user-avatar-large').textContent = currentUser.username[0].toUpperCase();
-                document.getElementById('login-section').innerHTML = '<button class="btn-secondary" id="logout-btn">退出登录</button>';
-                document.getElementById('logout-btn').onclick = logoutUser;
+                document.getElementById('user-status').textContent = '身份已验证';
+                document.getElementById('login-section').innerHTML = '<button class="btn-secondary" id="logout-btn">退出当前账户</button>';
+                document.getElementById('logout-btn').onclick = () => { currentUser = null; localStorage.removeItem('xjlu_user'); updateUserUI(); };
             } else {
-                document.getElementById('user-name').textContent = '未登录用户';
-                document.getElementById('user-status').textContent = '点击登录解锁全部功能';
-                document.getElementById('user-avatar').textContent = '访客';
-                document.getElementById('user-avatar-large').textContent = '访客';
-                document.getElementById('login-section').innerHTML = '<button class="btn-primary" id="show-login">登录 / 注册</button>';
-                document.getElementById('show-login').onclick = () => document.getElementById('login-modal').style.display = 'block';
+                document.getElementById('user-name').textContent = '未验证身份';
+                document.getElementById('user-status').textContent = '需登录以同步数据';
+                document.getElementById('login-section').innerHTML = '<button class="btn-primary" id="show-login">登录系统</button>';
+                document.getElementById('show-login').onclick = () => document.getElementById('login-modal').style.display = 'flex';
             }
-            updateStats();
-        }
-
-        function updateStats() {
             document.getElementById('stat-achievements').textContent = achievements.length;
             document.getElementById('stat-favorites').textContent = favorites.length;
         }
 
-        // ===== 成就系统 =====
-        const defaultAchievements = [
-            {id: 1, title: ' 申研新兵', desc: '通关全部闯关', unlocked: quizProgress.completed.length >= 10},
-            {id: 2, title: '🏆 收藏达人', desc: '收藏5所大学', unlocked: favorites.length >= 5},
-            {id: 3, title: '💬 社交达人', desc: '发送10条消息', unlocked: false}
+        document.getElementById('login-submit').onclick = () => {
+            const acc = document.getElementById('login-account').value;
+            const users = JSON.parse(localStorage.getItem('xjlu_users')) || [];
+            const user = users.find(u => u.account === acc && u.password === document.getElementById('login-password').value);
+            if(user) { currentUser = user; localStorage.setItem('xjlu_user', JSON.stringify(user)); document.getElementById('login-modal').style.display='none'; updateUserUI(); } 
+            else { alert('验证失败'); }
+        };
+
+        document.getElementById('register-submit').onclick = () => {
+            const acc = document.getElementById('reg-account').value;
+            const users = JSON.parse(localStorage.getItem('xjlu_users')) || [];
+            if(users.find(u => u.account === acc)) return alert('账户已存在');
+            users.push({
+                username: document.getElementById('reg-username').value, studentId: document.getElementById('reg-student-id').value,
+                account: acc, password: document.getElementById('reg-password').value
+            });
+            localStorage.setItem('xjlu_users', JSON.stringify(users));
+            alert('注册成功'); document.getElementById('back-to-login').click();
+        };
+
+        // ==================== 3. 地图系统与完整 30 所大学 ====================
+        const map = L.map('map', { zoomControl: false }).setView([30, 20], 3);
+        let tileLayer;
+
+        function updateMapStyle() {
+            if (tileLayer) map.removeLayer(tileLayer);
+            const style = currentTheme === 'light' 
+                ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+                : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+            tileLayer = L.tileLayer(style, { attribution: '&copy; CARTO' }).addTo(map);
+            renderMarkers();
+        }
+
+        const universities = [
+            {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544, state:"牛津郡", country:"英国", city:"牛津", comment:"牛津的图书馆美到窒息，录取要求极高，注重独立研究能力。"},
+            {name:"剑桥大学 (Cambridge)",lat:52.2053,lng:0.1192, state:"剑桥郡", country:"英国", city:"剑桥", comment:"在康河撑船很浪漫，理工科极其强悍。"},
+            {name:"帝国理工学院 (ICL)",lat:51.4988,lng:-0.1749, state:"大伦敦", country:"英国", city:"伦敦", comment:"工程与商科顶尖，课程密度大，就业竞争力极强。"},
+            {name:"伦敦大学学院 (UCL)",lat:51.5246,lng:-0.1340, state:"大伦敦", country:"英国", city:"伦敦", comment:"UCL地理位置绝佳，综合学科门类极其齐全。"},
+            {name:"伦敦国王学院 (KCL)",lat:51.5115,lng:-0.1160, state:"大伦敦", country:"英国", city:"伦敦", comment:"建筑超有历史感，医学和法学领域享有盛誉。"},
+            {name:"伦敦政治经济学院 (LSE)",lat:51.5144,lng:-0.1165, state:"大伦敦", country:"英国", city:"伦敦", comment:"社会科学的殿堂，政商界校友网络庞大。"},
+            {name:"爱丁堡大学 (Edinburgh)",lat:55.9445,lng:-3.1892, state:"苏格兰", country:"英国", city:"爱丁堡", comment:"风景美如画，人工智能与计算科学的发源地之一。"},
+            {name:"曼彻斯特大学 (Manchester)",lat:53.4668,lng:-2.2339, state:"大曼彻斯特", country:"英国", city:"曼彻斯特", comment:"红砖大学之首，商科及工程材料学非常强劲。"},
+            {name:"麻省理工学院 (MIT)",lat:42.3601,lng:-71.0942, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"理工科圣地，极重数理基础与创新实践。"},
+            {name:"哈佛大学 (Harvard)",lat:42.3770,lng:-71.1167, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"综合学术实力毋庸置疑，培养了无数行业领袖。"},
+            {name:"斯坦福大学 (Stanford)",lat:37.4275,lng:-122.1697, state:"加州", country:"美国", city:"斯坦福", comment:"地处硅谷核心，创业氛围浓厚，对跨学科综合能力要求高。"},
+            {name:"加州理工学院 (Caltech)",lat:34.1377,lng:-118.1253, state:"加州", country:"美国", city:"帕萨迪纳", comment:"规模小巧但科研密度极高，真正的硬核理工。"},
+            {name:"芝加哥大学 (UChicago)",lat:41.7897,lng:-87.5997, state:"伊利诺伊州", country:"美国", city:"芝加哥", comment:"学术氛围超浓，经济学和法学具有统治级地位。"},
+            {name:"耶鲁大学 (Yale)",lat:41.3163,lng:-72.9223, state:"康涅狄格州", country:"美国", city:"纽黑文", comment:"人文与艺术学科的巅峰，法学院全美首屈一指。"},
+            {name:"哥伦比亚大学 (Columbia)",lat:40.8075,lng:-73.9626, state:"纽约州", country:"美国", city:"纽约", comment:"占据曼哈顿绝佳位置，新闻与金融专业得天独厚。"},
+            {name:"康奈尔大学 (Cornell)",lat:42.4534,lng:-76.4735, state:"纽约州", country:"美国", city:"伊萨卡", comment:"常青藤中最接地气的一所，农学、工科与酒店管理出众。"},
+            {name:"加州大学伯克利 (UCB)",lat:37.8719,lng:-122.2585, state:"加州", country:"美国", city:"伯克利", comment:"公立大学的标杆，计算机与物理学极具统治力。"},
+            {name:"加州大学洛杉矶 (UCLA)",lat:34.0689,lng:-118.4452, state:"加州", country:"美国", city:"洛杉矶", comment:"阳光海滩与学术并存，艺术影视与应用科学并重。"},
+            {name:"墨尔本大学 (UniMelb)",lat:-37.7983,lng:144.9610, state:"维多利亚州", country:"澳大利亚", city:"墨尔本", comment:"澳洲综合排名榜首，研究资源丰富，生活质量高。"},
+            {name:"悉尼大学 (USYD)",lat:-33.8886,lng:151.1873, state:"新南威尔士", country:"澳大利亚", city:"悉尼", comment:"校园极具古典美，商科与医学申请竞争激烈。"},
+            {name:"新加坡国立大学 (NUS)",lat:1.2966,lng:103.7764, state:"", country:"新加坡", city:"新加坡", comment:"亚洲顶尖学府，软硬件设施一流，申请竞争白热化。"},
+            {name:"南洋理工大学 (NTU)",lat:1.3483,lng:103.6831, state:"", country:"新加坡", city:"新加坡", comment:"校园绝美且现代化，工程与材料科学世界前列。"},
+            {name:"香港大学 (HKU)",lat:22.2830,lng:114.1371, state:"香港", country:"中国", city:"香港", comment:"国际化程度高，商科及法学极具声望，留港发展的优质平台。"},
+            {name:"香港中文大学 (CUHK)",lat:22.4195,lng:114.2066, state:"香港", country:"中国", city:"香港", comment:"人文气息浓厚，校园广阔，翻译与计算机科学极强。"},
+            {name:"香港科技大学 (HKUST)",lat:22.3364,lng:114.2655, state:"香港", country:"中国", city:"香港", comment:"建校历史短但发展迅猛，商学院和工学院实力雄厚。"},
+            {name:"多伦多大学 (UofT)",lat:43.6629,lng:-79.3957, state:"安大略省", country:"加拿大", city:"多伦多", comment:"加拿大科研实力最强学府，AI领域的重镇。"},
+            {name:"苏黎世联邦理工 (ETH)",lat:47.3763,lng:8.5477, state:"苏黎世州", country:"瑞士", city:"苏黎世", comment:"欧洲大陆顶尖理工院校，学费低廉但课业挑战极大。"},
+            {name:"东京大学 (UTokyo)",lat:35.7128,lng:139.7596, state:"东京都", country:"日本", city:"东京", comment:"亚洲传统名校，基础理科与工程领域科研底蕴深厚。"},
+            {name:"清华大学 (Tsinghua)",lat:40.0000,lng:116.3265, state:"北京", country:"中国", city:"北京", comment:"国内工科与应用科学的最高殿堂，学风极其严谨。"},
+            {name:"北京大学 (PKU)",lat:39.9915,lng:116.3056, state:"北京", country:"中国", city:"北京", comment:"国内人文社科与理学基础的最高殿堂，思想自由。"}
         ];
 
-        function renderAchievementTree() {
-            const tree = document.getElementById('achievement-tree');
-            tree.innerHTML = '';
-            const allAchievements = [...defaultAchievements];
-            achievements.forEach(a => {
-                if (!allAchievements.find(d => d.title === a.title)) {
-                    allAchievements.push({id: Date.now(), title: '🏅 ' + a.title, desc: a.date, unlocked: true, custom: true});
-                }
-            });
-            allAchievements.forEach(ach => {
-                const node = document.createElement('div');
-                node.className = 'ach-node';
-                node.innerHTML = `
-                    <div class="ach-icon">${ach.unlocked ? '✓' : '🔒'}</div>
-                    <div class="ach-node-content ${ach.unlocked ? 'unlocked' : 'locked'}">
-                        <div class="ach-title">${ach.title}</div>
-                        <div class="ach-date">${ach.desc}</div>
-                    </div>
-                `;
-                tree.appendChild(node);
-            });
-        }
-
-        function checkAchievements() {
-            const ach1 = defaultAchievements[0];
-            if (quizProgress.completed.length >= 10 && !achievements.find(a => a.title === ach1.title)) {
-                achievements.push({title: ach1.title, date: new Date().toLocaleDateString()});
-                localStorage.setItem('xjlu_achievements', JSON.stringify(achievements));
-                alert('🎉 恭喜解锁成就：申研新兵！');
-            }
-            updateStats();
-            renderAchievementTree();
-        }
-
-        // ===== AI聊天系统 =====
-        const CHAT_PROMPT = `你是一位西浦(XJTLU)毕业的热心学长，知识渊博、客观全面、简练直接。你的回答应该：
-1. 客观真实，不夸大
-2. 简练有力，不废话
-3. 格式清晰，使用适当分段
-4. 结合实际经验
-5. 如果不确定，直接说不知道
-请直接回答，不要重复问题背景。`;
-
-        function initChat() {
-            if (API_KEY) {
-                document.getElementById('api-section').style.display = 'none';
-                document.getElementById('api-unlocked-section').style.display = 'block';
-            }
-        }
-
-        async function sendChat() {
-            const input = document.getElementById('chat-input');
-            const msg = input.value.trim();
-            if (!msg) return;
-            if (!API_KEY) {
-                alert('请先输入 API Key');
-                return;
-            }
-            addChatMessage('user', msg);
-            input.value = '';
-            const typing = document.createElement('div');
-            typing.className = 'chat-msg chat-ai';
-            typing.innerHTML = '<div class="msg">思考中...</div>';
-            document.getElementById('chat-box').appendChild(typing);
-            scrollChat();
-            try {
-                const res = await fetch('https://api.deepseek.com/chat/completions', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}`},
-                    body: JSON.stringify({model: 'deepseek-chat', messages: [{role:'system',content:CHAT_PROMPT},{role:'user',content:msg}], temperature: 0.7})
+        let markers = [];
+        function renderMarkers() {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+            const color = getComputedStyle(document.body).getPropertyValue('--marker-fill').trim();
+            universities.forEach(uni => {
+                const marker = L.circleMarker([uni.lat, uni.lng], {
+                    radius: 6, fillColor: color, color: "#FFFFFF", weight: 2, opacity: 1, fillOpacity: 0.95
+                }).addTo(map);
+                marker.bindTooltip(uni.name, { direction: "top", className: "treasure-tooltip", offset: [0, -10] });
+                marker.on('click', () => {
+                    map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5, easeLinearity: 0.25 });
+                    showUniversityModal(uni);
                 });
-                const data = await res.json();
-                typing.remove();
-                addChatMessage('ai', data.choices[0].message.content);
-            } catch (e) {
-                typing.remove();
-                addChatMessage('ai', '抱歉，网络异常');
-            }
+                markers.push(marker);
+            });
         }
 
-        function addChatMessage(type, content) {
-            const box = document.getElementById('chat-box');
-            const div = document.createElement('div');
-            div.className = `chat-msg chat-${type}`;
-            div.innerHTML = `<div class="msg">${content.replace(/\n/g, '<br>')}</div>`;
-            box.appendChild(div);
-            scrollChat();
-        }
-
-        function scrollChat() {
-            const box = document.getElementById('chat-box');
-            box.scrollTop = box.scrollHeight;
-        }
-
-        // ===== 收藏系统 =====
-        let currentUniForFav = null;
-
-        function addFavorite(uni) {
-            if (!favorites.find(f => f.name === uni.name)) {
-                favorites.push(uni);
-                localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
-                updateStats();
-                renderFavorites();
-                checkAchievements();
-            }
-        }
-
-        function removeFavorite(name) {
-            favorites = favorites.filter(f => f.name !== name);
-            localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
-            updateStats();
-            renderFavorites();
+        function showUniversityModal(uni) {
+            const modal = document.getElementById('uni-modal');
+            const content = document.getElementById('uni-modal-content');
+            document.getElementById('uni-modal-title').textContent = "院校档案检索";
+            content.innerHTML = `<div style="text-align:center;padding:40px 0;color:var(--text-muted)"><i data-lucide="loader" style="animation:spin 2s linear infinite;"></i></div>`;
+            modal.style.display = 'flex';
+            refreshIcons();
+            
+            setTimeout(() => {
+                const locStr = uni.state ? `${uni.state}, ${uni.country}` : `${uni.country}`;
+                content.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+                        <div style="width:48px;height:48px;background:var(--bg-hover);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="building-2"></i></div>
+                        <div style="font-size:20px; font-weight:600;">${uni.name}</div>
+                    </div>
+                    <div class="uni-stat" style="display:flex; align-items:center; gap:16px;">
+                        <i data-lucide="map-pin" style="color:var(--text-muted);"></i>
+                        <div><div style="font-size:12px;color:var(--text-muted);">地理位置</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
+                    </div>
+                    <div class="ai-senior-section">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> 档案评估报告</div>
+                        <div style="font-size:14px;line-height:1.6;color:var(--text-muted);">${uni.comment}</div>
+                    </div>
+                    <button class="btn-primary" id="btn-fav-${uni.lat}"><i data-lucide="bookmark"></i> 存入研究清单</button>
+                `;
+                refreshIcons();
+                document.getElementById(`btn-fav-${uni.lat}`).onclick = function() {
+                    if (!favorites.find(f => f.name === uni.name)) {
+                        favorites.push(uni); localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
+                        renderFavorites(); updateUserUI();
+                        this.innerHTML = '<i data-lucide="check"></i> 已存入清单';
+                        this.style.background = 'var(--success-text)';
+                        refreshIcons();
+                    }
+                };
+            }, 600);
         }
 
         function renderFavorites() {
             const list = document.getElementById('favorites-list');
             if (favorites.length === 0) {
-                list.innerHTML = '<div class="empty-state"><div class="empty-icon">📚</div><h4>暂无收藏</h4><p>点击大学卡片收藏</p></div>';
-                return;
+                list.innerHTML = `<div class="empty-state"><i data-lucide="bookmark" style="width:32px;height:32px;margin-bottom:16px;"></i><h4>清单为空</h4><p style="font-size:13px;margin-top:8px;">在地图上点击院校将其加入清单。</p></div>`;
+                refreshIcons(); return;
             }
             list.innerHTML = '';
             favorites.forEach(f => {
                 const div = document.createElement('div');
                 div.className = 'fav-item';
-                div.innerHTML = `<div class="fav-info"><div class="fav-name">${f.name}</div><div class="fav-meta">点击地图可查看</div></div><button class="fav-remove" onclick="removeFavorite('${f.name}')">删除</button>`;
+                div.innerHTML = `
+                    <div><div class="fav-name">${f.name}</div><div class="fav-meta">地理坐标: ${f.lat.toFixed(2)}, ${f.lng.toFixed(2)}</div></div>
+                    <button class="icon-btn" onclick="favorites=favorites.filter(x=>x.name!=='${f.name}');localStorage.setItem('xjlu_favorites',JSON.stringify(favorites));renderFavorites();updateUserUI();"><i data-lucide="trash-2" style="color:var(--danger-text);"></i></button>
+                `;
                 list.appendChild(div);
             });
+            refreshIcons();
         }
 
-        // ===== 地图系统 =====
-        const map = L.map('map', {minZoom: 1.5, maxZoom: 10, zoomControl: false}).setView([20, 0], 2);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution: '© OpenStreetMap', maxZoom: 19}).addTo(map);
-
-       const universities = [
-            {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544, state:"牛津郡", country:"英国", city:"牛津", comment:"牛津的图书馆美到窒息，但凌晨三点的闭馆铃声会让你怀疑人生。"},
-            {name:"剑桥大学 (Cambridge)",lat:52.2053,lng:0.1192, state:"剑桥郡", country:"英国", city:"剑桥", comment:"在康河撑船很浪漫，但小心别把船桨掉进河里，捞起来可费劲了。"},
-            {name:"帝国理工学院 (ICL)",lat:51.4988,lng:-0.1749, state:"大伦敦", country:"英国", city:"伦敦", comment:"ICL的考试难度堪比登天，但毕业率却高得惊人，果然是学霸聚集地。"},
-            {name:"伦敦大学学院 (UCL)",lat:51.5246,lng:-0.1340, state:"大伦敦", country:"英国", city:"伦敦", comment:"UCL地理位置绝佳，但DDL能让你熬掉所有头发！"},
-            {name:"伦敦国王学院 (KCL)",lat:51.5115,lng:-0.1160, state:"大伦敦", country:"英国", city:"伦敦", comment:"KCL的建筑超有历史感，上课就像在拍哈利波特，但楼梯爬起来要人命。"},
-            {name:"伦敦政治经济学院 (LSE)",lat:51.5144,lng:-0.1165, state:"大伦敦", country:"英国", city:"伦敦", comment:"LSE的学生个个都是辩论高手，跟他们聊天要做好被辩到哑口无言的准备。"},
-            {name:"爱丁堡大学 (Edinburgh)",lat:55.9445,lng:-3.1892, state:"苏格兰", country:"英国", city:"爱丁堡", comment:"爱丁堡的风景美如画，但冬天的风真的能把人吹到怀疑人生。"},
-            {name:"曼彻斯特大学 (Manchester)",lat:53.4668,lng:-2.2339, state:"大曼彻斯特", country:"英国", city:"曼彻斯特", comment:"曼大的学生活动超级丰富，但曼城的天气嘛...就当是免费的保湿SPA吧。"},
-            {name:"麻省理工学院 (MIT)",lat:42.3601,lng:-71.0942, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"MIT的学霸密度全球第一，在这里你会发现自己的智商被按在地上摩擦。"},
-            {name:"哈佛大学 (Harvard)",lat:42.3770,lng:-71.1167, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"哈佛的校园像电影场景，但图书馆的座位比春运火车票还难抢。"},
-            {name:"斯坦福大学 (Stanford)",lat:37.4275,lng:-122.1697, state:"加利福尼亚州", country:"美国", city:"斯坦福", comment:"斯坦福的阳光和草坪让人不想学习，但身边的同学会用实力鞭策你。"},
-            {name:"加州理工学院 (Caltech)",lat:34.1377,lng:-118.1253, state:"加利福尼亚州", country:"美国", city:"帕萨迪纳", comment:"Caltech的教授都是诺贝尔奖级别的，但他们的课也难到让你怀疑人生。"},
-            {name:"芝加哥大学 (UChicago)",lat:41.7897,lng:-87.5997, state:"伊利诺伊州", country:"美国", city:"芝加哥", comment:"芝大的学术氛围超浓，但冬天的寒风能把你的灵魂都吹走。"},
-            {name:"耶鲁大学 (Yale)",lat:41.3163,lng:-72.9223, state:"康涅狄格州", country:"美国", city:"纽黑文", comment:"耶鲁的宿舍像古堡，但半夜走路时总感觉有幽灵在跟着你。"},
-            {name:"哥伦比亚大学 (Columbia)",lat:40.8075,lng:-73.9626, state:"纽约州", country:"美国", city:"纽约", comment:"哥大的位置绝佳，但纽约的生活成本会让你变成月光族。"},
-            {name:"康奈尔大学 (Cornell)",lat:42.4534,lng:-76.4735, state:"纽约州", country:"美国", city:"伊萨卡", comment:"康奈尔的校园美如仙境，但冬天的雪能没过你的膝盖。"},
-            {name:"加州大学伯克利 (UCB)",lat:37.8719,lng:-122.2585, state:"加利福尼亚州", country:"美国", city:"伯克利", comment:"伯克利的学生超有活力，但上课要早起挤公交，真的很痛苦。"},
-            {name:"加州大学洛杉矶 (UCLA)",lat:34.0689,lng:-118.4452, state:"加利福尼亚州", country:"美国", city:"洛杉矶", comment:"UCLA的阳光和海滩让人嫉妒，但期末周的图书馆通宵灯火通明。"},
-            {name:"墨尔本大学 (UniMelb)",lat:-37.7983,lng:144.9610, state:"维多利亚州", country:"澳大利亚", city:"墨尔本", comment:"墨大的咖啡文化超棒，但澳洲的学费和生活费会让你流下贫穷的泪水。"},
-            {name:"悉尼大学 (USYD)",lat:-33.8886,lng:151.1873, state:"新南威尔士州", country:"澳大利亚", city:"悉尼", comment:"悉尼大学的校园就在市中心，但澳洲的阳光真的会把你晒成黑炭。"},
-            {name:"新加坡国立大学 (NUS)",lat:1.2966,lng:103.7764, state:"无", country:"新加坡", city:"新加坡", comment:"NUS的设施超级现代化，但新加坡的 humidity 会让你每天都像刚洗完澡。"},
-            {name:"南洋理工大学 (NTU)",lat:1.3483,lng:103.6831, state:"无", country:"新加坡", city:"新加坡", comment:"NTU的校园超美，但从宿舍到教学楼要走半小时，每天都像在健身。"},
-            {name:"香港大学 (HKU)",lat:22.2830,lng:114.1371, state:"香港特别行政区", country:"中国", city:"香港", comment:"港大的地理位置绝佳，但香港的房价和物价会让你怀疑人生。"},
-            {name:"香港中文大学 (CUHK)",lat:22.4195,lng:114.2066, state:"香港特别行政区", country:"中国", city:"香港", comment:"中大的校园像公园，但爬山上课真的很累，每天步数轻松破万。"},
-            {name:"香港科技大学 (HKUST)",lat:22.3364,lng:114.2655, state:"香港特别行政区", country:"中国", city:"香港", comment:"科大的海景超美，但风大到能把你的伞吹翻，发型吹乱。"},
-            {name:"多伦多大学 (UofT)",lat:43.6629,lng:-79.3957, state:"安大略省", country:"加拿大", city:"多伦多", comment:"多大的校区超美，但加拿大的冬天真的能冻死人，出门就像进了冰箱。"},
-            {name:"苏黎世联邦理工 (ETH)",lat:47.3763,lng:8.5477, state:"苏黎世州", country:"瑞士", city:"苏黎世", comment:"ETH的教学质量世界顶级，但瑞士的物价高到让你不敢随便下馆子。"},
-            {name:"东京大学 (UTokyo)",lat:35.7128,lng:139.7596, state:"东京都", country:"日本", city:"东京", comment:"东大的学术氛围超浓，但日本的樱花季人挤人，根本看不到花。"},
-            {name:"清华大学 (Tsinghua)",lat:40.0000,lng:116.3265, state:"北京市", country:"中国", city:"北京", comment:"清华的校园大到迷路，但学霸云集，压力山大。"},
-            {name:"北京大学 (PKU)",lat:39.9915,lng:116.3056, state:"北京市", country:"中国", city:"北京", comment:"北大的历史感超强，但期末周的图书馆座位比春运火车票还难抢。"}
-        ];
-
-        universities.forEach(uni => {
-            // 创建宝藏节点光晕
-            const glow = document.createElement('div');
-            glow.className = 'treasure-glow';
-            document.getElementById('map-container').appendChild(glow);
-            
-            // 更新光晕位置
-            function updateGlowPosition() {
-                const point = map.latLngToContainerPoint([uni.lat, uni.lng]);
-                glow.style.left = `${point.x - 50}px`;
-                glow.style.top = `${point.y - 50}px`;
-            }
-            
-            // 初始更新位置
-            updateGlowPosition();
-            
-            // 地图移动或缩放时更新位置
-            map.on('move', updateGlowPosition);
-            map.on('zoom', updateGlowPosition);
-            
-            // 创建宝藏节点标记
-            const marker = L.circleMarker([uni.lat, uni.lng], {
-                radius: 8, 
-                fillColor: "#00d4aa", 
-                color: "#ffffff", 
-                weight: 2, 
-                opacity: 1, 
-                fillOpacity: 0.9
-            }).addTo(map);
-            
-            // 为标记添加脉冲动画
-            marker.on('mouseover', function() {
-                this.setRadius(12);
-                this.setStyle({fillColor: "#00ffd4", weight: 3});
-            });
-            
-            marker.on('mouseout', function() {
-                this.setRadius(8);
-                this.setStyle({fillColor: "#00d4aa", weight: 2});
-            });
-            
-            marker.bindTooltip(uni.name, {
-                permanent: false, 
-                direction: "top",
-                className: "treasure-tooltip",
-                offset: [0, -15]
-            });
-            
-            marker.on('click', () => {
-                // 增强的飞行特效
-                map.flyTo([uni.lat, uni.lng], 8, {
-                    animate: true, 
-                    duration: 2.0,
-                    easeLinearity: 0.2,
-                    noMoveStart: true
-                });
-                
-                // 添加点击特效
-                const clickEffect = document.createElement('div');
-                clickEffect.style.position = 'absolute';
-                clickEffect.style.width = '10px';
-                clickEffect.style.height = '10px';
-                clickEffect.style.backgroundColor = '#00d4aa';
-                clickEffect.style.borderRadius = '50%';
-                clickEffect.style.transform = 'scale(0)';
-                clickEffect.style.animation = 'clickPulse 1s ease-out forwards';
-                clickEffect.style.pointerEvents = 'none';
-                clickEffect.style.zIndex = '300';
-                
-                const point = map.latLngToContainerPoint([uni.lat, uni.lng]);
-                clickEffect.style.left = `${point.x - 5}px`;
-                clickEffect.style.top = `${point.y - 5}px`;
-                document.getElementById('map-container').appendChild(clickEffect);
-                
-                setTimeout(() => clickEffect.remove(), 1000);
-                
-                // 显示大学详情
-                showUniversityModal(uni);
-            });
-        });
-        
-        // 添加点击脉冲动画
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes clickPulse {
-                0% {
-                    transform: scale(0);
-                    opacity: 1;
-                }
-                100% {
-                    transform: scale(3);
-                    opacity: 0;
-                }
-            }
-            .treasure-tooltip {
-                background: rgba(10, 10, 20, 0.95) !important;
-                border: 1px solid #00d4aa !important;
-                border-radius: 8px !important;
-                padding: 8px 12px !important;
-                color: #ffffff !important;
-                font-size: 12px !important;
-                box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3) !important;
-            }
-            .treasure-tooltip::after {
-                border-top-color: rgba(10, 10, 20, 0.95) !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        function showUniversityModal(uni) {
-            document.getElementById('uni-modal-title').textContent = uni.name;
-            const content = document.getElementById('uni-modal-content');
-            content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)"><div class="loading-spinner"></div><br>🧙‍♂️ 学长正在思考中...</div>';
-            document.getElementById('uni-modal').style.display = 'block';
-            
-            // 模拟AI思考延迟
-            setTimeout(() => {
-                // 显示大学信息、AI学长评论和收藏按钮
-                content.innerHTML = `
-                    <div class="uni-header">
-                        <div class="uni-logo">🎓</div>
-                        <div class="uni-title">${uni.name}</div>
-                    </div>
-                    
-                   <div class="uni-stat">
-                            <div class="uni-stat-icon">🌍</div>
-                            <div class="uni-stat-info">
-                                <div class="uni-stat-label">位置</div>
-                                <div class="uni-stat-value">${uni.state === '无' ? '' : uni.state + ', '}${uni.country}, ${uni.city}</div>
-                            </div>
-                        </div>
-                        <div class="uni-stat">
-                            <div class="uni-stat-icon">⭐</div>
-                            <div class="uni-stat-info">
-                                <div class="uni-stat-label">QS排名</div>
-                                <div class="uni-stat-value">Top 50</div>
-                            </div>
-                        </div>
-                        <div class="uni-stat">
-                            <div class="uni-stat-icon">📚</div>
-                            <div class="uni-stat-info">
-                                <div class="uni-stat-label">GPA要求</div>
-                                <div class="uni-stat-value">3.0+</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="ai-senior-section">
-                        <div class="ai-senior-header">
-                            <div class="ai-senior-avatar">👨‍🎓</div>
-                            <div class="ai-senior-title">西浦学长有话说</div>
-                        </div>
-                        <div class="ai-senior-comment">
-                            ${uni.comment}
-                        </div>
-                    </div>
-                    
-                    <div class="uni-actions">
-                        <button class="fav-btn" onclick="addFavorite({name:'${uni.name}',lat:${uni.lat},lng:${uni.lng}});this.textContent='已收藏 ✓';this.disabled=true;">
-                            <span class="fav-icon">❤️</span>
-                            <span class="fav-text">收藏</span>
-                        </button>
-                    </div>
-                `;
-            }, 800);
-        }
-
-        async function fetchUniversityInfo(uni, content) {
-            // 显示查询失败
-            content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--accent)">查询失败，请检查网络或 API Key</div>';
-        }
-
-        // ===== 答题闯关系统 =====
+        // ==================== 4. 完整的 30 道测试题系统 ====================
         const quizQuestions = [
-            {q:"申请研究生时，通常需要达到的最低雅思总分是？",o:["6.0","6.5","7.0","7.5"],a:1},
+            {q:"申请海外研究生时，通常需要达到的最低雅思总分是？",o:["6.0","6.5","7.0","7.5"],a:1},
             {q:"GPA（绩点）的全称是什么？",o:["Grade Point Average","Graduate Point Average","General Point Average","Global Point Average"],a:0},
             {q:"申请研究生通常需要几封推荐信？",o:["1封","2-3封","4封","5封"],a:1},
             {q:"GRE考试主要用于申请哪个国家的研究生？",o:["英国","加拿大","美国","澳大利亚"],a:2},
             {q:"学术CV（简历）中不应该包含什么？",o:["教育背景","研究经历","个人兴趣爱好","发表论文"],a:2},
-            {q:"个人陈述（PS）的理想长度是多少？",o:["100-200字","300-500字","800-1000字","1500字以上"],a:1},
+            {q:"个人陈述（PS）的理想长度是多少字？",o:["100-200字","300-500字","800-1000字","1500字以上"],a:1},
             {q:"申请研究生时，通常需要提供的成绩单是？",o:["高中成绩单","本科成绩单","研究生成绩单","无需成绩单"],a:1},
             {q:"GMAT考试主要用于申请什么专业的研究生？",o:["理工科","文科","商科","艺术"],a:2},
             {q:"申请截止日期（Deadline）的含义是？",o:["开始申请的日期","提交材料的最后日期","录取通知的日期","入学的日期"],a:1},
-            {q:"conditional offer是什么意思？",o:["无条件录取","有条件录取","拒绝录取","等待审核"],a:1},
-            {q:"申请研究生时，语言成绩的有效期通常是？",o:["6个月","1年","2年","永久有效"],a:2},
-            {q:"学术推荐信应该由谁来写？",o:["同学","家人","任课老师或导师","自己"],a:2},
-            {q:"申请海外研究生时，通常需要的资金证明是为了证明什么？",o:["有能力支付学费和生活费","有投资能力","有工作经验","有社会关系"],a:0},
-            {q:"CV和Resume的主要区别是什么？",o:["没有区别","CV更详细，Resume更简洁","CV用于学术，Resume用于工作","CV更长，Resume更短"],a:2},
-            {q:"申请研究生时，除了成绩外，最看重的是什么？",o:["家庭背景","课外活动","科研经历和实习经验","社会关系"],a:2},
+            {q:"Conditional Offer 的中文意思是什么？",o:["无条件录取","有条件录取","拒绝录取","等待审核"],a:1},
+            {q:"申请研究生时，雅思成绩的有效期通常是？",o:["6个月","1年","2年","永久有效"],a:2},
+            {q:"学术推荐信最好应该由谁来写？",o:["同学","家人","任课老师或导师","自己"],a:2},
+            {q:"申请海外研究生时，提供资金证明的目的是什么？",o:["证明有能力支付学杂费","证明有投资能力","证明有工作经验","证明有社会关系"],a:0},
+            {q:"学术界 CV 和普通求职 Resume 的主要区别是？",o:["没有区别","CV更详细偏学术，Resume更简洁偏应用","CV更长，Resume更短","随意使用"],a:1},
+            {q:"除均分外，理工科研究生申请最看重什么？",o:["家庭背景","课外活动","科研经历和论文发表","社会关系"],a:2},
             {q:"雅思考试的四个部分不包括哪个？",o:["听力","阅读","写作","翻译"],a:3},
-            {q:"申请研究生时，通常需要提前多久开始准备？",o:["1-3个月","4-6个月","1年左右","2年以上"],a:2},
-            {q:"什么是personal statement？",o:["个人简历","个人陈述，介绍申请动机和背景","推荐信","成绩单"],a:1},
-            {q:"申请研究生时，GRE和GMAT可以替代吗？",o:["可以，完全替代","部分学校可以，但最好按要求准备","完全不可以","取决于专业"],a:1},
-            {q:"什么是rolling admission？",o:["滚动录取，先到先得","固定日期录取","分批录取","随机录取"],a:0},
-            {q:"申请研究生时，作品集（Portfolio）主要用于哪个专业？",o:["商科","理工科","艺术设计类","文科"],a:2},
-            {q:"什么是waitlist？",o:["录取名单","拒绝名单","等待名单，可能后续录取","面试名单"],a:2},
-            {q:"申请研究生时，推荐信应该如何提交？",o:["申请人自己提交","推荐人直接提交","学校提交","不需要提交"],a:1},
-            {q:"什么是transcript？",o:["个人陈述","成绩单","简历","推荐信"],a:1},
-            {q:"申请研究生时，语言成绩可以后补吗？",o:["完全不可以","部分学校允许conditional offer后补","所有学校都允许","取决于专业"],a:1},
-            {q:"什么是reference letter？",o:["推荐信","参考信","介绍信","证明信"],a:0},
-            {q:"申请研究生时，通常需要的GPA最低要求是？",o:["2.0","2.5","3.0","3.5"],a:2},
-            {q:"什么是statement of purpose？",o:["目的陈述，说明研究兴趣和目标","个人陈述","推荐信","简历"],a:0},
-            {q:"申请研究生时，实习经验对哪个专业最有帮助？",o:["纯理论学科","应用学科和商科","基础学科","所有专业"],a:1},
-            {q:"什么是unconditional offer？",o:["有条件录取","无条件录取","等待录取","拒绝录取"],a:1}
+            {q:"申请研究生时，通常需要提前多久开始准备语言考试？",o:["1-3个月","4-6个月","至少提前1年","拿到offer后再准备"],a:2},
+            {q:"什么是 Personal Statement (PS)？",o:["个人简历","个人陈述，介绍申请动机和背景","推荐信","成绩单"],a:1},
+            {q:"申请商科研究生时，GRE和GMAT通常可以互相替代吗？",o:["完全可以","部分学校可以，但最好按要求准备","完全不可以","取决于是否跨专业"],a:1},
+            {q:"什么是 Rolling Admission？",o:["滚动录取，先到先得","固定日期统一录取","分批录取","随机抽取"],a:0},
+            {q:"申请研究生时，作品集（Portfolio）主要用于哪个专业大类？",o:["商科","理工科","艺术设计与建筑类","纯文科"],a:2},
+            {q:"被放入 Waitlist 意味着什么？",o:["已经被正式录取","被彻底拒绝","在等待名单中，仍有转正可能","要求重新面试"],a:2},
+            {q:"目前大多数海外院校推荐信是如何提交的？",o:["申请人直接邮寄纸质版","网申系统发送链接，推荐人自行上传","随成绩单一起打包提交","完全不需要提交"],a:1},
+            {q:"Transcript 在留学申请中指的是？",o:["个人陈述","官方成绩单","简历","推荐信"],a:1},
+            {q:"英国的大部分研究生项目，语言成绩可以后补吗？",o:["完全不可以","多数允许拿 conditional offer 后补","所有学校和专业都允许","只有商科允许"],a:1},
+            {q:"Reference Letter 在留学申请中指的是？",o:["推荐信","参考信","介绍信","证明信"],a:0},
+            {q:"海外院校通常要求提供的本科成绩单需要什么语言版本？",o:["仅中文即可","必须经过公证的英文版","中英文对照的官方盖章版","以上皆可"],a:2},
+            {q:"Statement of Purpose (SOP) 更侧重于说明什么？",o:["详细的研究兴趣和学术目标","个人的家庭背景","推荐人的评价","课外兴趣爱好"],a:0},
+            {q:"跨专业申请时，什么材料能够最大程度弥补专业背景的不足？",o:["更高的语言成绩","相关的实习经历和先修课程","更精美的排版","同学的推荐"],a:1},
+            {q:"Unconditional Offer 的含义是？",o:["有条件录取","无条件录取（正式录取）","等待录取","拒绝录取"],a:1}
         ];
 
-        let currentQuizLevel = 1;
         let currentQuestionIndex = 0;
         let selectedOption = null;
 
-        function renderQuiz() {
-            document.getElementById('quiz-start').style.display = 'none';
-            document.getElementById('quiz-game').style.display = 'block';
-            document.getElementById('quiz-result').style.display = 'none';
-            currentQuestionIndex = 0;
-            selectedOption = null;
-            loadQuizQuestion();
-        }
-
         function loadQuizQuestion() {
-            const idx = (currentQuizLevel - 1) * 3 + currentQuestionIndex;
-            if (idx >= quizQuestions.length) return;
-            const q = quizQuestions[idx];
-            document.getElementById('quiz-level-num').textContent = currentQuizLevel;
-            document.getElementById('quiz-progress-fill').style.width = `${((currentQuestionIndex + 1) / 3) * 100}%`;
-            document.getElementById('quiz-question').textContent = `第 ${currentQuestionIndex + 1} 题：${q.q}`;
+            if (currentQuestionIndex >= quizQuestions.length) return;
+            const q = quizQuestions[currentQuestionIndex];
+            document.getElementById('quiz-level-num').textContent = currentQuestionIndex + 1;
+            document.getElementById('quiz-progress-fill').style.width = `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
+            document.getElementById('quiz-question').textContent = `${currentQuestionIndex + 1}. ${q.q}`;
+            
             const container = document.getElementById('quiz-options');
             container.innerHTML = '';
             q.o.forEach((opt, i) => {
                 const div = document.createElement('div');
-                div.className = 'quiz-option';
-                div.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
+                div.className = 'quiz-option'; div.textContent = opt;
                 div.onclick = () => {
                     document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
-                    div.classList.add('selected');
-                    selectedOption = i;
+                    div.classList.add('selected'); selectedOption = i;
                 };
                 container.appendChild(div);
             });
         }
 
+        document.getElementById('start-quiz').onclick = () => {
+            document.getElementById('quiz-start').style.display = 'none';
+            document.getElementById('quiz-game').style.display = 'block';
+            currentQuestionIndex = 0; loadQuizQuestion();
+        };
+
         document.getElementById('quiz-submit').onclick = () => {
-            if (selectedOption === null) {
-                alert('请选择答案');
-                return;
-            }
-            const idx = (currentQuizLevel - 1) * 3 + currentQuestionIndex;
-            const q = quizQuestions[idx];
+            if (selectedOption === null) return;
+            const q = quizQuestions[currentQuestionIndex];
             const options = document.querySelectorAll('.quiz-option');
-            if (selectedOption === q.a) {
-                options[selectedOption].classList.add('correct');
-            } else {
-                options[selectedOption].classList.add('incorrect');
-                options[q.a].classList.add('correct');
-            }
+            
+            if (selectedOption === q.a) { options[selectedOption].classList.add('correct'); } 
+            else { options[selectedOption].classList.add('incorrect'); options[q.a].classList.add('correct'); }
+            
             setTimeout(() => {
-                currentQuestionIndex++;
-                selectedOption = null;
-                if (currentQuestionIndex >= 3) {
-                    showQuizResult();
-                } else {
-                    loadQuizQuestion();
-                }
+                currentQuestionIndex++; selectedOption = null;
+                if (currentQuestionIndex >= quizQuestions.length) {
+                    document.getElementById('quiz-game').style.display = 'none';
+                    document.getElementById('quiz-result').style.display = 'block';
+                    document.getElementById('quiz-result-icon-container').innerHTML = '<i data-lucide="check-circle" style="width:56px;height:56px;color:var(--success-text);"></i>';
+                    document.getElementById('quiz-result-title').textContent = `测试全部完成`;
+                    document.getElementById('quiz-result-msg').textContent = '您已完成全部 30 道升学准备测试题，基础扎实！';
+                    document.getElementById('quiz-next').style.display = 'none';
+                    refreshIcons();
+                } else { loadQuizQuestion(); }
             }, 800);
         };
 
-        function showQuizResult() {
-            document.getElementById('quiz-game').style.display = 'none';
-            document.getElementById('quiz-result').style.display = 'block';
-            const idx = (currentQuizLevel - 1) * 3;
-            const correct = quizQuestions[idx].a;
-            const isCorrect = selectedOption === correct || document.querySelector('.quiz-option.correct');
-            if (currentQuizLevel >= 10) {
-                document.getElementById('quiz-result-icon').textContent = '🎉';
-                document.getElementById('quiz-result-title').textContent = '全部通关！';
-                document.getElementById('quiz-result-msg').textContent = '恭喜获得"申研新兵"成就！';
-                document.getElementById('quiz-next').style.display = 'none';
-                document.getElementById('quiz-retry').style.display = 'none';
-                if (!quizProgress.completed.includes(10)) {
-                    quizProgress.completed.push(10);
-                    localStorage.setItem('xjlu_quiz_progress', JSON.stringify(quizProgress));
-                    checkAchievements();
-                }
-            } else {
-                document.getElementById('quiz-result-icon').textContent = '✓';
-                document.getElementById('quiz-result-title').textContent = `第 ${currentQuizLevel} 关通过！`;
-                document.getElementById('quiz-result-msg').textContent = '恭喜进入下一关！';
-                document.getElementById('quiz-next').style.display = 'inline-block';
-                document.getElementById('quiz-retry').style.display = 'none';
-                if (!quizProgress.completed.includes(currentQuizLevel)) {
-                    quizProgress.completed.push(currentQuizLevel);
-                    localStorage.setItem('xjlu_quiz_progress', JSON.stringify(quizProgress));
-                }
+        document.getElementById('quiz-retry').onclick = () => {
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-game').style.display = 'block';
+            currentQuestionIndex = 0; loadQuizQuestion();
+        };
+
+        // ==================== 5. AI Chat & 其他模块 ====================
+        const CHAT_PROMPT = `你是一位西浦(XJTLU)毕业的高级顾问，客观、极其专业、简练。回答需直接切中要害，分段清晰。`;
+        function initAPI() {
+            if (API_KEY) {
+                document.getElementById('api-section').style.display = 'none';
+                document.getElementById('api-unlocked-section').style.display = 'flex';
             }
         }
-
-        document.getElementById('start-quiz').onclick = renderQuiz;
-        document.getElementById('quiz-next').onclick = () => {
-            currentQuizLevel++;
-            renderQuiz();
+        
+        document.getElementById('submit-api').onclick = () => {
+            const val = document.getElementById('api-key-input').value.trim();
+            if(val) { API_KEY = val; localStorage.setItem('xjlu_api_key', val); initAPI(); }
         };
-        document.getElementById('quiz-retry').onclick = renderQuiz;
-
-        // ===== 情感疏导系统 =====
-        const emotionResponses = {
-            great: {title: '太棒了！', text: '保持这份热情，你离梦想越来越近了！相信自己，继续加油！'},
-            okay: {title: '正常状态', text: '不急不躁，稳扎稳打。按部就班地准备，你想要的都会有。'},
-            stressed: {title: '释放压力', text: '深呼吸，休息一下。申请只是人生的一站，不是全部。站起来活动活动，听首喜欢的歌！'},
-            anxious: {title: '缓解焦虑', text: '焦虑是因为你想变得更好。把大目标拆成小任务，一步步来，你会发现自己已经在进步了。'}
+        document.getElementById('reset-api').onclick = () => {
+            API_KEY = null; localStorage.removeItem('xjlu_api_key');
+            document.getElementById('api-section').style.display = 'block';
+            document.getElementById('api-unlocked-section').style.display = 'none';
         };
 
-        const quotes = [
-            '"每一次努力都在为梦想铺路，坚持就是胜利！"',
-            '"留学的路上虽然艰难，但你的付出终将值得！"',
-            '"相信自己，你比想象中更强大！"',
-            '"小小的进步也是进步，为自己点赞！"',
-            '"申请季只是人生的一个阶段，保持平常心！"',
-            '"你的努力会被看见的，继续加油！"',
-            '"成功不是偶然，是每一天的积累！"'
-        ];
+        async function sendChat() {
+            const input = document.getElementById('chat-input'); const msg = input.value.trim();
+            if (!msg) return;
+            if (!API_KEY) return alert('系统提示：请先在账户面板配置 API 访问。');
+            
+            const box = document.getElementById('chat-box');
+            box.innerHTML += `<div class="chat-msg chat-user"><div class="msg">${msg}</div></div>`;
+            input.value = ''; box.scrollTop = box.scrollHeight;
+            
+            const typingId = 'typing-' + Date.now();
+            box.innerHTML += `<div class="chat-msg chat-ai" id="${typingId}"><div class="msg"><i data-lucide="loader" style="animation:spin 2s linear infinite;width:16px;"></i></div></div>`;
+            refreshIcons(); box.scrollTop = box.scrollHeight;
+            
+            try {
+                const res = await fetch('https://api.deepseek.com/chat/completions', {
+                    method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}`},
+                    body: JSON.stringify({model: 'deepseek-chat', messages: [{role:'system',content:CHAT_PROMPT},{role:'user',content:msg}], temperature: 0.3})
+                });
+                const data = await res.json();
+                document.getElementById(typingId).remove();
+                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg">${data.choices[0].message.content.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (e) {
+                document.getElementById(typingId).remove();
+                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg" style="color:var(--danger-text)">通信失败，请检查网络连接或 API 配置。</div></div>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+        document.getElementById('chat-send').onclick = sendChat;
+        document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChat(); };
 
+        // 情感系统
+        const emotionData = {
+            great: {title: '状态评估：极佳', text: '已为您建立表现日志。保持当前节奏与执行力。'},
+            okay: {title: '状态评估：平稳', text: '平稳期是长期任务的常态。请继续按时间表推进各项准备。'},
+            stressed: {title: '状态评估：高压', text: '建议启动降压流程：暂停当前工作，离开屏幕，执行15分钟的物理放松或环境切换。'},
+            anxious: {title: '状态评估：焦虑', text: '焦虑源于控制感缺失。建议将宏大目标拆解为未来24小时内可执行的最小任务单元，逐一击破。'}
+        };
         document.querySelectorAll('.emotion-mood').forEach(mood => {
             mood.onclick = () => {
                 document.querySelectorAll('.emotion-mood').forEach(m => m.classList.remove('active'));
                 mood.classList.add('active');
-                const data = emotionResponses[mood.dataset.mood];
-                document.getElementById('emotion-title').textContent = data.title;
-                document.getElementById('emotion-text').textContent = data.text;
+                const d = emotionData[mood.dataset.mood];
+                document.getElementById('emotion-title').textContent = d.title;
+                document.getElementById('emotion-text').textContent = d.text;
                 document.getElementById('emotion-response').style.display = 'block';
             };
         });
 
-        document.getElementById('new-quote').onclick = () => {
-            document.getElementById('quote-text').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-        };
-
-        // ===== 事件绑定 =====
-        document.getElementById('submit-api').onclick = () => {
-            const key = document.getElementById('api-key-input').value.trim();
-            if (key) {
-                API_KEY = key;
-                localStorage.setItem('xjlu_api_key', key);
-                document.getElementById('api-section').style.display = 'none';
-                document.getElementById('api-unlocked-section').style.display = 'block';
-            }
-        };
-
-        document.getElementById('chat-send').onclick = sendChat;
-        document.getElementById('chat-input').onkeypress = e => { if (e.key === 'Enter') sendChat(); };
-
-        // 重置 API Key
-        document.getElementById('reset-api').onclick = () => {
-            API_KEY = null;
-            localStorage.removeItem('xjlu_api_key');
-            document.getElementById('api-section').style.display = 'block';
-            document.getElementById('api-unlocked-section').style.display = 'none';
-            document.getElementById('api-key-input').value = '';
-            document.getElementById('api-status').textContent = '';
-        };
-
-        document.getElementById('show-login').onclick = () => document.getElementById('login-modal').style.display = 'block';
-        document.getElementById('show-register').onclick = () => {
-            document.getElementById('login-form-container').style.display = 'none';
-            document.getElementById('register-form-container').style.display = 'block';
-        };
-        document.getElementById('back-to-login').onclick = () => {
-            document.getElementById('login-form-container').style.display = 'block';
-            document.getElementById('register-form-container').style.display = 'none';
-        };
-
-        document.getElementById('login-submit').onclick = () => {
-            const account = document.getElementById('login-account').value;
-            const password = document.getElementById('login-password').value;
-            if (loginUser(account, password)) {
-                document.getElementById('login-modal').style.display = 'none';
-                alert('登录成功！');
-            } else {
-                alert('账号或密码错误');
-            }
-        };
-
-        document.getElementById('register-submit').onclick = () => {
-            const username = document.getElementById('reg-username').value;
-            const studentId = document.getElementById('reg-student-id').value;
-            const account = document.getElementById('reg-account').value;
-            const password = document.getElementById('reg-password').value;
-            if (registerUser(username, studentId, account, password)) {
-                alert('注册成功！');
-                document.getElementById('login-form-container').style.display = 'block';
-                document.getElementById('register-form-container').style.display = 'none';
-            }
-        };
-
-        document.getElementById('achievement-btn').onclick = () => {
-            renderAchievementTree();
-            document.getElementById('achievement-modal').style.display = 'block';
-        };
-
-        document.getElementById('add-achievement').onclick = () => {
-            const title = document.getElementById('new-achievement').value.trim();
-            if (title) {
-                achievements.push({title, date: new Date().toLocaleDateString()});
-                localStorage.setItem('xjlu_achievements', JSON.stringify(achievements));
-                document.getElementById('new-achievement').value = '';
-                renderAchievementTree();
-                updateStats();
-                checkAchievements();
-            }
-        };
-
+        // 导航与模态框全局逻辑
         document.querySelectorAll('.panel-tab').forEach(tab => {
             tab.onclick = () => {
-                document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
+                document.querySelectorAll('.panel-tab, .tab-content').forEach(el => el.classList.remove('active'));
+                tab.classList.add('active'); document.getElementById(tab.dataset.tab).classList.add('active');
             };
         });
-
         document.querySelectorAll('.nav-link').forEach(link => {
             link.onclick = () => {
                 document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
                 const panel = link.dataset.panel;
-                if (panel === 'quiz') {
-                    document.getElementById('quiz-modal').style.display = 'block';
-                } else if (panel === 'emotion') {
-                    document.getElementById('emotion-modal').style.display = 'block';
-                } else if (panel === 'explore') {
-                    document.getElementById('left-sidebar').classList.add('open');
-                }
+                if (panel === 'quiz') { document.getElementById('quiz-modal').style.display = 'flex'; }
+                else if (panel === 'emotion') { document.getElementById('emotion-modal').style.display = 'flex'; }
+                else if (panel === 'home' && window.innerWidth <= 1024) { document.getElementById('left-sidebar').classList.add('open'); }
             };
         });
+        document.getElementById('toggle-sidebar').onclick = () => document.getElementById('left-sidebar').classList.toggle('open');
+        document.querySelectorAll('.modal-close').forEach(btn => btn.onclick = () => btn.closest('.modal').style.display = 'none');
+        window.onclick = e => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
+        
+        document.getElementById('show-register').onclick = () => { document.getElementById('login-form-container').style.display = 'none'; document.getElementById('register-form-container').style.display = 'block'; };
+        document.getElementById('back-to-login').onclick = () => { document.getElementById('login-form-container').style.display = 'block'; document.getElementById('register-form-container').style.display = 'none'; };
 
-        document.getElementById('toggle-sidebar').onclick = () => {
-            document.getElementById('left-sidebar').classList.toggle('open');
-        };
-
-        document.querySelectorAll('.modal .modal-close').forEach(btn => {
-            btn.onclick = () => btn.closest('.modal').style.display = 'none';
-        });
-
-        window.onclick = e => {
-            if (e.target.classList.contains('modal')) e.target.style.display = 'none';
-        };
-
-        // ===== 初始化 =====
+        // ==================== 初始化 ====================
+        setTheme(currentTheme);
         updateUserUI();
         renderFavorites();
-        initChat();
-        updateStats();
+        initAPI();
+        
+        // Spin 动画 CSS
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = "@keyframes spin { 100% { transform: rotate(360deg); } }";
+        document.head.appendChild(styleSheet);
     </script>
 </body>
 </html>
