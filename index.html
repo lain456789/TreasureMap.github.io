@@ -686,37 +686,37 @@
         const map = L.map('map', {minZoom: 1.5, maxZoom: 10, zoomControl: false}).setView([20, 0], 2);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {attribution: '© OpenStreetMap', maxZoom: 19}).addTo(map);
 
-        const universities = [
-            {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544,comment:"牛津的图书馆美到窒息，但凌晨三点的闭馆铃声会让你怀疑人生。"},
-            {name:"剑桥大学 (Cambridge)",lat:52.2053,lng:0.1192,comment:"在康河撑船很浪漫，但小心别把船桨掉进河里，捞起来可费劲了。"},
-            {name:"帝国理工学院 (ICL)",lat:51.4988,lng:-0.1749,comment:"ICL的考试难度堪比登天，但毕业率却高得惊人，果然是学霸聚集地。"},
-            {name:"伦敦大学学院 (UCL)",lat:51.5246,lng:-0.1340,comment:"UCL地理位置绝佳，但DDL能让你熬掉所有头发！"},
-            {name:"伦敦国王学院 (KCL)",lat:51.5115,lng:-0.1160,comment:"KCL的建筑超有历史感，上课就像在拍哈利波特，但楼梯爬起来要人命。"},
-            {name:"伦敦政治经济学院 (LSE)",lat:51.5144,lng:-0.1165,comment:"LSE的学生个个都是辩论高手，跟他们聊天要做好被辩到哑口无言的准备。"},
-            {name:"爱丁堡大学 (Edinburgh)",lat:55.9445,lng:-3.1892,comment:"爱丁堡的风景美如画，但冬天的风真的能把人吹到怀疑人生。"},
-            {name:"曼彻斯特大学 (Manchester)",lat:53.4668,lng:-2.2339,comment:"曼大的学生活动超级丰富，但曼城的天气嘛...就当是免费的保湿SPA吧。"},
-            {name:"麻省理工学院 (MIT)",lat:42.3601,lng:-71.0942,comment:"MIT的学霸密度全球第一，在这里你会发现自己的智商被按在地上摩擦。"},
-            {name:"哈佛大学 (Harvard)",lat:42.3770,lng:-71.1167,comment:"哈佛的校园像电影场景，但图书馆的座位比春运火车票还难抢。"},
-            {name:"斯坦福大学 (Stanford)",lat:37.4275,lng:-122.1697,comment:"斯坦福的阳光和草坪让人不想学习，但身边的同学会用实力鞭策你。"},
-            {name:"加州理工学院 (Caltech)",lat:34.1377,lng:-118.1253,comment:"Caltech的教授都是诺贝尔奖级别的，但他们的课也难到让你怀疑人生。"},
-            {name:"芝加哥大学 (UChicago)",lat:41.7897,lng:-87.5997,comment:"芝大的学术氛围超浓，但冬天的寒风能把你的灵魂都吹走。"},
-            {name:"耶鲁大学 (Yale)",lat:41.3163,lng:-72.9223,comment:"耶鲁的宿舍像古堡，但半夜走路时总感觉有幽灵在跟着你。"},
-            {name:"哥伦比亚大学 (Columbia)",lat:40.8075,lng:-73.9626,comment:"哥大的位置绝佳，但纽约的生活成本会让你变成月光族。"},
-            {name:"康奈尔大学 (Cornell)",lat:42.4534,lng:-76.4735,comment:"康奈尔的校园美如仙境，但冬天的雪能没过你的膝盖。"},
-            {name:"加州大学伯克利 (UCB)",lat:37.8719,lng:-122.2585,comment:"伯克利的学生超有活力，但上课要早起挤公交，真的很痛苦。"},
-            {name:"加州大学洛杉矶 (UCLA)",lat:34.0689,lng:-118.4452,comment:"UCLA的阳光和海滩让人嫉妒，但期末周的图书馆通宵灯火通明。"},
-            {name:"墨尔本大学 (UniMelb)",lat:-37.7983,lng:144.9610,comment:"墨大的咖啡文化超棒，但澳洲的学费和生活费会让你流下贫穷的泪水。"},
-            {name:"悉尼大学 (USYD)",lat:-33.8886,lng:151.1873,comment:"悉尼大学的校园就在市中心，但澳洲的阳光真的会把你晒成黑炭。"},
-            {name:"新加坡国立大学 (NUS)",lat:1.2966,lng:103.7764,comment:"NUS的设施超级现代化，但新加坡的 humidity 会让你每天都像刚洗完澡。"},
-            {name:"南洋理工大学 (NTU)",lat:1.3483,lng:103.6831,comment:"NTU的校园超美，但从宿舍到教学楼要走半小时，每天都像在健身。"},
-            {name:"香港大学 (HKU)",lat:22.2830,lng:114.1371,comment:"港大的地理位置绝佳，但香港的房价和物价会让你怀疑人生。"},
-            {name:"香港中文大学 (CUHK)",lat:22.4195,lng:114.2066,comment:"中大的校园像公园，但爬山上课真的很累，每天步数轻松破万。"},
-            {name:"香港科技大学 (HKUST)",lat:22.3364,lng:114.2655,comment:"科大的海景超美，但风大到能把你的伞吹翻，发型吹乱。"},
-            {name:"多伦多大学 (UofT)",lat:43.6629,lng:-79.3957,comment:"多大的校区超美，但加拿大的冬天真的能冻死人，出门就像进了冰箱。"},
-            {name:"苏黎世联邦理工 (ETH)",lat:47.3763,lng:8.5477,comment:"ETH的教学质量世界顶级，但瑞士的物价高到让你不敢随便下馆子。"},
-            {name:"东京大学 (UTokyo)",lat:35.7128,lng:139.7596,comment:"东大的学术氛围超浓，但日本的樱花季人挤人，根本看不到花。"},
-            {name:"清华大学 (Tsinghua)",lat:40.0000,lng:116.3265,comment:"清华的校园大到迷路，但学霸云集，压力山大。"},
-            {name:"北京大学 (PKU)",lat:39.9915,lng:116.3056,comment:"北大的历史感超强，但期末周的图书馆座位比春运火车票还难抢。"}
+       const universities = [
+            {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544, state:"牛津郡", country:"英国", city:"牛津", comment:"牛津的图书馆美到窒息，但凌晨三点的闭馆铃声会让你怀疑人生。"},
+            {name:"剑桥大学 (Cambridge)",lat:52.2053,lng:0.1192, state:"剑桥郡", country:"英国", city:"剑桥", comment:"在康河撑船很浪漫，但小心别把船桨掉进河里，捞起来可费劲了。"},
+            {name:"帝国理工学院 (ICL)",lat:51.4988,lng:-0.1749, state:"大伦敦", country:"英国", city:"伦敦", comment:"ICL的考试难度堪比登天，但毕业率却高得惊人，果然是学霸聚集地。"},
+            {name:"伦敦大学学院 (UCL)",lat:51.5246,lng:-0.1340, state:"大伦敦", country:"英国", city:"伦敦", comment:"UCL地理位置绝佳，但DDL能让你熬掉所有头发！"},
+            {name:"伦敦国王学院 (KCL)",lat:51.5115,lng:-0.1160, state:"大伦敦", country:"英国", city:"伦敦", comment:"KCL的建筑超有历史感，上课就像在拍哈利波特，但楼梯爬起来要人命。"},
+            {name:"伦敦政治经济学院 (LSE)",lat:51.5144,lng:-0.1165, state:"大伦敦", country:"英国", city:"伦敦", comment:"LSE的学生个个都是辩论高手，跟他们聊天要做好被辩到哑口无言的准备。"},
+            {name:"爱丁堡大学 (Edinburgh)",lat:55.9445,lng:-3.1892, state:"苏格兰", country:"英国", city:"爱丁堡", comment:"爱丁堡的风景美如画，但冬天的风真的能把人吹到怀疑人生。"},
+            {name:"曼彻斯特大学 (Manchester)",lat:53.4668,lng:-2.2339, state:"大曼彻斯特", country:"英国", city:"曼彻斯特", comment:"曼大的学生活动超级丰富，但曼城的天气嘛...就当是免费的保湿SPA吧。"},
+            {name:"麻省理工学院 (MIT)",lat:42.3601,lng:-71.0942, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"MIT的学霸密度全球第一，在这里你会发现自己的智商被按在地上摩擦。"},
+            {name:"哈佛大学 (Harvard)",lat:42.3770,lng:-71.1167, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"哈佛的校园像电影场景，但图书馆的座位比春运火车票还难抢。"},
+            {name:"斯坦福大学 (Stanford)",lat:37.4275,lng:-122.1697, state:"加利福尼亚州", country:"美国", city:"斯坦福", comment:"斯坦福的阳光和草坪让人不想学习，但身边的同学会用实力鞭策你。"},
+            {name:"加州理工学院 (Caltech)",lat:34.1377,lng:-118.1253, state:"加利福尼亚州", country:"美国", city:"帕萨迪纳", comment:"Caltech的教授都是诺贝尔奖级别的，但他们的课也难到让你怀疑人生。"},
+            {name:"芝加哥大学 (UChicago)",lat:41.7897,lng:-87.5997, state:"伊利诺伊州", country:"美国", city:"芝加哥", comment:"芝大的学术氛围超浓，但冬天的寒风能把你的灵魂都吹走。"},
+            {name:"耶鲁大学 (Yale)",lat:41.3163,lng:-72.9223, state:"康涅狄格州", country:"美国", city:"纽黑文", comment:"耶鲁的宿舍像古堡，但半夜走路时总感觉有幽灵在跟着你。"},
+            {name:"哥伦比亚大学 (Columbia)",lat:40.8075,lng:-73.9626, state:"纽约州", country:"美国", city:"纽约", comment:"哥大的位置绝佳，但纽约的生活成本会让你变成月光族。"},
+            {name:"康奈尔大学 (Cornell)",lat:42.4534,lng:-76.4735, state:"纽约州", country:"美国", city:"伊萨卡", comment:"康奈尔的校园美如仙境，但冬天的雪能没过你的膝盖。"},
+            {name:"加州大学伯克利 (UCB)",lat:37.8719,lng:-122.2585, state:"加利福尼亚州", country:"美国", city:"伯克利", comment:"伯克利的学生超有活力，但上课要早起挤公交，真的很痛苦。"},
+            {name:"加州大学洛杉矶 (UCLA)",lat:34.0689,lng:-118.4452, state:"加利福尼亚州", country:"美国", city:"洛杉矶", comment:"UCLA的阳光和海滩让人嫉妒，但期末周的图书馆通宵灯火通明。"},
+            {name:"墨尔本大学 (UniMelb)",lat:-37.7983,lng:144.9610, state:"维多利亚州", country:"澳大利亚", city:"墨尔本", comment:"墨大的咖啡文化超棒，但澳洲的学费和生活费会让你流下贫穷的泪水。"},
+            {name:"悉尼大学 (USYD)",lat:-33.8886,lng:151.1873, state:"新南威尔士州", country:"澳大利亚", city:"悉尼", comment:"悉尼大学的校园就在市中心，但澳洲的阳光真的会把你晒成黑炭。"},
+            {name:"新加坡国立大学 (NUS)",lat:1.2966,lng:103.7764, state:"无", country:"新加坡", city:"新加坡", comment:"NUS的设施超级现代化，但新加坡的 humidity 会让你每天都像刚洗完澡。"},
+            {name:"南洋理工大学 (NTU)",lat:1.3483,lng:103.6831, state:"无", country:"新加坡", city:"新加坡", comment:"NTU的校园超美，但从宿舍到教学楼要走半小时，每天都像在健身。"},
+            {name:"香港大学 (HKU)",lat:22.2830,lng:114.1371, state:"香港特别行政区", country:"中国", city:"香港", comment:"港大的地理位置绝佳，但香港的房价和物价会让你怀疑人生。"},
+            {name:"香港中文大学 (CUHK)",lat:22.4195,lng:114.2066, state:"香港特别行政区", country:"中国", city:"香港", comment:"中大的校园像公园，但爬山上课真的很累，每天步数轻松破万。"},
+            {name:"香港科技大学 (HKUST)",lat:22.3364,lng:114.2655, state:"香港特别行政区", country:"中国", city:"香港", comment:"科大的海景超美，但风大到能把你的伞吹翻，发型吹乱。"},
+            {name:"多伦多大学 (UofT)",lat:43.6629,lng:-79.3957, state:"安大略省", country:"加拿大", city:"多伦多", comment:"多大的校区超美，但加拿大的冬天真的能冻死人，出门就像进了冰箱。"},
+            {name:"苏黎世联邦理工 (ETH)",lat:47.3763,lng:8.5477, state:"苏黎世州", country:"瑞士", city:"苏黎世", comment:"ETH的教学质量世界顶级，但瑞士的物价高到让你不敢随便下馆子。"},
+            {name:"东京大学 (UTokyo)",lat:35.7128,lng:139.7596, state:"东京都", country:"日本", city:"东京", comment:"东大的学术氛围超浓，但日本的樱花季人挤人，根本看不到花。"},
+            {name:"清华大学 (Tsinghua)",lat:40.0000,lng:116.3265, state:"北京市", country:"中国", city:"北京", comment:"清华的校园大到迷路，但学霸云集，压力山大。"},
+            {name:"北京大学 (PKU)",lat:39.9915,lng:116.3056, state:"北京市", country:"中国", city:"北京", comment:"北大的历史感超强，但期末周的图书馆座位比春运火车票还难抢。"}
         ];
 
         universities.forEach(uni => {
@@ -843,12 +843,11 @@
                         <div class="uni-title">${uni.name}</div>
                     </div>
                     
-                    <div class="uni-stats">
-                        <div class="uni-stat">
+                   <div class="uni-stat">
                             <div class="uni-stat-icon">🌍</div>
                             <div class="uni-stat-info">
                                 <div class="uni-stat-label">位置</div>
-                                <div class="uni-stat-value">${uni.lat.toFixed(2)}, ${uni.lng.toFixed(2)}</div>
+                                <div class="uni-stat-value">${uni.state === '无' ? '' : uni.state + ', '}${uni.country}, ${uni.city}</div>
                             </div>
                         </div>
                         <div class="uni-stat">
