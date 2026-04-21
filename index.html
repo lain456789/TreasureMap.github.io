@@ -35,7 +35,7 @@
 
         /* 地图区域 */
         #map-container{flex:1;position:relative;overflow:hidden}
-        #map{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg-dark);filter:brightness(0.8) contrast(1.2)}
+        #map{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg-dark);}
         .map-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 50%,rgba(0,212,170,0.05) 0%,rgba(10,10,20,0.8) 100%);pointer-events:none;z-index:100}
         .map-grid{position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:50}
         .treasure-glow{position:absolute;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,170,0.3) 0%,rgba(0,212,170,0) 70%);animation:pulse 2s infinite ease-in-out;pointer-events:none;z-index:200}
@@ -684,7 +684,7 @@
 
         // ===== 地图系统 =====
         const map = L.map('map', {minZoom: 1.5, maxZoom: 10, zoomControl: false}).setView([20, 0], 2);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {attribution: '© OpenStreetMap', maxZoom: 19}).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution: '© OpenStreetMap', maxZoom: 19}).addTo(map);
 
        const universities = [
             {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544, state:"牛津郡", country:"英国", city:"牛津", comment:"牛津的图书馆美到窒息，但凌晨三点的闭馆铃声会让你怀疑人生。"},
