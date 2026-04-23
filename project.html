@@ -1809,32 +1809,37 @@
                     </div>
                     <div class="uni-stat" style="display:flex; align-items:center; gap:16px;">
                         <i data-lucide="map-pin" style="color:var(--text-muted);"></i>
-                        <div><div style="font-size:12px;color:var(--text-muted);">地理位置</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
+                        <div><div style="font-size:12px;color:var(--text-muted);">Location</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
                     </div>
                     <div class="ai-senior-section">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> 档案评估报告</div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> Profile Evaluation Report</div>
                         <div style="font-size:14px;line-height:1.6;color:var(--text-muted);">${uni.comment}</div>
                     </div>
-                    <button class="btn-primary" id="btn-ai-query" style="margin-top:16px; width:100%;"><i data-lucide="sparkles"></i> AI查询入学要求</button>
+                    <button class="btn-primary" id="btn-ai-query" style="margin-top:16px; width:100%;"><i data-lucide="sparkles"></i> AI Query Admission Requirements</button>
                     <div id="ai-query-result" style="margin-top:16px; display:none;"></div>
-                    <button class="btn-primary" id="btn-fav-${uni.lat}" style="margin-top:12px; width:100%;"><i data-lucide="bookmark"></i> 存入研究清单</button>
+                    <button class="btn-primary" id="btn-fav-${uni.lat}" style="margin-top:12px; width:100%;"><i data-lucide="bookmark"></i> Save to List</button>
                 `;
                 refreshIcons();
                 
                 document.getElementById('btn-ai-query').onclick = function() {
                     if (!API_KEY) {
-                        document.getElementById('ai-query-result').innerHTML = '<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 请先在设置中输入API Key</div>';
+                        document.getElementById('ai-query-result').innerHTML = '<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> Please enter API Key in Settings first</div>';
                         refreshIcons();
                         document.getElementById('ai-query-result').style.display = 'block';
                         return;
                     }
                     
                     const resultDiv = document.getElementById('ai-query-result');
-                    resultDiv.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);"><i data-lucide="loader" style="animation:spin 2s linear infinite;width:20px;"></i><br><span style="font-size:13px;">AI查询中，请稍候...</span></div>';
+                    resultDiv.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);"><i data-lucide="loader" style="animation:spin 2s linear infinite;width:20px;"></i><br><span style="font-size:13px;">AI querying, please wait...</span></div>';
                     resultDiv.style.display = 'block';
                     refreshIcons();
                     
-                    const prompt = `请提供关于${uni.name}（位于${uni.city}, ${uni.country}）的入学要求信息，以列表形式输出，包括：\n1. 语言成绩要求（雅思、托福等）\n2. 绩点要求（GPA）\n3. 其他重要入学条件\n\n请用简洁的列表格式回复。`;
+                    const prompt = `Please provide information about ${uni.name} (located in ${uni.city}, ${uni.country})'s admission requirements in a list format, including:
+1. Language score requirements (IELTS, TOEFL, etc.)
+2. GPA requirements
+3. Other important admission conditions
+
+Please reply in English with a concise list format.`;
                     
                     fetch('https://api.moonshot.cn/v1/chat/completions', {
                         method: 'POST',
@@ -1842,15 +1847,15 @@
                         body: JSON.stringify({ model: 'moonshot-v1-8k', messages: [{ role: 'user', content: prompt }], temperature: 0.7 })
                     }).then(res => res.json()).then(data => {
                         if (data.error) {
-                            resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 查询失败：${data.error.message || 'API错误'}</div>`;
+                            resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> Query failed: ${data.error.message || 'API error'}</div>`;
                         } else {
                             const reply = data.choices[0].message.content;
                             const formattedReply = reply.replace(/\n/g, '<br>').replace(/(\d+\.\s*)/g, '<strong>$1</strong>');
-                            resultDiv.innerHTML = `<div style="background:var(--bg-hover);border-radius:8px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-primary);"><strong style="color:var(--accent);font-size:14px;"><i data-lucide="sparkles" style="width:14px;vertical-align:middle;margin-right:4px;"></i> AI查询结果</strong><br><br>${formattedReply}</div>`;
+                            resultDiv.innerHTML = `<div style="background:var(--bg-hover);border-radius:8px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-primary);"><strong style="color:var(--accent);font-size:14px;"><i data-lucide="sparkles" style="width:14px;vertical-align:middle;margin-right:4px;"></i> AI Query Results</strong><br><br>${formattedReply}</div>`;
                         }
                         refreshIcons();
                     }).catch(err => {
-                        resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 网络错误，请稍后重试</div>`;
+                        resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> Network error, please try again later</div>`;
                         refreshIcons();
                     });
                 };
@@ -1859,7 +1864,7 @@
                     if (!favorites.find(f => f.name === uni.name)) {
                         favorites.push(uni); localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
                         renderFavorites(); updateUserUI(); updateUniversitySelect();
-                        this.innerHTML = '<i data-lucide="check"></i> 已存入清单';
+                        this.innerHTML = '<i data-lucide="check"></i> Saved';
                         this.style.background = 'var(--success-text)';
                         refreshIcons();
                     }
