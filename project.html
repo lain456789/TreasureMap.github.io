@@ -424,23 +424,31 @@
             
             /* Content Tabs */
             #content-tabs {
-                padding: 0 12px;
-                gap: 12px;
+                padding: 0 8px;
+                gap: 8px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #content-tabs::-webkit-scrollbar {
+                display: none;
             }
             
             .content-tab {
-                padding: 10px 14px;
-                font-size: 13px;
+                padding: 8px 12px;
+                font-size: 12px;
+                white-space: nowrap;
             }
             
             /* Content Panel */
             .content-panel {
-                padding: 12px;
+                padding: 16px;
             }
             
             /* Map Area */
             #map-container {
-                height: 50vh;
+                height: 40vh;
             }
             
             /* Achievement Panel */
@@ -464,12 +472,18 @@
             /* Emotion Support Panel */
             .emotion-moods {
                 gap: 12px;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             /* University Details Panel */
             #university-details {
-                padding: 12px;
+                padding: 16px;
                 min-height: 250px;
+            }
+            
+            /* University Cards */
+            .university-card {
+                margin-bottom: 12px;
             }
         }
 
@@ -497,26 +511,30 @@
             /* Left Sidebar */
             #left-sidebar {
                 top: 56px;
+                width: 100%;
+                max-width: 100%;
             }
             
             /* Content Tabs */
             #content-tabs {
-                height: 52px;
+                height: 48px;
+                padding: 0 6px;
+                gap: 6px;
             }
             
             .content-tab {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 6px 10px;
+                font-size: 11px;
             }
             
             /* Content Panel */
             .content-panel {
-                padding: 8px;
+                padding: 12px;
             }
             
             /* Map Area */
             #map-container {
-                height: 45vh;
+                height: 35vh;
             }
             
             /* Achievement Panel */
@@ -549,6 +567,146 @@
             /* University Details Panel */
             #university-panel h3 {
                 font-size: 18px;
+            }
+            
+            /* University Cards */
+            .university-card {
+                padding: 12px;
+            }
+            
+            .university-card h5 {
+                font-size: 13px;
+            }
+            
+            .university-card p {
+                font-size: 11px;
+            }
+        }
+        
+        /* Mobile Feature Visibility Optimizations */
+        @media(max-width: 768px) {
+            /* Feature Cards */
+            .feature-card {
+                padding: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .feature-card h4 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .feature-card p {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+            
+            /* Progress Cards */
+            .progress-card {
+                padding: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .progress-card h4 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .progress-card .progress-bar {
+                margin: 8px 0;
+            }
+            
+            /* Task Items */
+            .task-item {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+            
+            .task-item h4 {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            
+            .task-item p {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            
+            /* University Stats */
+            .uni-stats {
+                padding: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .uni-stats h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .uni-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+        }
+        
+        @media(max-width: 480px) {
+            /* Feature Cards */
+            .feature-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            .feature-card h4 {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            
+            .feature-card p {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+            
+            /* Progress Cards */
+            .progress-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            .progress-card h4 {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            
+            /* Task Items */
+            .task-item {
+                padding: 10px;
+                margin-bottom: 6px;
+            }
+            
+            .task-item h4 {
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+            
+            .task-item p {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+            
+            /* University Stats */
+            .uni-stats {
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+            
+            .uni-stats h3 {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+            
+            .uni-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
             }
         }
         
@@ -959,60 +1117,60 @@
             <div id="content-panels">
                 <!-- Map Panel -->
                 <div class="content-panel active" id="map-panel">
-                    <div style="padding: 24px 32px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-                            <h3 style="font-size: 18px; font-weight: 600; margin: 0;">Explore Global Universities</h3>
+                    <div style="padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <h3 style="font-size: 16px; font-weight: 600; margin: 0;">Explore Global Universities</h3>
                             <button class="icon-btn" id="toggle-map-view" title="Toggle Map View"><i data-lucide="map"></i></button>
                         </div>
                         
-                        <div style="position: relative; margin-bottom: 24px;">
-                            <input type="text" id="university-search" placeholder="Search universities..." style="padding-left: 40px;">
-                            <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px;"></i>
+                        <div style="position: relative; margin-bottom: 16px;">
+                            <input type="text" id="university-search" placeholder="Search universities..." style="padding-left: 36px; font-size: 14px;">
+                            <i data-lucide="search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 14px;"></i>
                         </div>
                         
-                        <div id="map-container" style="height: 400px; margin-bottom: 24px; border-radius: 12px; overflow: hidden;">
+                        <div id="map-container" style="height: 400px; margin-bottom: 16px; border-radius: 12px; overflow: hidden;">
                             <div id="map"></div>
                         </div>
                         
-                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Recommended Universities</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+                        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Recommended Universities</h4>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Cambridge</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, UK</p>
                             </div>
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Imperial College London</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">London, UK</p>
                             </div>
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">ETH Zurich</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Zurich, Switzerland</p>
                             </div>
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">MIT</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, USA</p>
                             </div>
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Stanford University</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Stanford, USA</p>
                             </div>
                             <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Tokyo</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
@@ -1024,54 +1182,54 @@
 
                 <!-- Achievement Panel -->
                 <div class="content-panel" id="achievement-panel">
-                    <div style="display: flex; flex-direction: column; height: 100%; gap: 16px;">
+                    <div style="display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 16px;">
                         <!-- Achievement List -->
                         <div style="flex: 1; overflow-y: auto;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                                <h3 style="font-size: 18px; font-weight: 700; margin: 0;">My Achievements</h3>
-                                <button id="add-achievement-btn" style="padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px;">
-                                    <i data-lucide="plus" style="width: 14px;"></i>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <h3 style="font-size: 16px; font-weight: 700; margin: 0;">My Achievements</h3>
+                                <button id="add-achievement-btn" style="padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="plus" style="width: 12px;"></i>
                                     Add Achievement
                                 </button>
                             </div>
-                            <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                            <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 10px;"></div>
                         </div>
                         
                         <!-- Achievement Details -->
                         <div style="flex: 1; overflow-y: auto;">
-                            <h3 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">Achievement Details</h3>
-                            <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; min-height: 200px;">
+                            <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 12px 0;">Achievement Details</h3>
+                            <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 12px; min-height: 180px;">
                                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
-                                    <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-                                        <i data-lucide="trophy" style="width: 30px; height: 30px;"></i>
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                                        <i data-lucide="trophy" style="width: 24px; height: 24px;"></i>
                                     </div>
-                                    <h5 style="font-size: 16px; font-weight: 600; margin: 0 0 8px 0;">Select an Achievement</h5>
-                                    <p style="font-size: 14px; margin: 0;">Click on an achievement above to view details</p>
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select an Achievement</h5>
+                                    <p style="font-size: 12px; margin: 0;">Click on an achievement above to view details</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Add Achievement Form -->
-                    <div id="add-achievement-form" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-surface); border-top: 1px solid var(--border); padding: 16px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); z-index: 1000;">
-                        <h4 style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Add New Achievement</h4>
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div id="add-achievement-form" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-surface); border-top: 1px solid var(--border); padding: 12px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); z-index: 1000;">
+                        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Add New Achievement</h4>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
                             <div>
-                                <label style="display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-muted);">Achievement Title</label>
-                                <input type="text" id="achievement-title" placeholder="e.g., Completed Language Exam" style="width: 100%; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px;">
+                                <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Title</label>
+                                <input type="text" id="achievement-title" placeholder="e.g., Completed Language Exam" style="width: 100%; padding: 8px 10px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px;">
                             </div>
                             <div>
-                                <label style="display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-muted);">Achievement Type</label>
-                                <select id="achievement-type" style="width: 100%; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px;">
+                                <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Type</label>
+                                <select id="achievement-type" style="width: 100%; padding: 8px 10px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px;">
                                     <option value="academic">Academic Achievement</option>
                                     <option value="language">Language Proficiency</option>
                                     <option value="experience">Internship/Research</option>
                                     <option value="other">Other Achievement</option>
                                 </select>
                             </div>
-                            <div style="display: flex; gap: 10px;">
-                                <button id="cancel-add-achievement" style="flex: 1; padding: 10px 20px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">Cancel</button>
-                                <button id="submit-add-achievement" style="flex: 1; padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Add</button>
+                            <div style="display: flex; gap: 8px;">
+                                <button id="cancel-add-achievement" style="flex: 1; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">Cancel</button>
+                                <button id="submit-add-achievement" style="flex: 1; padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Add</button>
                             </div>
                         </div>
                     </div>
@@ -1079,27 +1237,27 @@
 
                 <!-- Quiz Panel -->
                 <div class="content-panel" id="quiz-panel">
-                    <div style="max-width: 100%; margin: 0 auto;">
-                        <div id="quiz-start" style="text-align:center; padding: 40px 0;">
-                            <i data-lucide="book-open" style="width:48px; height:48px; color:var(--text-muted); margin-bottom:16px;"></i>
-                            <h3 style="font-size:20px; margin-bottom:12px;">Study Abroad Preparation Quiz</h3>
-                            <p style="color:var(--text-muted); margin-bottom:32px; font-size:14px;">Contains 30 core test questions to verify your readiness.</p>
-                            <button class="btn-primary" id="start-quiz" style="width: 100%; padding: 14px 24px; font-size: 14px;">Start Quiz</button>
+                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
+                        <div id="quiz-start" style="text-align:center; padding: 30px 0;">
+                            <i data-lucide="book-open" style="width:40px; height:40px; color:var(--text-muted); margin-bottom:12px;"></i>
+                            <h3 style="font-size:18px; margin-bottom:10px;">Study Abroad Preparation Quiz</h3>
+                            <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Contains 30 core test questions to verify your readiness.</p>
+                            <button class="btn-primary" id="start-quiz" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Quiz</button>
                         </div>
                         <div id="quiz-game" style="display:none;">
                             <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
-                            <p style="text-align:right; font-size:12px; color:var(--text-muted); margin-bottom:16px;">Progress <span id="quiz-level-num">1</span> / 30</p>
-                            <div id="quiz-question" style="font-size:16px; font-weight:500; line-height:1.5; margin-bottom:24px;"></div>
+                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Progress <span id="quiz-level-num">1</span> / 30</p>
+                            <div id="quiz-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
                             <div id="quiz-options"></div>
-                            <button class="btn-primary" id="quiz-submit" style="margin-top:24px;">Submit Answer</button>
+                            <button class="btn-primary" id="quiz-submit" style="margin-top:20px;">Submit Answer</button>
                         </div>
-                        <div id="quiz-result" style="display:none; text-align:center; padding:40px 0;">
-                            <div id="quiz-result-icon-container" style="margin-bottom:16px; display:flex; justify-content:center;"></div>
-                            <h3 id="quiz-result-title" style="font-size:20px; margin-bottom:12px;"></h3>
-                            <p id="quiz-result-msg" style="color:var(--text-muted); margin-bottom:32px; font-size:14px;"></p>
-                            <div style="display:flex; gap:16px; justify-content:center;">
-                                <button class="btn-secondary" id="quiz-retry" style="flex:1; max-width: 150px;">Retry</button>
-                                <button class="btn-primary" id="quiz-next" style="flex:1; max-width: 150px;">Next Question</button>
+                        <div id="quiz-result" style="display:none; text-align:center; padding:30px 0;">
+                            <div id="quiz-result-icon-container" style="margin-bottom:12px; display:flex; justify-content:center;"></div>
+                            <h3 id="quiz-result-title" style="font-size:18px; margin-bottom:10px;"></h3>
+                            <p id="quiz-result-msg" style="color:var(--text-muted); margin-bottom:24px; font-size:13px;"></p>
+                            <div style="display:flex; gap:12px; justify-content:center;">
+                                <button class="btn-secondary" id="quiz-retry" style="flex:1; max-width: 120px; padding: 10px 16px;">Retry</button>
+                                <button class="btn-primary" id="quiz-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next Question</button>
                             </div>
                         </div>
                     </div>
@@ -1107,36 +1265,36 @@
 
                 <!-- Emotion Support Panel -->
                 <div class="content-panel" id="emotion-panel">
-                    <div style="max-width: 100%; margin: 0 auto;">
-                        <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Mood Regulation</h3>
-                        <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Record your current preparation status:</p>
-                        <div class="emotion-moods" style="grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                            <div class="emotion-mood" data-mood="great"><i data-lucide="sun" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:12px; font-weight:500;">Great</div></div>
-                            <div class="emotion-mood" data-mood="okay"><i data-lucide="minus" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:12px; font-weight:500;">Steady</div></div>
-                            <div class="emotion-mood" data-mood="stressed"><i data-lucide="cloud-lightning" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:12px; font-weight:500;">Stressed</div></div>
-                            <div class="emotion-mood" data-mood="anxious"><i data-lucide="cloud-rain" style="width:32px;height:32px; margin-bottom:12px;"></i><div style="font-size:12px; font-weight:500;">Anxious</div></div>
+                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
+                        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">Mood Regulation</h3>
+                        <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Record your current preparation status:</p>
+                        <div class="emotion-moods" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                            <div class="emotion-mood" data-mood="great"><i data-lucide="sun" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Great</div></div>
+                            <div class="emotion-mood" data-mood="okay"><i data-lucide="minus" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Steady</div></div>
+                            <div class="emotion-mood" data-mood="stressed"><i data-lucide="cloud-lightning" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Stressed</div></div>
+                            <div class="emotion-mood" data-mood="anxious"><i data-lucide="cloud-rain" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Anxious</div></div>
                         </div>
-                        <div class="emotion-response" id="emotion-response" style="display:none; margin-top:24px;">
-                            <h4 id="emotion-title" style="font-size:16px; font-weight:600; margin-bottom:12px;"></h4>
-                            <p id="emotion-text" style="font-size:14px; color:var(--text-muted); line-height:1.6;"></p>
+                        <div class="emotion-response" id="emotion-response" style="display:none; margin-top:20px; padding:16px;">
+                            <h4 id="emotion-title" style="font-size:14px; font-weight:600; margin-bottom:10px;"></h4>
+                            <p id="emotion-text" style="font-size:13px; color:var(--text-muted); line-height:1.6;"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- University Details Panel -->
                 <div class="content-panel" id="university-panel">
-                    <div style="max-width: 100%; margin: 0 auto;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                            <h3 style="font-size: 20px; font-weight: 700; margin: 0;">University Profile Search</h3>
-                            <button class="btn-secondary" id="back-to-map" style="width: auto; padding: 8px 16px;"><i data-lucide="arrow-left" style="width:14px; margin-right:6px;"></i> Back to Map</button>
+                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">University Profile Search</h3>
+                            <button class="btn-secondary" id="back-to-map" style="width: auto; padding: 6px 12px; font-size: 12px;"><i data-lucide="arrow-left" style="width:12px; margin-right:4px;"></i> Back to Map</button>
                         </div>
-                        <div id="university-details" style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; min-height: 300px;">
+                        <div id="university-details" style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; min-height: 250px;">
                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
-                                <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-                                    <i data-lucide="building-2" style="width: 30px; height: 30px;"></i>
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                                    <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
                                 </div>
-                                <h5 style="font-size: 16px; font-weight: 600; margin: 0 0 8px 0;">Select a University</h5>
-                                <p style="font-size: 14px; margin: 0;">Click on a university on the map to view detailed information</p>
+                                <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select a University</h5>
+                                <p style="font-size: 12px; margin: 0;">Click on a university on the map to view detailed information</p>
                             </div>
                         </div>
                     </div>
