@@ -1792,7 +1792,6 @@
         }
 
         function showUniversityModal(uni) {
-            // 切换到大学详情面板
             document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
             document.getElementById('university-panel').classList.add('active');
@@ -1816,9 +1815,46 @@
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> 档案评估报告</div>
                         <div style="font-size:14px;line-height:1.6;color:var(--text-muted);">${uni.comment}</div>
                     </div>
-                    <button class="btn-primary" id="btn-fav-${uni.lat}"><i data-lucide="bookmark"></i> 存入研究清单</button>
+                    <button class="btn-primary" id="btn-ai-query" style="margin-top:16px; width:100%;"><i data-lucide="sparkles"></i> AI查询入学要求</button>
+                    <div id="ai-query-result" style="margin-top:16px; display:none;"></div>
+                    <button class="btn-primary" id="btn-fav-${uni.lat}" style="margin-top:12px; width:100%;"><i data-lucide="bookmark"></i> 存入研究清单</button>
                 `;
                 refreshIcons();
+                
+                document.getElementById('btn-ai-query').onclick = function() {
+                    if (!API_KEY) {
+                        document.getElementById('ai-query-result').innerHTML = '<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 请先在设置中输入API Key</div>';
+                        refreshIcons();
+                        document.getElementById('ai-query-result').style.display = 'block';
+                        return;
+                    }
+                    
+                    const resultDiv = document.getElementById('ai-query-result');
+                    resultDiv.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);"><i data-lucide="loader" style="animation:spin 2s linear infinite;width:20px;"></i><br><span style="font-size:13px;">AI查询中，请稍候...</span></div>';
+                    resultDiv.style.display = 'block';
+                    refreshIcons();
+                    
+                    const prompt = `请提供关于${uni.name}（位于${uni.city}, ${uni.country}）的入学要求信息，以列表形式输出，包括：\n1. 语言成绩要求（雅思、托福等）\n2. 绩点要求（GPA）\n3. 其他重要入学条件\n\n请用简洁的列表格式回复。`;
+                    
+                    fetch('https://api.moonshot.cn/v1/chat/completions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+                        body: JSON.stringify({ model: 'moonshot-v1-8k', messages: [{ role: 'user', content: prompt }], temperature: 0.7 })
+                    }).then(res => res.json()).then(data => {
+                        if (data.error) {
+                            resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 查询失败：${data.error.message || 'API错误'}</div>`;
+                        } else {
+                            const reply = data.choices[0].message.content;
+                            const formattedReply = reply.replace(/\n/g, '<br>').replace(/(\d+\.\s*)/g, '<strong>$1</strong>');
+                            resultDiv.innerHTML = `<div style="background:var(--bg-hover);border-radius:8px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-primary);"><strong style="color:var(--accent);font-size:14px;"><i data-lucide="sparkles" style="width:14px;vertical-align:middle;margin-right:4px;"></i> AI查询结果</strong><br><br>${formattedReply}</div>`;
+                        }
+                        refreshIcons();
+                    }).catch(err => {
+                        resultDiv.innerHTML = `<div style="color:var(--danger-text);font-size:13px;padding:12px;background:var(--bg-hover);border-radius:8px;"><i data-lucide="alert-circle" style="width:14px;margin-right:6px;vertical-align:middle;"></i> 网络错误，请稍后重试</div>`;
+                        refreshIcons();
+                    });
+                };
+                
                 document.getElementById(`btn-fav-${uni.lat}`).onclick = function() {
                     if (!favorites.find(f => f.name === uni.name)) {
                         favorites.push(uni); localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
