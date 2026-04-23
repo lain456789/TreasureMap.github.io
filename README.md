@@ -1,150 +1,131 @@
-# 升学寻宝图 (TreasureMap)
+# TreasureMap - Study Abroad Planning System
 
-一个为西浦(XJTLU)学生打造的升学规划与申请辅助系统，提供地图探索、AI聊天、答题闯关等功能，帮助学生更好地规划升学路径。
+A comprehensive study abroad planning and application assistant system designed for XJTLU students. Features include map exploration, AI chat, quiz challenges, and more to help students better plan their study abroad journey.
 
-## 🎯 核心功能
+## 🎯 Core Features
 
-### 1. 地图探索
-- 全球大学地图可视化
-- 点击大学查看详细信息
-- 大学收藏功能（不依赖API）
+### 1. Map Exploration
+- Global university map visualization
+- Click on universities to view detailed information
+- University bookmark/favorite feature (no API required)
 
-### 2. AI 聊天助手
-- 基于DeepSeek API的智能问答
-- 升学相关问题咨询
-- 个性化升学建议
+### 2. AI Chat Assistant
+- Intelligent Q&A based on DeepSeek API
+- Study abroad related consultation
+- Personalized study abroad advice
 
-### 3. 答题闯关系统
-- 10关申请研究生基础知识题库
-- 涵盖雅思、绩点、推荐信等核心知识点
-- 通关解锁成就
+### 3. Quiz Challenge System
+- 10 levels of graduate application knowledge questions
+- Covers key topics like IELTS, GPA, recommendation letters, etc.
+- Unlock achievements upon completion
 
-### 4. 成就系统
-- 系统成就与自定义成就
-- 成就树可视化展示
-- 升学进度追踪
+### 4. Achievement System
+- System achievements and custom achievements
+- Achievement tree visualization
+- Study abroad progress tracking
 
-### 5. 情感支持模块
-- 心情追踪与调节
-- 励志名言与压力缓解方法
-- 升学过程中的心理支持
+### 5. Emotional Support Module
+- Mood tracking and regulation
+- Motivational quotes and stress relief methods
+- Psychological support during the study abroad journey
 
-### 6. 用户系统
-- 登录/注册功能
-- 本地数据存储
-- 预留数据库接口
+### 6. User System
+- Login/Registration functionality
+- Local data storage
+- Reserved database interface
 
-### 7. 申请进度管理
-- **待办事项系统**：默认申请流程待办事项
-- **进度追踪**：可视化进度条
-- **任务管理**：点击标记完成/未完成
-- **智能提醒**：申请流程关键节点提示
+### 7. Application Progress Management
+- **To-Do List System**: Default application process tasks
+- **Progress Tracking**: Visual progress bars
+- **Task Management**: Click to mark complete/incomplete
+- **Smart Reminders**: Key milestone reminders for application process
 
-## 🛠️ 技术栈
+## 🛠️ Tech Stack
 
-- **前端**：HTML5, CSS3, JavaScript
-- **地图**：Leaflet.js
-- **存储**：localStorage
-- **AI**：DeepSeek API
-- **样式**：CSS Variables, 渐变效果, 响应式设计
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Map**: Leaflet.js
+- **Storage**: localStorage
+- **AI**: DeepSeek API
+- **Styling**: CSS Variables, Gradients, Responsive Design
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 TreasureMap.github.io/
-├── index.html          # 主应用文件
-└── README.md           # 项目说明
+├── index.html          # Project introduction page
+├── project.html        # Main application file
+└── README.md           # Project documentation
 ```
 
-## 🚀 如何使用
+## 🚀 How to Use
 
-1. **克隆项目**
+1. **Clone the project**
    ```bash
    git clone https://github.com/lain456789/TreasureMap.github.io.git
    ```
 
-2. **打开项目**
-   - 直接在浏览器中打开 `index.html` 文件
-   - 或部署到任何静态网站托管服务
+2. **Open the project**
+   - Open `index.html` directly in a browser
+   - Or deploy to any static website hosting service
 
-3. **使用流程**
-   - **首页**：查看系统概览
-   - **地图**：探索全球大学，点击大学查看详情并收藏
-   - **AI聊天**：输入API Key后开始聊天咨询
-   - **答题闯关**：完成10关升学知识问答
-   - **成就**：查看和管理个人成就
-   - **申请进度**：管理待办事项，追踪申请流程进度
+3. **Usage Flow**
+   - **Home**: View system overview
+   - **Map**: Explore global universities, click to view details and bookmark
+   - **AI Chat**: Enter API Key to start chat consultation
+   - **Quiz Challenge**: Complete 10 levels of study abroad knowledge Q&A
+   - **Achievements**: View and manage personal achievements
+   - **Application Progress**: Manage to-do items, track application process progress
 
-## 🔑 API Key 使用
+## 🔑 API Key Usage
 
-- **获取API Key**：从DeepSeek官网申请API Key
-- **输入API Key**：在侧边栏AI面板中输入
-- **有效期**：页面不关闭则长期有效
-- **功能解锁**：输入后解锁AI聊天功能
+- **Get API Key**: Apply for API Key from DeepSeek official website
+- **Enter API Key**: Enter in the sidebar AI panel
+- **Validity**: Remains valid as long as the page is not closed
+- **Feature Unlock**: AI chat feature unlocks after entering
 
-## 🎨 界面特色
+## 🎨 Interface Features
 
-- **现代化设计**：深色主题，渐变效果，流畅动画
-- **响应式布局**：适配不同屏幕尺寸
-- **交互体验**：平滑过渡，悬停效果，反馈动画
-- **视觉层次**：清晰的信息架构，突出核心功能
-- **待办事项模块**：美观的卡片设计，流畅的交互体验
+- **Modern Design**: Dark theme, gradient effects, smooth animations
+- **Responsive Layout**: Adapts to different screen sizes
+- **Interactive Experience**: Smooth transitions, hover effects, feedback animations
+- **Visual Hierarchy**: Clear information architecture, highlighting core features
+- **To-Do Module**: Beautiful card design, smooth interactive experience
 
-## 📱 功能模块详解
+## 📱 Feature Module Details
 
-### 地图模块
-- 全球大学分布可视化
-- 点击大学查看详细信息
-- 一键收藏功能
-- 平滑的地图交互体验
+### Map Module
+- Global university distribution visualization
+- Click on universities to view detailed information
+- One-click bookmark feature
+- Smooth map interaction experience
 
-### AI聊天模块
-- 智能问答系统
-- 升学相关咨询
-- 个性化建议
-- 历史消息记录
+### AI Chat Module
+- Based on DeepSeek API for intelligent responses
+- Study abroad consultation and Q&A
+- Personalized recommendations based on user profile
 
-### 答题闯关模块
-- 30道申请研究生基础知识题
-- 10关递进难度
-- 即时反馈与解析
-- 成就解锁系统
+### Quiz Module
+- 10 progressive difficulty levels
+- Covers IELTS, GPA, recommendation letters, personal statements, etc.
+- Achievement rewards upon completion
 
-### 成就系统
-- 系统预设成就
-- 自定义成就添加
-- 成就树可视化
-- 进度追踪与展示
+### Achievement Module
+- Visual achievement tree display
+- System achievements and custom achievements
+- Progress persistence via localStorage
 
-### 情感支持模块
-- 心情状态记录
-- 励志名言推荐
-- 压力缓解方法
-- 情绪管理工具
+### Emotion Module
+- 5 mood options for tracking
+- Motivational quotes and stress relief methods
+- Psychological support during the application process
 
-### 申请进度管理
-- **默认待办事项**：申请流程关键步骤
-- **进度条**：实时显示完成进度
-- **交互设计**：点击即可标记完成状态
-- **视觉效果**：现代化卡片设计，流畅动画
+## 🔧 Development Notes
 
-## 🔮 未来规划
+- The system uses localStorage for data persistence
+- API Key is securely stored in localStorage
+- All data remains on the user's local device
+- No backend server required - fully static site
 
-- [ ] 后端数据库集成
-- [ ] 用户账号系统
-- [ ] 更多大学数据
-- [ ] 个性化升学规划报告
-- [ ] 社区互动功能
-- [ ] 移动端适配
+## 📄 License
 
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request，一起完善这个项目！
-
-## 📄 许可证
-
-MIT License
-
----
-
-**祝所有同学都能找到属于自己的升学宝藏！** 🌟
+This project is for educational purposes. Please comply with the API service provider's terms of use.

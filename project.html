@@ -10,9 +10,9 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* 响应式变量系统 */
+        /* Responsive Variable System */
         :root {
-            /* 浅色模式变量 (Swiss Spa Light) */
+            /* Light Mode Variables (Swiss Spa Light) */
             --bg-body: #F9FAFB;
             --bg-surface: #FFFFFF;
             --bg-hover: #F3F4F6;
@@ -21,7 +21,7 @@
             --border: #E5E7EB;
             --primary: #000000;
             --primary-hover: #374151;
-            --marker-fill: #1E3A8A; /* 海军蓝 */
+            --marker-fill: #1E3A8A; /* Navy Blue */
             --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
             --shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.08);
             --nav-bg: rgba(255, 255, 255, 0.85);
@@ -32,7 +32,7 @@
         }
 
         [data-theme="dark"] {
-            /* 深色模式变量 (Midnight Minimalist) */
+            /* Dark Mode Variables (Midnight Minimalist) */
             --bg-body: #050505;
             --bg-surface: #0F0F0F;
             --bg-hover: #1A1A1A;
@@ -41,7 +41,7 @@
             --border: #262626;
             --primary: #FFFFFF;
             --primary-hover: #E5E5E5;
-            --marker-fill: #3B82F6; /* 亮蓝 */
+            --marker-fill: #3B82F6; /* Bright Blue */
             --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.2);
             --shadow-modal: 0 10px 50px rgba(0, 0, 0, 0.4);
             --nav-bg: rgba(10, 10, 10, 0.85);
@@ -61,7 +61,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 顶部导航栏 */
+        /* Top Navigation Bar */
         #navbar {
             position: fixed; top: 0; left: 0; right: 0; height: 64px;
             background: var(--nav-bg);
@@ -101,10 +101,10 @@
         }
         .icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--border); }
 
-        /* 主容器 */
+        /* Main Container */
         #main-container { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; display: flex; }
 
-        /* 左侧功能导航栏 */
+        /* Left Sidebar Navigation */
         #left-sidebar {
             width: 480px; background: var(--bg-surface); border-right: 1px solid var(--border);
             display: flex; flex-direction: column; z-index: 900;
@@ -118,7 +118,7 @@
 
 
 
-        /* 左侧导航栏内容 */
+        /* Left Sidebar Content */
         .sidebar-panel {
             padding: 16px;
         }
@@ -133,7 +133,7 @@
             line-height: 1.5;
         }
 
-        /* 大学统计图表 */
+        /* University Statistics Chart */
         .uni-stats {
             margin-top: 16px;
             padding: 16px;
@@ -157,7 +157,7 @@
             margin-top: 4px;
         }
 
-        /* 专业分布图表 */
+        /* Major Distribution Chart */
         .major-distribution {
             margin-top: 16px;
             padding: 16px;
@@ -172,7 +172,7 @@
             height: 200px;
         }
 
-        /* 学习路径规划 */
+        /* Study Path Planning */
         .study-path {
             margin-top: 16px;
             padding: 16px;
@@ -202,14 +202,14 @@
             font-size: 12px;
         }
 
-        /* 主内容区域 */
+        /* Main Content Area */
         #content-area {
             flex: 1; display: flex; flex-direction: column;
             position: relative;
             width: 100%;
         }
 
-        /* 顶部功能标签页 */
+        /* Top Function Tabs */
         #content-tabs {
             height: 60px; background: var(--bg-surface); border-bottom: 1px solid var(--border);
             display: flex; align-items: center; padding: 0 32px; gap: 16px;
@@ -245,7 +245,7 @@
             height: 2px; background: var(--text-main);
         }
 
-        /* 内容区域 */
+        /* Content Area */
         #content-panels {
             flex: 1; position: relative;
             overflow: hidden;
@@ -262,14 +262,14 @@
             display: block;
         }
 
-        /* 地图区域 */
+        /* Map Area */
         #map-container {
             height: 60vh; position: relative; background: var(--bg-body);
         }
 
         #map { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
 
-        /* 内容板块样式 */
+        /* Content Panel Styles */
         .sidebar-panel { height: 100%; display: flex; flex-direction: column; }
         .panel-header { padding: 24px 32px 16px; }
         .panel-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
@@ -288,7 +288,7 @@
         .tab-content { display: none; flex: 1; overflow-y: auto; padding: 24px 32px; }
         .tab-content.active { display: block; }
 
-        /* 统一卡片样式 */
+        /* Unified Card Style */
         .user-section, .api-section, .fav-item, .ach-node-content, .uni-stat, .ai-senior-section, .emotion-response, .quiz-option, .university-card {
             background: var(--bg-surface); border: 1px solid var(--border);
             border-radius: 8px; padding: 20px; margin-bottom: 20px;
@@ -306,7 +306,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        /* 按钮样式 */
+        /* Button Styles */
         .btn-primary {
             width: 100%; padding: 12px; background: var(--primary); border: none;
             border-radius: 8px; color: var(--bg-surface); font-weight: 500; font-size: 14px; cursor: pointer;
@@ -326,7 +326,7 @@
         .btn-link { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; text-decoration: underline; }
         .btn-link:hover { color: var(--text-main); }
 
-        /* 表单输入 */
+        /* Form Input */
         input, select {
             width: 100%; padding: 12px 16px; background: var(--bg-body);
             border: 1px solid var(--border); border-radius: 8px; color: var(--text-main);
@@ -335,7 +335,7 @@
         input:focus { outline: none; border-color: var(--text-muted); }
         .form-group label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 13px; font-weight: 500; }
 
-        /* 聊天气泡 */
+        /* Chat Bubble */
         .chat-box { background: var(--bg-body); border-radius: 8px; height: 320px; padding: 20px; overflow-y: auto; margin-bottom: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px;}
         .chat-msg { display: flex; flex-direction: column; }
         .chat-user { align-items: flex-end; }
@@ -344,7 +344,7 @@
         .chat-user .msg { background: var(--primary); color: var(--bg-surface); border-radius: 12px 12px 4px 12px;}
         .chat-ai .msg { background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 12px 12px 12px 4px; box-shadow: var(--shadow-subtle);}
 
-        /* 模态框 */
+        /* Modal */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
@@ -358,7 +358,7 @@
         .modal-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .modal-body { padding: 32px; overflow-y: auto; }
 
-        /* 特定业务组件细化 */
+        /* Specific Business Component Details */
         .user-info { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
         .user-avatar-large { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
         .user-stats { display: flex; gap: 24px; border-top: 1px solid var(--border); padding-top: 20px; }
@@ -373,7 +373,7 @@
         
         .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
 
-        /* 答题系统 */
+        /* Quiz System */
         .progress-bar { width: 100%; height: 6px; background: var(--bg-hover); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
         .progress-fill { height: 100%; background: var(--text-main); transition: width 0.3s ease; }
         .quiz-option { cursor: pointer; padding: 16px 20px; font-weight: 500; font-size: 14px; margin-bottom: 12px;}
@@ -382,7 +382,7 @@
         .quiz-option.correct { border-color: var(--success-text); color: var(--success-text); background: var(--success-bg); }
         .quiz-option.incorrect { border-color: var(--danger-text); color: var(--danger-text); background: var(--danger-bg); }
 
-        /* 情感系统 */
+        /* Emotion System */
         .emotion-moods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
         .emotion-mood { text-align: center; padding: 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .emotion-mood:hover { border-color: var(--text-muted); }
@@ -392,7 +392,7 @@
         .treasure-tooltip { background: var(--bg-surface) !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 8px 12px !important; color: var(--text-main) !important; font-size: 13px !important; font-family: inherit !important; font-weight: 500 !important; box-shadow: var(--shadow-subtle) !important; }
         .treasure-tooltip::after { display: none !important; }
         
-        /* 响应式 */
+        /* Responsive */
         @media(max-width: 1024px) {
             #left-sidebar {
                 position: fixed;
@@ -413,7 +413,7 @@
         }
 
         @media(max-width: 768px) {
-            /* 顶部导航栏 */
+            /* Top Navigation Bar */
             #navbar {
                 padding: 0 16px;
             }
@@ -422,7 +422,7 @@
                 font-size: 14px;
             }
             
-            /* 内容标签页 */
+            /* Content Tabs */
             #content-tabs {
                 padding: 0 12px;
                 gap: 12px;
@@ -433,17 +433,17 @@
                 font-size: 13px;
             }
             
-            /* 内容面板 */
+            /* Content Panel */
             .content-panel {
                 padding: 12px;
             }
             
-            /* 地图区域 */
+            /* Map Area */
             #map-container {
                 height: 50vh;
             }
             
-            /* 成就面板 */
+            /* Achievement Panel */
             #achievement-panel {
                 gap: 12px;
             }
@@ -452,7 +452,7 @@
                 gap: 10px;
             }
             
-            /* 答题面板 */
+            /* Quiz Panel */
             #quiz-start {
                 padding: 30px 0;
             }
@@ -461,12 +461,12 @@
                 padding: 30px 0;
             }
             
-            /* 情感疏导面板 */
+            /* Emotion Support Panel */
             .emotion-moods {
                 gap: 12px;
             }
             
-            /* 大学详情面板 */
+            /* University Details Panel */
             #university-details {
                 padding: 12px;
                 min-height: 250px;
@@ -474,7 +474,7 @@
         }
 
         @media(max-width: 480px) {
-            /* 顶部导航栏 */
+            /* Top Navigation Bar */
             #navbar {
                 height: 56px;
             }
@@ -489,17 +489,17 @@
                 height: 32px;
             }
             
-            /* 主容器 */
+            /* Main Container */
             #main-container {
                 top: 56px;
             }
             
-            /* 左侧导航栏 */
+            /* Left Sidebar */
             #left-sidebar {
                 top: 56px;
             }
             
-            /* 内容标签页 */
+            /* Content Tabs */
             #content-tabs {
                 height: 52px;
             }
@@ -509,22 +509,22 @@
                 font-size: 12px;
             }
             
-            /* 内容面板 */
+            /* Content Panel */
             .content-panel {
                 padding: 8px;
             }
             
-            /* 地图区域 */
+            /* Map Area */
             #map-container {
                 height: 45vh;
             }
             
-            /* 成就面板 */
+            /* Achievement Panel */
             #achievement-panel h3 {
                 font-size: 16px;
             }
             
-            /* 答题面板 */
+            /* Quiz Panel */
             #quiz-start {
                 padding: 20px 0;
             }
@@ -541,18 +541,18 @@
                 font-size: 18px;
             }
             
-            /* 情感疏导面板 */
+            /* Emotion Support Panel */
             #emotion-panel h3 {
                 font-size: 18px;
             }
             
-            /* 大学详情面板 */
+            /* University Details Panel */
             #university-panel h3 {
                 font-size: 18px;
             }
         }
         
-        /* 大学分布统计 */
+        /* University Distribution Statistics */
         .uni-stats {
             background: var(--bg-hover);
             border: 1px solid var(--border-muted);
@@ -600,7 +600,7 @@
             text-transform: uppercase;
         }
         
-        /* 进度条功能 */
+        /* Progress Bar Feature */
         .progress-section {
             background: var(--bg-hover);
             border: 1px solid var(--border-muted);
@@ -752,7 +752,7 @@
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
         
-        /* AI申请评估 */
+        /* AI Application Evaluation */
         .ai-evaluation {
             background: var(--bg-hover);
             border: 1px solid var(--border-muted);
@@ -947,7 +947,7 @@
         </aside>
 
         <div id="content-area">
-            <!-- 顶部功能标签页 -->
+            <!-- Top Function Tabs -->
             <div id="content-tabs">
                 <button class="content-tab active" data-panel="map-panel"><i data-lucide="map" style="width:16px; margin-right:8px;"></i> Map Exploration</button>
                 <button class="content-tab" data-panel="achievement-panel"><i data-lucide="trophy" style="width:16px; margin-right:8px;"></i> Achievement Center</button>
@@ -955,9 +955,9 @@
                 <button class="content-tab" data-panel="emotion-panel"><i data-lucide="heart" style="width:16px; margin-right:8px;"></i> Emotional Support</button>
             </div>
 
-            <!-- 内容面板 -->
+            <!-- Content Panels -->
             <div id="content-panels">
-                <!-- 地图面板 -->
+                <!-- Map Panel -->
                 <div class="content-panel active" id="map-panel">
                     <div style="padding: 24px 32px;">
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
@@ -1022,10 +1022,10 @@
                     </div>
                 </div>
 
-                <!-- 成就面板 -->
+                <!-- Achievement Panel -->
                 <div class="content-panel" id="achievement-panel">
                     <div style="display: flex; flex-direction: column; height: 100%; gap: 16px;">
-                        <!-- 成就列表 -->
+                        <!-- Achievement List -->
                         <div style="flex: 1; overflow-y: auto;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                                 <h3 style="font-size: 18px; font-weight: 700; margin: 0;">My Achievements</h3>
@@ -1037,7 +1037,7 @@
                             <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 12px;"></div>
                         </div>
                         
-                        <!-- 成就详情 -->
+                        <!-- Achievement Details -->
                         <div style="flex: 1; overflow-y: auto;">
                             <h3 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">Achievement Details</h3>
                             <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; min-height: 200px;">
@@ -1052,7 +1052,7 @@
                         </div>
                     </div>
                     
-                    <!-- 添加成就表单 -->
+                    <!-- Add Achievement Form -->
                     <div id="add-achievement-form" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-surface); border-top: 1px solid var(--border); padding: 16px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); z-index: 1000;">
                         <h4 style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Add New Achievement</h4>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -1077,7 +1077,7 @@
                     </div>
                 </div>
 
-                <!-- 答题面板 -->
+                <!-- Quiz Panel -->
                 <div class="content-panel" id="quiz-panel">
                     <div style="max-width: 100%; margin: 0 auto;">
                         <div id="quiz-start" style="text-align:center; padding: 40px 0;">
@@ -1105,7 +1105,7 @@
                     </div>
                 </div>
 
-                <!-- 情感疏导面板 -->
+                <!-- Emotion Support Panel -->
                 <div class="content-panel" id="emotion-panel">
                     <div style="max-width: 100%; margin: 0 auto;">
                         <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Mood Regulation</h3>
@@ -1193,7 +1193,7 @@
         }
         document.getElementById('theme-toggle').onclick = () => setTheme(currentTheme === 'light' ? 'dark' : 'light');
 
-        // 响应式处理
+        // Responsive handling
         function checkResize() {
             const btn = document.getElementById('toggle-sidebar');
             if(window.innerWidth <= 1024) { btn.style.display = 'flex'; } else { btn.style.display = 'none'; document.getElementById('left-sidebar').classList.remove('open');}
