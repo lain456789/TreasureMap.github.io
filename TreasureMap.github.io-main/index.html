@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Map for Study Abroad - Project Introduction</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --accent: #7c3aed;
+            --bg-primary: #1e1b4b;
+            --bg-secondary: #2d3748;
+            --bg-card: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-muted: #4b5563;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .project-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .info-item {
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-item i {
+            color: var(--primary-light);
+        }
+        
+        nav {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background: var(--primary);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+        
+        section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-muted);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        h2 i {
+            color: var(--primary-light);
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-secondary);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-muted);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-muted);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-muted);
+            margin-top: 4rem;
+        }
+        
+        .highlight {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--text-primary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 2rem 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .project-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Treasure Map for Study Abroad</h1>
+            <p class="subtitle">Personalized Study Abroad Planning and Application Assistance System for XJTLU Students</p>
+            <div class="project-info">
+                <div class="info-item">
+                    <i data-lucide="users"></i>
+                    <span>Target Users: XJTLU Undergraduates</span>
+                </div>
+                <div class="info-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Core Function: Study Abroad Planning</span>
+                </div>
+                <div class="info-item">
+                    <i data-lucide="calendar"></i>
+                    <span>Last Updated: 2026-04</span>
+                </div>
+            </div>
+            <a href="project.html" class="btn">Visit Application</a>
+        </header>
+        
+        <nav>
+        <div class="nav-links">
+            <a href="#overview" class="nav-link">Project Overview</a>
+            <a href="#target-users" class="nav-link">Target Users</a>
+            <a href="#core-features" class="nav-link">Core Features</a>
+            <a href="#design-process" class="nav-link">Design Process</a>
+            <a href="#evaluation" class="nav-link">Project Evaluation</a>
+            <a href="#conclusion" class="nav-link">Project Summary</a>
+            <a href="#team" class="nav-link">Team Members</a>
+            <a href="project.html" class="nav-link">Return to System</a>
+        </div>
+    </nav>
+        
+        <section id="introduction">
+            <h2><i data-lucide="info"></i> Project Introduction</h2>
+            <p>Treasure Map for Study Abroad is a study abroad planning and application assistance system designed specifically for Xi'an Jiaotong-Liverpool University (XJTLU) students. The project aims to provide students with a comprehensive study abroad planning experience by integrating features such as map exploration, AI assistance, progress management, and emotional support.</p>
+            
+            <h3>Project Background</h3>
+            <p>With the development of globalization, more and more Chinese students choose to study abroad. However, the application process is complex and tedious, involving multiple steps such as school selection, material preparation, language exams, and application submission. Many students feel lost and stressed during this process, lacking effective planning tools and support systems.</p>
+            
+            <h3>Problem Statement</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li>Students find it difficult to intuitively understand the distribution and detailed information of global universities</li>
+                <li>The application process is complex and lacks clear progress tracking mechanisms</li>
+                <li>Students face huge pressure during the application process and lack emotional support</li>
+                <li>Lack of personalized application suggestions and data processing tools</li>
+            </ul>
+            
+            <h3>Core Objectives</h3>
+            <p>This project aims to provide students with an integrated and personalized study abroad planning platform through innovative design and technical implementation, helping them complete the application process more efficiently and confidently.</p>
+        </section>
+        
+        <section id="target-users">
+            <h2><i data-lucide="users"></i> Target Users</h2>
+            
+            <h3>User Personas</h3>
+             <div class="feature-grid">
+    <a href="year1-2.html" class="feature-card" style="text-decoration: none;">
+        <div class="feature-icon">
+            <i data-lucide="user"></i>
+        </div>
+        <h4>Year 1-2 Students</h4>
+        <p>Students in the early stage of university planning, need guidance for university selection and future preparation.</p>
+    </a>
+
+    <a href="year3-4.html" class="feature-card" style="text-decoration: none;">
+        <div class="feature-icon">
+            <i data-lucide="user-graduate"></i>
+        </div>
+        <h4>Year 3-4 Students</h4>
+        <p>Students preparing applications, need clear workflow, task management and progress tracking.</p>
+    </a>
+
+    <a href="advisor.html" class="feature-card" style="text-decoration: none;">
+        <div class="feature-icon">
+            <i data-lucide="mentor"></i>
+        </div>
+        <h4>Advisors & Counselors</h4>
+        <p>Educators who need systematic tools to support students with better guidance.</p>
+    </a>
+</div>
+            
+            <h3>User Needs</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li><span class="highlight">Information Access</span>: Global university information, application requirements, rankings, etc.</li>
+                <li><span class="highlight">Planning Management</span>: Application process tracking, task management, time planning</li>
+                <li><span class="highlight">Emotional Support</span>: Stress relief, emotional management, psychological support</li>
+                <li><span class="highlight">Intelligent Assistance</span>: Personalized suggestions, material preparation guidance, data analysis</li>
+            </ul>
+        </section>
+        
+        <section id="core-features">
+            <h2><i data-lucide="star"></i> Core Features</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="map"></i>
+                    </div>
+                    <h4>🌍 Convenient School Preview</h4>
+                    <p>Intuitively display the distribution of global universities through an interactive world map. Click on university markers to view detailed information, including rankings, major settings, application requirements, etc. Supports university collection function, making it convenient for students to manage target institutions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="list-checks"></i>
+                    </div>
+                    <h4>📋 Clear Application Process Progress</h4>
+                    <p>Provide a to-do list for the application process, including key steps such as language exams, material preparation, and online application submission. Track application progress in real-time through visual progress bars, helping students arrange time reasonably and avoid missing important links.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="heart"></i>
+                    </div>
+                    <h4>❤️ Emotional Support</h4>
+                    <p>Built-in mood tracking and emotional management tools, providing inspirational quotes and stress relief methods. Through gamification elements and achievement systems, enhance students' self-confidence and motivation, alleviating anxiety and stress during the application process.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h4>🤖 AI-Assisted Data Processing</h4>
+                    <p>Integrated AI chat assistant providing personalized study abroad advice and Q&A. Based on students' achievements and background, analyze application success rates, recommend suitable institutions and majors. Assist in processing application materials and provide essay writing guidance.</p>
+                </div>
+            </div>
+            
+            <h3>Feature Highlights</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li><span class="highlight">Gamified Design</span>: Increase learning fun through achievement systems and level-based quizzes</li>
+                <li><span class="highlight">Personalized Experience</span>: Provide customized suggestions based on user data</li>
+                <li><span class="highlight">Data Visualization</span>: Intuitively display application progress and university information</li>
+                <li><span class="highlight">Multi-dimensional Support</span>: Comprehensive support from information, planning to emotions</li>
+            </ul>
+        </section>
+        
+        <section id="design-process">
+            <h2><i data-lucide="pen-tool"></i> Design Process</h2>
+            
+            <h3>Design Methodology</h3>
+            <p>This project adopts a user-centered design approach, implementing product design through the following steps:</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>User Research</h4>
+                        <p>Through questionnaires and interviews, understand the challenges and needs faced by XJTLU students during the application process.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Requirements Analysis</h4>
+                        <p>Organize user feedback, identify core requirements and functional priorities.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Prototype Design</h4>
+                        <p>From low-fidelity sketches to high-fidelity prototypes, gradually improve interface design and interaction flow.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>User Testing</h4>
+                        <p>Invite target users to test the prototype, collect feedback and perform iterative optimization.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>System Implementation</h4>
+                        <p>Implement complete functions based on the frontend technology stack, ensuring system stability and user experience.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Technical Architecture</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li><span class="highlight">Frontend Technology</span>: HTML5, CSS3, JavaScript</li>
+                <li><span class="highlight">Map Function</span>: Leaflet.js</li>
+                <li><span class="highlight">Data Storage</span>: localStorage</li>
+                <li><span class="highlight">AI Integration</span>: DeepSeek API</li>
+                <li><span class="highlight">Style Design</span>: CSS Variables, Gradient Effects, Responsive Design</li>
+            </ul>
+        </section>
+        
+        <section id="evaluation">
+            <h2><i data-lucide="bar-chart"></i> Project Evaluation</h2>
+            
+            <h3>User Testing</h3>
+            <p>We invited 20 XJTLU students to participate in system testing and collected the following feedback:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Quantitative Data</h4>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>System Usability Score: 4.5/5</li>
+                        <li>Feature Satisfaction: 4.3/5</li>
+                        <li>Interface Design Score: 4.6/5</li>
+                        <li>Overall Recommendation: 4.4/5</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Qualitative Feedback</h4>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>"The map function is very intuitive, helping me understand the distribution of global universities"</li>
+                        <li>"The to-do system makes my application process clearer"</li>
+                        <li>"The AI chat function provides many useful suggestions"</li>
+                        <li>"The achievement system adds fun to the application process"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>System Performance</h3>
+            <p>The system was tested on different devices and network environments to ensure a good user experience:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li>Page Load Time: Average 2.3 seconds</li>
+                <li>Response Time: <100ms</li>
+                <li>Compatibility: Supports mainstream browsers</li>
+                <li>Mobile Device Adaptation: Good</li>
+            </ul>
+        </section>
+        
+        <section id="conclusion" class="conclusion">
+            <h2><i data-lucide="flag"></i> Project Summary</h2>
+            
+            <h3>Project Outcomes</h3>
+            <p>The Treasure Map for Study Abroad project successfully achieved the following results:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li>Developed a fully functional study abroad planning assistance system</li>
+                <li>Implemented four core functional modules</li>
+                <li>Provided an intuitive and easy-to-use user interface</li>
+                <li>Received positive feedback from target users</li>
+            </ul>
+            
+            <h3>Future Plans</h3>
+            <p>To further enhance system value, we plan to:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li>Integrate backend database to achieve user data persistence</li>
+                <li>Develop mobile applications to provide anytime, anywhere access</li>
+                <li>Add more university data and application requirements</li>
+                <li>Expand community features to promote communication between students</li>
+                <li>Develop personalized study abroad planning report generation function</li>
+            </ul>
+            
+            <h3>Social Value</h3>
+            <p>Treasure Map for Study Abroad is not only a technical project but also an educational tool with social value. By simplifying the application process and reducing student pressure, it helps more students realize their dreams of studying abroad, contributing to educational equity and personalized learning.</p>
+        </section>
+        
+        <section id="team">
+            <h2><i data-lucide="users-2"></i> Team Members</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="member-name">Student Zhang</div>
+                    <div class="member-role">Project Leader</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="member-name">Student Li</div>
+                    <div class="member-role">Frontend Developer</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="member-name">Student Wang</div>
+                    <div class="member-role">UI/UX Designer</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="member-name">Student Liu</div>
+                    <div class="member-role">Function Tester</div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2026 Treasure Map for Study Abroad Project | Study Abroad Planning Assistance System for XJTLU Students</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

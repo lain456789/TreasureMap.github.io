@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advisors | UniQuest</title>
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+        background: #1e1b4b;
+        color: #fff;
+        margin: 0;
+        padding: 40px 20px;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .back {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+    }
+    .persona {
+        background: #2d3748;
+        border: 1px solid #4f46e5;
+        margin-bottom: 40px;
+        overflow: hidden;
+    }
+    .p-header {
+        background: #4f46e5;
+        color: #fff;
+        padding: 14px 16px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .p-body {
+        padding: 24px;
+        display: grid;
+        grid-template-columns: 180px 1fr 200px;
+        gap: 24px;
+    }
+    .avatar {
+        width: 160px;
+        height: 160px;
+        background: #374151;
+        margin-bottom: 16px;
+    }
+    .quote {
+        background: #4f46e5;
+        color: #fff;
+        padding: 12px;
+        font-size: 14px;
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+    .base-info {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+    .tag {
+        background: #4f46e5;
+        color: #fff;
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+    .section-title {
+        color: #a5b4fc;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .list {
+        padding-left: 20px;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    .motivation-item {
+        margin-bottom: 12px;
+    }
+    .motivation-label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+    .motivation-bar {
+        width: 100%;
+        height: 10px;
+        background: #374151;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .motivation-fill {
+        height: 100%;
+        background: #4f46e5;
+    }
+    .dim-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+    .dim-track {
+        width: 100px;
+        height: 8px;
+        background: #374151;
+        position: relative;
+    }
+    .dim-dot {
+        width: 10px;
+        height: 8px;
+        background: #4f46e5;
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+    }
+    .bio {
+        background: #374151;
+        padding: 12px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-top: 16px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back">← Back to About</a>
+
+    <div class="persona">
+        <div class="p-header">Admission Counselor</div>
+        <div class="p-body">
+            <div>
+                <div class="avatar"></div>
+                <div class="quote">I need efficient tools to reduce repetitive questions and manage students.</div>
+                <div class="base-info">
+                    Job: Admission Advisor<br>
+                    Work: Planning & Consultation<br>
+                    Goal: Efficiency & Standardised Service
+                </div>
+            </div>
+            <div>
+                <div class="tags">
+                    <span class="tag">Professional</span>
+                    <span class="tag">Patient</span>
+                    <span class="tag">Efficient</span>
+                    <span class="tag">Responsible</span>
+                </div>
+                <div>
+                    <div class="section-title">Goals</div>
+                    <ul class="list">
+                        <li>Answer frequent student questions quickly</li>
+                        <li>Track student application progress</li>
+                        <li>Provide systematic standard guidance</li>
+                        <li>Improve overall advising efficiency</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="section-title">Frustrations</div>
+                    <ul class="list">
+                        <li>Too many repetitive consultations</li>
+                        <li>Hard to monitor each student's status</li>
+                        <li>Scattered information without platform</li>
+                        <li>Hard to scale advising service</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="section-title">Motivation</div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Efficiency Tools</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:100%"></div></div>
+                    </div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Student Management</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Knowledge System</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:85%"></div></div>
+                    </div>
+                </div>
+                <div style="margin-top:20px">
+                    <div class="section-title">Personality</div>
+                    <div class="dim-item"><span>Introvert</span><div class="dim-track"><div class="dim-dot" style="left:45%"></div></div><span>Extrovert</span></div>
+                    <div class="dim-item"><span>Logical</span><div class="dim-track"><div class="dim-dot" style="left:75%"></div></div><span>Emotional</span></div>
+                    <div class="dim-item"><span>Practical</span><div class="dim-track"><div class="dim-dot" style="left:60%"></div></div><span>Intuitive</span></div>
+                </div>
+                <div class="bio">
+                    Professional admission advisor dealing with daily student enquiries. They need an automatic platform to answer FAQs, track progress and improve professional efficiency.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="persona">
+        <div class="p-header">Career Planner</div>
+        <div class="p-body">
+            <div>
+                <div class="avatar"></div>
+                <div class="quote">I help students choose the most suitable study path.</div>
+                <div class="base-info">
+                    Job: Career & Study Planner<br>
+                    Focus: Positioning & Path Design<br>
+                    Goal: Personalised Scientific Planning
+                </div>
+            </div>
+            <div>
+                <div class="tags">
+                    <span class="tag">Analytical</span>
+                    <span class="tag">Strategic</span>
+                    <span class="tag">Systematic</span>
+                    <span class="tag">Goal-oriented</span>
+                </div>
+                <div>
+                    <div class="section-title">Goals</div>
+                    <ul class="list">
+                        <li>Help students with self-positioning</li>
+                        <li>Provide personalised university plans</li>
+                        <li>Support planning with data</li>
+                        <li>Improve student admission results</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="section-title">Frustrations</div>
+                    <ul class="list">
+                        <li>Student background information is scattered</li>
+                        <li>Lack of unified planning tools</li>
+                        <li>Hard to quantify progress</li>
+                        <li>Hard to standardise planning advice</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="section-title">Motivation</div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Planning System</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:100%"></div></div>
+                    </div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Student Assessment</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="motivation-item">
+                        <div class="motivation-label">Process Templates</div>
+                        <div class="motivation-bar"><div class="motivation-fill" style="width:85%"></div></div>
+                    </div>
+                </div>
+                <div style="margin-top:20px">
+                    <div class="section-title">Personality</div>
+                    <div class="dim-item"><span>Introvert</span><div class="dim-track"><div class="dim-dot" style="left:50%"></div></div><span>Extrovert</span></div>
+                    <div class="dim-item"><span>Logical</span><div class="dim-track"><div class="dim-dot" style="left:80%"></div></div><span>Emotional</span></div>
+                    <div class="dim-item"><span>Practical</span><div class="dim-track"><div class="dim-dot" style="left:65%"></div></div><span>Intuitive</span></div>
+                </div>
+                <div class="bio">
+                    Strategic career planner focusing on long-term study paths. They need an integrated platform to analyse students, make plans and visualise progress scientifically.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
