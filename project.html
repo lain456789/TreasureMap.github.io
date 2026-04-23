@@ -1360,11 +1360,27 @@
         checkResize();
 
         // ==================== 2. Data Storage and User System ====================
-        let API_KEY = localStorage.getItem('xjlu_api_key') || null;
+        let API_KEY = null;
         let currentUser = JSON.parse(localStorage.getItem('xjlu_user')) || null;
         let favorites = JSON.parse(localStorage.getItem('xjlu_favorites')) || [];
         let achievements = JSON.parse(localStorage.getItem('xjlu_achievements')) || [];
         let quizProgress = JSON.parse(localStorage.getItem('xjlu_quiz_progress')) || {completed:[]};
+
+        // Check API key expiration
+        function checkAPIKeyExpiration() {
+            const apiData = JSON.parse(localStorage.getItem('xjlu_api_key_data'));
+            if (apiData) {
+                const now = Date.now();
+                const expirationTime = apiData.timestamp + (5 * 60 * 1000); // 5 minutes
+                if (now <= expirationTime) {
+                    API_KEY = apiData.key;
+                } else {
+                    // API key expired
+                    localStorage.removeItem('xjlu_api_key_data');
+                    API_KEY = null;
+                }
+            }
+        }
 
         function updateUserUI() {
             if (currentUser) {
@@ -1930,18 +1946,34 @@
         // ==================== 5. AI Chat & 其他模块 ====================
         const CHAT_PROMPT = `你是一位西浦(XJTLU)毕业的高级顾问，客观、极其专业、简练。回答需直接切中要害，分段清晰。`;
         function initAPI() {
+            // Check API key expiration
+            checkAPIKeyExpiration();
+            
             if (API_KEY) {
                 document.getElementById('api-section').style.display = 'none';
                 document.getElementById('api-unlocked-section').style.display = 'flex';
+            } else {
+                document.getElementById('api-section').style.display = 'block';
+                document.getElementById('api-unlocked-section').style.display = 'none';
             }
         }
         
         document.getElementById('submit-api').onclick = () => {
             const val = document.getElementById('api-key-input').value.trim();
-            if(val) { API_KEY = val; localStorage.setItem('xjlu_api_key', val); initAPI(); }
+            if(val) {
+                API_KEY = val;
+                // Store API key with timestamp for expiration
+                const apiData = {
+                    key: val,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('xjlu_api_key_data', JSON.stringify(apiData));
+                initAPI();
+            }
         };
         document.getElementById('reset-api').onclick = () => {
-            API_KEY = null; localStorage.removeItem('xjlu_api_key');
+            API_KEY = null;
+            localStorage.removeItem('xjlu_api_key_data');
             document.getElementById('api-section').style.display = 'block';
             document.getElementById('api-unlocked-section').style.display = 'none';
         };
@@ -2250,6 +2282,8 @@
         // ==================== 初始化 ====================
         document.addEventListener('DOMContentLoaded', () => {
             setTheme(currentTheme);
+            // Check API key expiration on page load
+            checkAPIKeyExpiration();
             updateUserUI();
             initAPI();
             updateUniversityStats();
