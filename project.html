@@ -2313,10 +2313,22 @@
         }
         
         // ==================== University Search ====================
-        const recommendedContainer = document.querySelector('#map-panel .content-panel.active .university-card') ? document.querySelector('#map-panel').querySelector('.university-card')?.parentElement : null;
-        
         function renderSearchResults(results) {
-            const container = document.getElementById('search-results') || createSearchResultsContainer();
+            let container = document.getElementById('search-results');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'search-results';
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = '1fr';
+                container.style.gap = '12px';
+                container.style.marginTop = '16px';
+                container.style.marginBottom = '16px';
+                
+                const mapPanel = document.getElementById('map-panel');
+                const mapContainer = document.getElementById('map-container');
+                mapPanel.insertBefore(container, mapContainer.nextSibling);
+            }
+            
             container.innerHTML = '';
             
             if (results.length === 0) {
@@ -2337,7 +2349,12 @@
                 `;
                 card.onclick = (e) => {
                     if (!e.target.closest('.icon-btn')) {
+                        // Fly to the university on the map
+                        map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5, easeLinearity: 0.25 });
+                        // Show university modal
                         showUniversityModal(uni);
+                        // Hide search results
+                        container.style.display = 'none';
                     }
                 };
                 const bookmarkBtn = card.querySelector('.icon-btn');
@@ -2358,28 +2375,27 @@
             refreshIcons();
         }
         
-        function createSearchResultsContainer() {
-            const container = document.createElement('div');
-            container.id = 'search-results';
-            container.style.display = 'grid';
-            container.style.gridTemplateColumns = '1fr';
-            container.style.gap = '12px';
-            container.style.marginTop = '16px';
-            
-            const searchSection = document.querySelector('#map-panel');
-            const mapContainer = document.getElementById('map-container');
-            searchSection.insertBefore(container, mapContainer.nextSibling);
-            
-            return container;
-        }
-        
         document.getElementById('university-search').oninput = (e) => {
             const query = e.target.value.toLowerCase().trim();
-            const container = document.getElementById('search-results') || createSearchResultsContainer();
+            let container = document.getElementById('search-results');
             
             if (query.length === 0) {
-                container.style.display = 'none';
+                if (container) container.style.display = 'none';
                 return;
+            }
+            
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'search-results';
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = '1fr';
+                container.style.gap = '12px';
+                container.style.marginTop = '16px';
+                container.style.marginBottom = '16px';
+                
+                const mapPanel = document.getElementById('map-panel');
+                const mapContainer = document.getElementById('map-container');
+                mapPanel.insertBefore(container, mapContainer.nextSibling);
             }
             
             container.style.display = 'grid';
@@ -2387,23 +2403,9 @@
                 uni.name.toLowerCase().includes(query) ||
                 uni.city.toLowerCase().includes(query) ||
                 uni.country.toLowerCase().includes(query) ||
-                uni.state?.toLowerCase().includes(query)
+                (uni.state && uni.state.toLowerCase().includes(query))
             );
             renderSearchResults(results.slice(0, 10));
-        };
-        
-        document.getElementById('university-search').onfocus = (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (query.length > 0) {
-                const container = document.getElementById('search-results');
-                if (container) container.style.display = 'grid';
-                const results = universities.filter(uni => 
-                    uni.name.toLowerCase().includes(query) ||
-                    uni.city.toLowerCase().includes(query) ||
-                    uni.country.toLowerCase().includes(query)
-                );
-                renderSearchResults(results.slice(0, 10));
-            }
         };
         
         // ==================== 事件监听 ====================
