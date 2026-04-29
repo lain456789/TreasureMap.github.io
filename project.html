@@ -1992,20 +1992,61 @@
         document.getElementById('chat-send').onclick = sendChat;
         document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChat(); };
 
-        // 情感系统
+        // Emotional Support System - Multiple random messages per mood
         const emotionData = {
-            great: {title: 'Status Assessment: Excellent', text: 'Performance log created. Maintain your current pace and execution.'},
-            okay: {title: 'Status Assessment: Steady', text: 'Plateaus are normal for long-term tasks. Please continue to advance preparations according to your schedule.'},
-            stressed: {title: 'Status Assessment: High Stress', text: 'Decompression protocol recommended: Pause current work, step away from the screen, and execute 15 minutes of physical relaxation or environment change.'},
-            anxious: {title: 'Status Assessment: Anxious', text: 'Anxiety stems from a lack of control. It is recommended to break down grand goals into minimal task units executable within the next 24 hours and conquer them one by one.'}
+            great: {
+                title: 'Status Assessment: Excellent',
+                messages: [
+                    'Outstanding performance! Your dedication is paying off. Keep up the excellent work and maintain this momentum.',
+                    'Fantastic progress! Your consistent effort is showing results. Take a moment to celebrate this achievement.',
+                    'Excellent work! Your preparation is on track. Consider this a well-deserved recognition of your hard work.',
+                    'Brilliant! You are making remarkable strides. Keep pushing forward - success is within your reach.',
+                    'Superb execution! Your commitment to excellence is evident. This positive trajectory will lead to great outcomes.'
+                ]
+            },
+            okay: {
+                title: 'Status Assessment: Steady',
+                messages: [
+                    'Plateaus are normal for long-term tasks. Please continue to advance preparations according to your schedule.',
+                    'Steady progress is still progress. Trust the process and keep working towards your goals consistently.',
+                    'Maintenance mode is valid. Focus on small daily improvements rather than dramatic breakthroughs.',
+                    'Consistency beats intensity. Your steady approach will compound over time into significant results.',
+                    'Progress may seem slow, but every step counts. Keep moving forward at your current pace.'
+                ]
+            },
+            stressed: {
+                title: 'Status Assessment: High Stress',
+                messages: [
+                    'Decompression protocol recommended: Pause current work, step away from the screen, and execute 15 minutes of physical relaxation or environment change.',
+                    'Stress is a signal, not a verdict. Take a short break, breathe deeply, and return with a clearer perspective.',
+                    'High stress affects decision-making. Consider a brief walk, stretching, or listening to calming music before continuing.',
+                    'Your wellbeing comes first. Step away from the task, hydrate, and give your mind a chance to reset.',
+                    'Feeling overwhelmed is temporary. Prioritize rest, then tackle one small task at a time to rebuild momentum.'
+                ]
+            },
+            anxious: {
+                title: 'Status Assessment: Anxious',
+                messages: [
+                    'Anxiety stems from a lack of control. It is recommended to break down grand goals into minimal task units executable within the next 24 hours and conquer them one by one.',
+                    'Uncertainty is natural in this process. Focus on what you can control: your daily actions and decisions.',
+                    'Anxiety often precedes growth. Channel this energy into structured preparation rather than worrying about outcomes.',
+                    'Take a deep breath. Break your preparation into smaller, manageable steps and address them one at a time.',
+                    'Your anxiety shows you care. Use it as motivation to prepare thoroughly, but remember to be kind to yourself.'
+                ]
+            }
         };
+        
+        function getRandomEmotionMessage(mood) {
+            const messages = emotionData[mood].messages;
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
         document.querySelectorAll('.emotion-mood').forEach(mood => {
             mood.onclick = () => {
                 document.querySelectorAll('.emotion-mood').forEach(m => m.classList.remove('active'));
                 mood.classList.add('active');
-                const d = emotionData[mood.dataset.mood];
-                document.getElementById('emotion-title').textContent = d.title;
-                document.getElementById('emotion-text').textContent = d.text;
+                document.getElementById('emotion-title').textContent = emotionData[mood.dataset.mood].title;
+                document.getElementById('emotion-text').textContent = getRandomEmotionMessage(mood.dataset.mood);
                 document.getElementById('emotion-response').style.display = 'block';
             };
         });
@@ -2270,6 +2311,100 @@
                 resultDiv.textContent = 'Evaluation failed, please check network connection or API configuration';
             }
         }
+        
+        // ==================== University Search ====================
+        const recommendedContainer = document.querySelector('#map-panel .content-panel.active .university-card') ? document.querySelector('#map-panel').querySelector('.university-card')?.parentElement : null;
+        
+        function renderSearchResults(results) {
+            const container = document.getElementById('search-results') || createSearchResultsContainer();
+            container.innerHTML = '';
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px;">No universities found</div>';
+                return;
+            }
+            
+            results.forEach(uni => {
+                const card = document.createElement('div');
+                card.className = 'university-card';
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
+                        <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                    </div>
+                    <p style="font-size:12px;color:var(--text-muted);margin:0;">${uni.city}, ${uni.country}</p>
+                `;
+                card.onclick = (e) => {
+                    if (!e.target.closest('.icon-btn')) {
+                        showUniversityModal(uni);
+                    }
+                };
+                const bookmarkBtn = card.querySelector('.icon-btn');
+                bookmarkBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (!favorites.find(f => f.name === uni.name)) {
+                        favorites.push(uni);
+                        localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
+                        renderFavorites();
+                        updateUserUI();
+                        bookmarkBtn.innerHTML = '<i data-lucide="check"></i>';
+                        bookmarkBtn.style.color = 'var(--success-text)';
+                        refreshIcons();
+                    }
+                };
+                container.appendChild(card);
+            });
+            refreshIcons();
+        }
+        
+        function createSearchResultsContainer() {
+            const container = document.createElement('div');
+            container.id = 'search-results';
+            container.style.display = 'grid';
+            container.style.gridTemplateColumns = '1fr';
+            container.style.gap = '12px';
+            container.style.marginTop = '16px';
+            
+            const searchSection = document.querySelector('#map-panel');
+            const mapContainer = document.getElementById('map-container');
+            searchSection.insertBefore(container, mapContainer.nextSibling);
+            
+            return container;
+        }
+        
+        document.getElementById('university-search').oninput = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const container = document.getElementById('search-results') || createSearchResultsContainer();
+            
+            if (query.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+            
+            container.style.display = 'grid';
+            const results = universities.filter(uni => 
+                uni.name.toLowerCase().includes(query) ||
+                uni.city.toLowerCase().includes(query) ||
+                uni.country.toLowerCase().includes(query) ||
+                uni.state?.toLowerCase().includes(query)
+            );
+            renderSearchResults(results.slice(0, 10));
+        };
+        
+        document.getElementById('university-search').onfocus = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query.length > 0) {
+                const container = document.getElementById('search-results');
+                if (container) container.style.display = 'grid';
+                const results = universities.filter(uni => 
+                    uni.name.toLowerCase().includes(query) ||
+                    uni.city.toLowerCase().includes(query) ||
+                    uni.country.toLowerCase().includes(query)
+                );
+                renderSearchResults(results.slice(0, 10));
+            }
+        };
         
         // ==================== 事件监听 ====================
         document.getElementById('add-todo').onclick = addTodo;
