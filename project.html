@@ -969,7 +969,7 @@
         </div>
         <div class="nav-links">
             <button class="nav-link active" data-panel="home"><i data-lucide="layout-grid" style="width:16px;"></i> Explore</button>
-            <button class="nav-link" data-panel="quiz"><i data-lucide="target" style="width:16px;"></i> Challenge</button>
+            <button class="nav-link" data-panel="recommend"><i data-lucide="sparkles" style="width:16px;"></i> Recommend</button>
             <button class="nav-link" data-panel="emotion"><i data-lucide="heart" style="width:16px;"></i> Support</button>
             <a href="index.html" class="nav-link external" target="_blank"><i data-lucide="info" style="width:16px;"></i> About</a>
         </div>
@@ -1102,7 +1102,7 @@
             <div id="content-tabs">
                 <button class="content-tab active" data-panel="map-panel"><i data-lucide="map" style="width:16px; margin-right:8px;"></i> Map Exploration</button>
                 <button class="content-tab" data-panel="achievement-panel"><i data-lucide="trophy" style="width:16px; margin-right:8px;"></i> Achievement Center</button>
-                <button class="content-tab" data-panel="quiz-panel"><i data-lucide="target" style="width:16px; margin-right:8px;"></i> Knowledge Challenge</button>
+                <button class="content-tab" data-panel="recommend-panel"><i data-lucide="sparkles" style="width:16px; margin-right:8px;"></i> School Recommendation</button>
                 <button class="content-tab" data-panel="emotion-panel"><i data-lucide="heart" style="width:16px; margin-right:8px;"></i> Emotional Support</button>
             </div>
 
@@ -1222,29 +1222,33 @@
                     </div>
                 </div>
 
-                <div class="content-panel" id="quiz-panel">
+                <div class="content-panel" id="recommend-panel">
                     <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
-                        <div id="quiz-start" style="text-align:center; padding: 30px 0;">
-                            <i data-lucide="book-open" style="width:40px; height:40px; color:var(--text-muted); margin-bottom:12px;"></i>
-                            <h3 style="font-size:18px; margin-bottom:10px;">Study Abroad Preparation Quiz</h3>
-                            <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Contains 30 core test questions to verify your readiness.</p>
-                            <button class="btn-primary" id="start-quiz" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Quiz</button>
-                        </div>
-                        <div id="quiz-game" style="display:none;">
-                            <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
-                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Progress <span id="quiz-level-num">1</span> / 30</p>
-                            <div id="quiz-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
-                            <div id="quiz-options"></div>
-                            <button class="btn-primary" id="quiz-submit" style="margin-top:20px;">Submit Answer</button>
-                        </div>
-                        <div id="quiz-result" style="display:none; text-align:center; padding:30px 0;">
-                            <div id="quiz-result-icon-container" style="margin-bottom:12px; display:flex; justify-content:center;"></div>
-                            <h3 id="quiz-result-title" style="font-size:18px; margin-bottom:10px;"></h3>
-                            <p id="quiz-result-msg" style="color:var(--text-muted); margin-bottom:24px; font-size:13px;"></p>
-                            <div style="display:flex; gap:12px; justify-content:center;">
-                                <button class="btn-secondary" id="quiz-retry" style="flex:1; max-width: 120px; padding: 10px 16px;">Retry</button>
-                                <button class="btn-primary" id="quiz-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next Question</button>
+                        <div id="recommend-start">
+                            <div style="text-align:center; padding: 30px 0;">
+                                <i data-lucide="graduation-cap" style="width:48px; height:48px; color:var(--accent); margin-bottom:16px;"></i>
+                                <h3 style="font-size:18px; margin-bottom:10px;">Smart School Recommendation</h3>
+                                <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Answer a few questions to get personalized university recommendations.</p>
+                                <button class="btn-primary" id="start-recommend" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Recommendation</button>
                             </div>
+                        </div>
+                        <div id="recommend-form" style="display:none;">
+                            <div class="progress-bar"><div class="progress-fill" id="recommend-progress-fill"></div></div>
+                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Question <span id="recommend-step-num">1</span> / <span id="recommend-total-num">5</span></p>
+                            <div id="recommend-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
+                            <div id="recommend-options"></div>
+                            <div style="display:flex; gap:12px; margin-top:20px;">
+                                <button class="btn-secondary" id="recommend-back" style="flex:1; max-width: 120px; padding: 10px 16px;">Back</button>
+                                <button class="btn-primary" id="recommend-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next</button>
+                            </div>
+                        </div>
+                        <div id="recommend-result" style="display:none;">
+                            <div style="text-align:center; margin-bottom:20px;">
+                                <i data-lucide="check-circle" style="width:48px; height:48px; color:var(--success-text);"></i>
+                                <h3 style="font-size:18px; margin-top:12px;">Recommended Universities</h3>
+                            </div>
+                            <div id="recommend-results-list" style="display:grid; gap:12px;"></div>
+                            <button class="btn-secondary" id="recommend-restart" style="width:100%; margin-top:20px; padding:12px;">Start Over</button>
                         </div>
                     </div>
                 </div>
@@ -1836,95 +1840,184 @@
             updateUniversitySelect();
         }
 
-        // ==================== 4. 完整的 30 道测试题系统 ====================
-        const quizQuestions = [
-            {q:"What is the minimum overall IELTS score usually required when applying for overseas graduate programs?",o:["6.0","6.5","7.0","7.5"],a:1},
-            {q:"What does GPA stand for?",o:["Grade Point Average","Graduate Point Average","General Point Average","Global Point Average"],a:0},
-            {q:"How many recommendation letters are usually required for graduate applications?",o:["1","2-3","4","5"],a:1},
-            {q:"Which country's graduate programs primarily require the GRE exam?",o:["UK","Canada","US","Australia"],a:2},
-            {q:"What should NOT be included in an academic CV?",o:["Educational Background","Research Experience","Personal Hobbies","Published Papers"],a:2},
-            {q:"What is the ideal word count for a Personal Statement (PS)?",o:["100-200 words","300-500 words","800-1000 words","Over 1500 words"],a:1},
-            {q:"Which transcript is usually required when applying for a graduate program?",o:["High School Transcript","Undergraduate Transcript","Graduate Transcript","No transcript needed"],a:1},
-            {q:"For which field of graduate study is the GMAT primarily used?",o:["STEM","Humanities","Business","Arts"],a:2},
-            {q:"What does the application deadline mean?",o:["Date to start applying","Last date to submit materials","Date of admission notification","Enrollment date"],a:1},
-            {q:"What does \"Conditional Offer\" mean in the application context?",o:["Unconditional Admission","Conditional Admission","Rejection","Under Review"],a:1},
-            {q:"What is the typical validity period of an IELTS score for graduate applications?",o:["6 months","1 year","2 years","Permanently valid"],a:2},
-            {q:"Who is the best person to write an academic recommendation letter?",o:["Classmate","Family member","Professor or Advisor","Yourself"],a:2},
-            {q:"What is the purpose of providing proof of funds when applying?",o:["To prove ability to pay tuition and living expenses","To prove investment ability","To prove work experience","To prove social connections"],a:0},
-            {q:"What is the main difference between an academic CV and a standard Resume?",o:["No difference","CV is more detailed and academic; Resume is concise and applied","CV is longer, Resume is shorter","Interchangeable"],a:1},
-            {q:"Besides GPA, what is most valued in STEM graduate applications?",o:["Family background","Extracurricular activities","Research experience and publications","Social connections"],a:2},
-            {q:"Which of the following is NOT a section of the IELTS exam?",o:["Listening","Reading","Writing","Translation"],a:3},
-            {q:"How far in advance should you typically start preparing for language exams?",o:["1-3 months","4-6 months","At least 1 year in advance","After getting an offer"],a:2},
-            {q:"What is a Personal Statement (PS)?",o:["Resume","An essay explaining application motives and background","Recommendation letter","Transcript"],a:1},
-            {q:"Can GRE and GMAT usually substitute for each other in business school applications?",o:["Absolutely","In some schools, but best to follow specific requirements","Not at all","Depends on if cross-majoring"],a:1},
-            {q:"What is Rolling Admission?",o:["Admissions evaluated as they are received (first-come, first-served)","Admitted on a fixed date uniformly","Admitted in batches","Random selection"],a:0},
-            {q:"For which field is a Portfolio primarily required?",o:["Business","STEM","Art, Design, and Architecture","Pure Humanities"],a:2},
-            {q:"What does being placed on a Waitlist mean?",o:["Formally admitted","Completely rejected","On a waiting list, still possible to be admitted","Required to interview again"],a:2},
-            {q:"How are recommendation letters typically submitted to most overseas institutions today?",o:["Applicant mails physical copies","System sends a link, recommender uploads directly","Packaged with transcripts","No need to submit"],a:1},
-            {q:"What does \"Transcript\" refer to in applications?",o:["Personal Statement","Official Academic Record","Resume","Recommendation Letter"],a:1},
-            {q:"Can language scores be submitted later for most UK graduate programs?",o:["Absolutely not","Most allow submission after receiving a conditional offer","All schools and majors allow it","Only business programs allow it"],a:1},
-            {q:"What does \"Reference Letter\" refer to?",o:["Recommendation Letter","Reference Letter (same)","Introduction Letter","Certification Letter"],a:0},
-            {q:"What language version of the undergraduate transcript is usually required?",o:["Only native language","Notarized English translation only","Official bilingual (Native and English) version with seal","Any of the above"],a:2},
-            {q:"What does a Statement of Purpose (SOP) focus more on?",o:["Detailed research interests and academic goals","Personal family background","Recommender's evaluation","Extracurricular hobbies"],a:0},
-            {q:"When applying for a different major, what can best make up for the lack of background?",o:["Higher language scores","Relevant internship experience and prerequisite courses","Better formatting","Classmate's recommendation"],a:1},
-            {q:"What does \"Unconditional Offer\" mean?",o:["Conditional Admission","Unconditional Admission (Formal Acceptance)","Waiting for Admission","Rejection"],a:1}
+        // ==================== School Recommendation System ====================
+        const recommendQuestions = [
+            {
+                q: "Which year are you currently in?",
+                options: ["Year 2 (Sophomore)", "Year 3 (Junior)", "Year 4 (Senior)"],
+                key: "year"
+            },
+            {
+                q: "Which school/college are you from at XJTLU?",
+                options: ["School of Business", "School of Science", "School of Advanced Technology", "School of Film and Television", "School of Arts", "School of Humanities and Social Sciences"],
+                key: "school"
+            },
+            {
+                q: "What is your major?",
+                options: ["Finance & Accounting", "Economics & Management", "Computer Science & AI", "Mathematics & Statistics", "Mechanical & Energy Engineering", "English & Communications", "Architecture & Urban Planning", "Other"],
+                key: "major"
+            },
+            {
+                q: "What is your approximate GPA range?",
+                options: ["Below 2.5 (Below 60)", "2.5 - 3.0 (60 - 75)", "3.0 - 3.5 (75 - 85)", "Above 3.5 (Above 85)"],
+                key: "gpa"
+            },
+            {
+                q: "What is your study habit?",
+                options: ["Very diligent - consistent daily study", "Moderate - study before exams", "Flexible - study when motivated", "Need improvement - often procrastinate"],
+                key: "habit"
+            }
         ];
-
-        let currentQuestionIndex = 0;
-        let selectedOption = null;
-
-        function loadQuizQuestion() {
-            if (currentQuestionIndex >= quizQuestions.length) return;
-            const q = quizQuestions[currentQuestionIndex];
-            document.getElementById('quiz-level-num').textContent = currentQuestionIndex + 1;
-            document.getElementById('quiz-progress-fill').style.width = `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
-            document.getElementById('quiz-question').textContent = `${currentQuestionIndex + 1}. ${q.q}`;
+        
+        let recommendStep = 0;
+        let recommendAnswers = {};
+        let selectedRecommendOption = null;
+        
+        function loadRecommendQuestion() {
+            if (recommendStep >= recommendQuestions.length) return;
+            const q = recommendQuestions[recommendStep];
+            document.getElementById('recommend-step-num').textContent = recommendStep + 1;
+            document.getElementById('recommend-total-num').textContent = recommendQuestions.length;
+            document.getElementById('recommend-progress-fill').style.width = `${((recommendStep) / recommendQuestions.length) * 100}%`;
+            document.getElementById('recommend-question').textContent = q.q;
             
-            const container = document.getElementById('quiz-options');
+            const container = document.getElementById('recommend-options');
             container.innerHTML = '';
-            q.o.forEach((opt, i) => {
+            q.options.forEach((opt, i) => {
                 const div = document.createElement('div');
-                div.className = 'quiz-option'; div.textContent = opt;
+                div.className = 'quiz-option';
+                div.textContent = opt;
                 div.onclick = () => {
-                    document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
-                    div.classList.add('selected'); selectedOption = i;
+                    document.querySelectorAll('#recommend-options .quiz-option').forEach(o => o.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedRecommendOption = i;
                 };
                 container.appendChild(div);
             });
+            
+            document.getElementById('recommend-back').style.visibility = recommendStep === 0 ? 'hidden' : 'visible';
+            document.getElementById('recommend-next').textContent = recommendStep === recommendQuestions.length - 1 ? 'Get Results' : 'Next';
+            refreshIcons();
         }
-
-        document.getElementById('start-quiz').onclick = () => {
-            document.getElementById('quiz-start').style.display = 'none';
-            document.getElementById('quiz-game').style.display = 'block';
-            currentQuestionIndex = 0; loadQuizQuestion();
-        };
-
-        document.getElementById('quiz-submit').onclick = () => {
-            if (selectedOption === null) return;
-            const q = quizQuestions[currentQuestionIndex];
-            const options = document.querySelectorAll('.quiz-option');
+        
+        function getRecommendations() {
+            const { year, school, major, gpa, habit } = recommendAnswers;
             
-            if (selectedOption === q.a) { options[selectedOption].classList.add('correct'); } 
-            else { options[selectedOption].classList.add('incorrect'); options[q.a].classList.add('correct'); }
+            const recommendations = universities.filter(uni => {
+                let score = 0;
+                
+                // GPA scoring
+                if (gpa === 'Above 3.5 (Above 85)') score += 30;
+                else if (gpa === '3.0 - 3.5 (75 - 85)') score += 20;
+                else if (gpa === '2.5 - 3.0 (60 - 75)') score += 10;
+                
+                // Study habit scoring
+                if (habit === 'Very diligent - consistent daily study') score += 20;
+                else if (habit === 'Moderate - study before exams') score += 15;
+                else if (habit === 'Flexible - study when motivated') score += 10;
+                
+                // Major-based filtering
+                const stemMajors = ['Computer Science & AI', 'Mathematics & Statistics', 'Mechanical & Energy Engineering'];
+                const businessMajors = ['Finance & Accounting', 'Economics & Management'];
+                
+                if (stemMajors.includes(major)) {
+                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Canada' || uni.country === 'Germany' || uni.country === 'Switzerland') {
+                        score += 25;
+                    }
+                } else if (businessMajors.includes(major)) {
+                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Hong Kong' || uni.country === 'Singapore') {
+                        score += 25;
+                    }
+                } else {
+                    score += 15;
+                }
+                
+                // Year-based adjustment
+                if (year === 'Year 2 (Sophomore)') {
+                    score += (uni.comment.length > 50) ? 15 : 10;
+                } else if (year === 'Year 3 (Junior)') {
+                    score += 20;
+                } else {
+                    score += 15;
+                }
+                
+                uni.matchScore = score;
+                return score > 30;
+            });
             
-            setTimeout(() => {
-                currentQuestionIndex++; selectedOption = null;
-                if (currentQuestionIndex >= quizQuestions.length) {
-                    document.getElementById('quiz-game').style.display = 'none';
-                    document.getElementById('quiz-result').style.display = 'block';
-                    document.getElementById('quiz-result-icon-container').innerHTML = '<i data-lucide="check-circle" style="width:56px;height:56px;color:var(--success-text);"></i>';
-                    document.getElementById('quiz-result-title').textContent = `Test Completed`;
-                    document.getElementById('quiz-result-msg').textContent = 'You have completed all 30 study abroad preparation test questions. Solid foundation!';
-                    document.getElementById('quiz-next').style.display = 'none';
-                    refreshIcons();
-                } else { loadQuizQuestion(); }
-            }, 800);
+            return recommendations.sort((a, b) => b.matchScore - a.matchScore).slice(0, 6);
+        }
+        
+        function showRecommendResults() {
+            const results = getRecommendations();
+            document.getElementById('recommend-form').style.display = 'none';
+            document.getElementById('recommend-result').style.display = 'block';
+            
+            const container = document.getElementById('recommend-results-list');
+            container.innerHTML = '';
+            
+            if (results.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">No exact matches found. Try adjusting your answers or browse the map directly.</p>';
+                return;
+            }
+            
+            results.forEach(uni => {
+                const card = document.createElement('div');
+                card.className = 'university-card';
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
+                        <span style="font-size:11px;background:var(--accent);color:white;padding:2px 8px;border-radius:10px;">${uni.matchScore}pts</span>
+                    </div>
+                    <p style="font-size:12px;color:var(--text-muted);margin:0 0 6px 0;">${uni.city}, ${uni.country}</p>
+                    <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.4;">${uni.comment.substring(0, 80)}...</p>
+                `;
+                card.onclick = () => {
+                    map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5 });
+                    showUniversityModal(uni);
+                };
+                container.appendChild(card);
+            });
+            refreshIcons();
+        }
+        
+        document.getElementById('start-recommend').onclick = () => {
+            document.getElementById('recommend-start').style.display = 'none';
+            document.getElementById('recommend-form').style.display = 'block';
+            recommendStep = 0;
+            recommendAnswers = {};
+            loadRecommendQuestion();
         };
-
-        document.getElementById('quiz-retry').onclick = () => {
-            document.getElementById('quiz-result').style.display = 'none';
-            document.getElementById('quiz-game').style.display = 'block';
-            currentQuestionIndex = 0; loadQuizQuestion();
+        
+        document.getElementById('recommend-next').onclick = () => {
+            if (selectedRecommendOption === null) return;
+            const key = recommendQuestions[recommendStep].key;
+            recommendAnswers[key] = recommendQuestions[recommendStep].options[selectedRecommendOption];
+            selectedRecommendOption = null;
+            
+            if (recommendStep < recommendQuestions.length - 1) {
+                recommendStep++;
+                loadRecommendQuestion();
+            } else {
+                showRecommendResults();
+            }
+        };
+        
+        document.getElementById('recommend-back').onclick = () => {
+            if (recommendStep > 0) {
+                recommendStep--;
+                selectedRecommendOption = null;
+                loadRecommendQuestion();
+            }
+        };
+        
+        document.getElementById('recommend-restart').onclick = () => {
+            document.getElementById('recommend-result').style.display = 'none';
+            document.getElementById('recommend-start').style.display = 'block';
+            recommendStep = 0;
+            recommendAnswers = {};
+            selectedRecommendOption = null;
         };
 
         // ==================== 5. AI Chat & 其他模块 ====================
@@ -2080,12 +2173,10 @@
                     if (window.innerWidth <= 1024) {
                         document.getElementById('left-sidebar').classList.add('open');
                     }
-                } else if (panel === 'quiz') {
-                    // 切换到知识挑战面板
-                    document.querySelector('[data-panel="quiz-panel"]').classList.add('active');
-                    document.getElementById('quiz-panel').classList.add('active');
+                } else if (panel === 'recommend') {
+                    document.querySelector('[data-panel="recommend-panel"]').classList.add('active');
+                    document.getElementById('recommend-panel').classList.add('active');
                 } else if (panel === 'emotion') {
-                    // 切换到情感疏导面板
                     document.querySelector('[data-panel="emotion-panel"]').classList.add('active');
                     document.getElementById('emotion-panel').classList.add('active');
                 }
