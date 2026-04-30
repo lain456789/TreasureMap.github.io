@@ -3,2513 +3,1296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XJTLU Treasure Map for Study Abroad - Intelligent Study Abroad Planning Platform</title>
+    <title>XJTLU Treasure Map - Study Abroad Adventure</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        /* Responsive Variable System */
-        :root {
-            /* Light Mode Variables (Swiss Spa Light) */
-            --bg-body: #F9FAFB;
-            --bg-surface: #FFFFFF;
-            --bg-hover: #F3F4F6;
-            --text-main: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
-            --primary: #000000;
-            --primary-hover: #374151;
-            --marker-fill: #1E3A8A; /* Navy Blue */
-            --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
-            --shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.08);
-            --nav-bg: rgba(255, 255, 255, 0.85);
-            --success-bg: #ECFDF5;
-            --success-text: #10B981;
-            --danger-bg: #FEF2F2;
-            --danger-text: #EF4444;
-        }
 
-        [data-theme="dark"] {
-            /* Dark Mode Variables (Midnight Minimalist) */
-            --bg-body: #050505;
-            --bg-surface: #0F0F0F;
-            --bg-hover: #1A1A1A;
-            --text-main: #FAFAFA;
-            --text-muted: #A1A1AA;
-            --border: #262626;
-            --primary: #FFFFFF;
-            --primary-hover: #E5E5E5;
-            --marker-fill: #3B82F6; /* Bright Blue */
-            --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.2);
-            --shadow-modal: 0 10px 50px rgba(0, 0, 0, 0.4);
-            --nav-bg: rgba(10, 10, 10, 0.85);
-            --success-bg: rgba(16, 185, 129, 0.1);
-            --success-text: #34D399;
-            --danger-bg: rgba(239, 68, 68, 0.1);
-            --danger-text: #F87171;
+        /* Game-like Theme Variables */
+        :root {
+            --treasure-gold: #FFD700;
+            --treasure-gold-dark: #B8860B;
+            --treasure-map: #DEB887;
+            --treasure-map-dark: #8B4513;
+            --treasure-sea: #1E90FF;
+            --treasure-sand: #F4A460;
+            --treasure-wood: #D2691E;
+            --bg-adventure: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --bg-card: rgba(255, 255, 255, 0.08);
+            --bg-card-hover: rgba(255, 255, 255, 0.12);
+            --border-gold: 1px solid rgba(255, 215, 0, 0.3);
+            --text-gold: #FFD700;
+            --text-main: #FFFFFF;
+            --text-muted: #B8B8D0;
+            --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         body, html {
             height: 100%; width: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-            background: var(--bg-body);
+            font-family: 'Segoe UI', 'Roboto', 'SF Pro Display', sans-serif;
+            background: var(--bg-adventure);
             color: var(--text-main);
             overflow: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Navigation Bar */
+        /* Treasure Map Style Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }
+
+        /* Navbar - Pirate Ship Style */
         #navbar {
-            position: fixed; top: 0; left: 0; right: 0; height: 64px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
+            position: fixed; top: 0; left: 0; right: 0; height: 60px;
+            background: rgba(10, 10, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
             z-index: 1000;
-            display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
-            transition: background 0.4s ease, border-color 0.4s ease;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px;
         }
 
         .nav-brand {
-            font-size: 16px; font-weight: 600; color: var(--text-main);
-            display: flex; align-items: center; gap: 12px; letter-spacing: -0.2px;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 16px; font-weight: 700;
+            color: var(--treasure-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        .nav-links { display: flex; gap: 8px; flex: 1; margin-left: 48px;}
-        .nav-link {
-            background: transparent; border: none; color: var(--text-muted);
-            padding: 8px 16px; border-radius: 8px; cursor: pointer;
-            transition: all 0.2s; font-size: 14px; font-weight: 500;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .nav-link:hover, .nav-link.active { color: var(--text-main); background: var(--bg-hover); }
-        .nav-link.external {
+        .nav-brand i { animation: compass-spin 8s linear infinite; }
+        @keyframes compass-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .nav-buttons { display: flex; gap: 8px; }
+        .nav-btn {
+            width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
             color: var(--text-muted);
-        }
-        .nav-link.external:hover {
-            color: var(--text-main);
-        }
-
-        .nav-right { display: flex; align-items: center; gap: 12px; }
-
-        .icon-btn {
-            background: transparent; border: 1px solid transparent; color: var(--text-muted);
-            width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
-            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
-        }
-        .icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--border); }
-
-        /* Main Container */
-        #main-container { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; display: flex; }
-
-        /* Left Sidebar Navigation */
-        #left-sidebar {
-            width: 480px; background: var(--bg-surface); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; z-index: 900;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease;
             position: relative;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--treasure-gold);
+            border-color: var(--treasure-gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
         }
 
-
-
-        /* Left Sidebar Content */
-        .sidebar-panel {
-            padding: 16px;
+        .nav-btn.badge::after {
+            content: attr(data-badge);
+            position: absolute; top: -4px; right: -4px;
+            width: 18px; height: 18px;
+            background: #FF4444;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600;
         }
 
-        .sidebar-panel h3 {
+        /* Main Container - Treasure Map View */
+        #main-container {
+            position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Compass Home Screen */
+        #compass-home {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .compass-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 30px;
+        }
+
+        .compass-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 3px solid var(--treasure-gold);
+            box-shadow: var(--shadow-glow), inset 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .compass-inner {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(10, 10, 20, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .compass-needle {
+            position: absolute;
+            width: 4px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--treasure-gold), var(--treasure-gold-dark));
+            transform-origin: center bottom;
+            animation: needle-swing 3s ease-in-out infinite;
+            border-radius: 2px;
+        }
+
+        .compass-needle::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 12px solid var(--treasure-gold);
+        }
+
+        @keyframes needle-swing {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .compass-center {
+            position: absolute;
+            width: 20px; height: 20px;
+            background: var(--treasure-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--treasure-gold);
+        }
+
+        .compass-direction {
+            position: absolute;
             font-size: 18px;
+            font-weight: 700;
+            color: var(--treasure-gold);
+            text-shadow: 0 0 10px var(--treasure-gold);
+        }
+        .compass-direction.n { top: 10px; left: 50%; transform: translateX(-50%); }
+        .compass-direction.e { right: 10px; top: 50%; transform: translateY(-50%); }
+        .compass-direction.s { bottom: 10px; left: 50%; transform: translateX(-50%); }
+        .compass-direction.w { left: 10px; top: 50%; transform: translateY(-50%); }
+
+        .home-title {
+            font-size: 28px; font-weight: 700;
+            color: var(--treasure-gold);
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .home-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Adventure Buttons Grid */
+        .adventure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .adventure-btn {
+            padding: 20px;
+            background: var(--bg-card);
+            border: var(--border-gold);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .adventure-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--treasure-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .adventure-btn:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--treasure-gold);
+        }
+
+        .adventure-btn:hover::before { transform: scaleX(1); }
+
+        .adventure-btn-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 12px;
+            color: var(--treasure-gold);
+            font-size: 20px;
+        }
+
+        .adventure-btn-title {
+            font-size: 15px; font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .adventure-btn-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Drawer Panels */
+        .drawer {
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 2px solid rgba(255, 215, 0, 0.2);
+            z-index: 900;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .drawer.open { transform: translateX(0); }
+
+        .drawer-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .drawer-title {
+            font-size: 18px; font-weight: 700;
+            color: var(--treasure-gold);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .drawer-close {
+            width: 36px; height: 36px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-close:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--treasure-gold);
+        }
+
+        /* Map Drawer */
+        #map-drawer .search-box {
+            position: relative;
             margin-bottom: 16px;
         }
 
-        .sidebar-panel p {
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        /* University Statistics Chart */
-        .uni-stats {
-            margin-top: 16px;
-            padding: 16px;
-        }
-
-        .uni-stats h4 {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .uni-stats-item {
-            margin-bottom: 12px;
-        }
-
-        .uni-stats-label {
-            font-size: 12px;
-        }
-
-        .uni-stats-bar {
-            height: 8px;
-            margin-top: 4px;
-        }
-
-        /* Major Distribution Chart */
-        .major-distribution {
-            margin-top: 16px;
-            padding: 16px;
-        }
-
-        .major-distribution h4 {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .major-chart-container {
-            height: 200px;
-        }
-
-        /* Study Path Planning */
-        .study-path {
-            margin-top: 16px;
-            padding: 16px;
-        }
-
-        .study-path h4 {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .path-item {
-            padding: 12px;
-            margin-bottom: 8px;
-        }
-
-        .path-item h5 {
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-
-        .path-item p {
-            font-size: 12px;
-        }
-
-        .path-btn {
-            padding: 8px 16px;
-            font-size: 12px;
-        }
-
-        /* Main Content Area */
-        #content-area {
-            flex: 1; display: flex; flex-direction: column;
-            position: relative;
+        #map-drawer input {
             width: 100%;
-        }
-
-        /* Top Function Tabs */
-        #content-tabs {
-            height: 60px; background: var(--bg-surface); border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; padding: 0 32px; gap: 16px;
-            z-index: 800;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        #content-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .content-tab {
-            background: none; border: none; color: var(--text-muted); padding: 12px 16px;
-            cursor: pointer; font-size: 14px; font-weight: 500; position: relative;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .content-tab:hover {
-            background: var(--bg-hover);
-            color: var(--text-main);
-        }
-
-        .content-tab.active {
-            color: var(--text-main);
-            background: var(--bg-hover);
-        }
-
-        .content-tab.active::after {
-            content: ''; position: absolute; bottom: 0; left: 16px; right: 16px;
-            height: 2px; background: var(--text-main);
-        }
-
-        /* Content Area */
-        #content-panels {
-            flex: 1; position: relative;
-            overflow: hidden;
-        }
-
-        .content-panel {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            display: none;
-            padding: 16px;
-            overflow-y: auto;
-        }
-
-        .content-panel.active {
-            display: block;
-        }
-
-        /* Map Area */
-        #map-container {
-            height: 60vh; position: relative; background: var(--bg-body);
-        }
-
-        #map { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
-
-        /* Content Panel Styles */
-        .sidebar-panel { height: 100%; display: flex; flex-direction: column; }
-        .panel-header { padding: 24px 32px 16px; }
-        .panel-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-
-        .panel-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 32px; gap: 24px; }
-        .panel-tab {
-            background: none; border: none; color: var(--text-muted); padding: 12px 0;
-            cursor: pointer; font-size: 14px; font-weight: 500; position: relative;
-        }
-        .panel-tab.active { color: var(--text-main); }
-        .panel-tab.active::after {
-            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
-            height: 2px; background: var(--text-main);
-        }
-
-        .tab-content { display: none; flex: 1; overflow-y: auto; padding: 24px 32px; }
-        .tab-content.active { display: block; }
-
-        /* Unified Card Style */
-        .user-section, .api-section, .fav-item, .ach-node-content, .uni-stat, .ai-senior-section, .emotion-response, .quiz-option, .university-card {
-            background: var(--bg-surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 20px; margin-bottom: 20px;
-            box-shadow: var(--shadow-subtle); transition: all 0.4s ease;
-        }
-
-        .university-card {
-            margin-bottom: 0;
-            transition: all 0.3s ease;
-        }
-
-        .university-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Button Styles */
-        .btn-primary {
-            width: 100%; padding: 12px; background: var(--primary); border: none;
-            border-radius: 8px; color: var(--bg-surface); font-weight: 500; font-size: 14px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: opacity 0.2s;
-        }
-        .btn-primary:hover { opacity: 0.85; }
-        
-        .btn-secondary {
-            width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border);
-            border-radius: 8px; color: var(--text-main); font-weight: 500; font-size: 14px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: all 0.2s;
-        }
-        .btn-secondary:hover { background: var(--bg-hover); }
-
-        .btn-link { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; text-decoration: underline; }
-        .btn-link:hover { color: var(--text-main); }
-
-        /* Form Input */
-        input, select {
-            width: 100%; padding: 12px 16px; background: var(--bg-body);
-            border: 1px solid var(--border); border-radius: 8px; color: var(--text-main);
-            font-size: 14px; transition: all 0.2s; font-family: inherit; margin-bottom: 16px;
-        }
-        input:focus { outline: none; border-color: var(--text-muted); }
-        .form-group label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 13px; font-weight: 500; }
-
-        /* Chat Bubble */
-        .chat-box { background: var(--bg-body); border-radius: 8px; height: 320px; padding: 20px; overflow-y: auto; margin-bottom: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px;}
-        .chat-msg { display: flex; flex-direction: column; }
-        .chat-user { align-items: flex-end; }
-        .chat-ai { align-items: flex-start; }
-        .msg { padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.5; }
-        .chat-user .msg { background: var(--primary); color: var(--bg-surface); border-radius: 12px 12px 4px 12px;}
-        .chat-ai .msg { background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 12px 12px 12px 4px; box-shadow: var(--shadow-subtle);}
-
-        /* Modal */
-        .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: var(--bg-surface); margin: 6vh auto; border-radius: 12px;
-            border: 1px solid var(--border); width: 90%; max-width: 480px;
-            box-shadow: var(--shadow-modal); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;
-        }
-        .modal-header { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .modal-body { padding: 32px; overflow-y: auto; }
-
-        /* Specific Business Component Details */
-        .user-info { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-        .user-avatar-large { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
-        .user-stats { display: flex; gap: 24px; border-top: 1px solid var(--border); padding-top: 20px; }
-        .stat-item { flex: 1; }
-        .stat-num { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-        .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; }
-
-        .fav-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; margin-bottom: 12px;}
-        .fav-item:hover { border-color: var(--text-muted); }
-        .fav-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
-        .fav-meta { font-size: 12px; color: var(--text-muted); }
-        
-        .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
-
-        /* Quiz System */
-        .progress-bar { width: 100%; height: 6px; background: var(--bg-hover); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
-        .progress-fill { height: 100%; background: var(--text-main); transition: width 0.3s ease; }
-        .quiz-option { cursor: pointer; padding: 16px 20px; font-weight: 500; font-size: 14px; margin-bottom: 12px;}
-        .quiz-option:hover { border-color: var(--text-muted); }
-        .quiz-option.selected { border-color: var(--text-main); background: var(--bg-hover); }
-        .quiz-option.correct { border-color: var(--success-text); color: var(--success-text); background: var(--success-bg); }
-        .quiz-option.incorrect { border-color: var(--danger-text); color: var(--danger-text); background: var(--danger-bg); }
-
-        /* Emotion System */
-        .emotion-moods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
-        .emotion-mood { text-align: center; padding: 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-        .emotion-mood:hover { border-color: var(--text-muted); }
-        .emotion-mood.active { border-color: var(--text-main); background: var(--bg-hover); }
-
-        /* Map Popup */
-        .treasure-tooltip { background: var(--bg-surface) !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 8px 12px !important; color: var(--text-main) !important; font-size: 13px !important; font-family: inherit !important; font-weight: 500 !important; box-shadow: var(--shadow-subtle) !important; }
-        .treasure-tooltip::after { display: none !important; }
-        
-        /* Responsive */
-        @media(max-width: 1024px) {
-            #left-sidebar {
-                position: fixed;
-                left: -100%;
-                top: 64px;
-                bottom: 0;
-                width: 100%;
-                max-width: 480px;
-            }
-
-            #left-sidebar.open {
-                left: 0;
-                box-shadow: var(--shadow-modal);
-            }
-
-            .nav-links { display: none; }
-            #toggle-sidebar { display: block !important; }
-        }
-
-        @media(max-width: 768px) {
-            /* Top Navigation Bar */
-            #navbar {
-                padding: 0 16px;
-            }
-            
-            .nav-brand {
-                font-size: 14px;
-            }
-            
-            /* Content Tabs */
-            #content-tabs {
-                padding: 0 8px;
-                gap: 8px;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            #content-tabs::-webkit-scrollbar {
-                display: none;
-            }
-            
-            .content-tab {
-                padding: 8px 12px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-            
-            /* Content Panel */
-            .content-panel {
-                padding: 16px;
-            }
-            
-            /* Map Area */
-            #map-container {
-                height: 40vh;
-            }
-            
-            /* Achievement Panel */
-            #achievement-panel {
-                gap: 12px;
-            }
-            
-            #achievement-tree {
-                gap: 10px;
-            }
-            
-            /* Quiz Panel */
-            #quiz-start {
-                padding: 30px 0;
-            }
-            
-            #quiz-result {
-                padding: 30px 0;
-            }
-            
-            /* Emotion Support Panel */
-            .emotion-moods {
-                gap: 12px;
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            /* University Details Panel */
-            #university-details {
-                padding: 16px;
-                min-height: 250px;
-            }
-            
-            /* University Cards */
-            .university-card {
-                margin-bottom: 12px;
-            }
-        }
-
-        @media(max-width: 480px) {
-            /* Top Navigation Bar */
-            #navbar {
-                height: 56px;
-            }
-            
-            .nav-brand {
-                font-size: 12px;
-                gap: 8px;
-            }
-            
-            .icon-btn {
-                width: 32px;
-                height: 32px;
-            }
-            
-            /* Main Container */
-            #main-container {
-                top: 56px;
-            }
-            
-            /* Left Sidebar */
-            #left-sidebar {
-                top: 56px;
-                width: 100%;
-                max-width: 100%;
-            }
-            
-            /* Content Tabs */
-            #content-tabs {
-                height: 48px;
-                padding: 0 6px;
-                gap: 6px;
-            }
-            
-            .content-tab {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-            
-            /* Content Panel */
-            .content-panel {
-                padding: 12px;
-            }
-            
-            /* Map Area */
-            #map-container {
-                height: 35vh;
-            }
-            
-            /* Achievement Panel */
-            #achievement-panel h3 {
-                font-size: 16px;
-            }
-            
-            /* Quiz Panel */
-            #quiz-start {
-                padding: 20px 0;
-            }
-            
-            #quiz-start h3 {
-                font-size: 18px;
-            }
-            
-            #quiz-result {
-                padding: 20px 0;
-            }
-            
-            #quiz-result h3 {
-                font-size: 18px;
-            }
-            
-            /* Emotion Support Panel */
-            #emotion-panel h3 {
-                font-size: 18px;
-            }
-            
-            /* University Details Panel */
-            #university-panel h3 {
-                font-size: 18px;
-            }
-            
-            /* University Cards */
-            .university-card {
-                padding: 12px;
-            }
-            
-            .university-card h5 {
-                font-size: 13px;
-            }
-            
-            .university-card p {
-                font-size: 11px;
-            }
-        }
-        
-        /* Mobile Feature Visibility Optimizations */
-        @media(max-width: 768px) {
-            /* Feature Cards */
-            .feature-card {
-                padding: 16px;
-                margin-bottom: 12px;
-            }
-            
-            .feature-card h4 {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-            
-            .feature-card p {
-                font-size: 13px;
-                margin-bottom: 12px;
-            }
-            
-            /* Progress Cards */
-            .progress-card {
-                padding: 16px;
-                margin-bottom: 12px;
-            }
-            
-            .progress-card h4 {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-            
-            .progress-card .progress-bar {
-                margin: 8px 0;
-            }
-            
-            /* Task Items */
-            .task-item {
-                padding: 12px;
-                margin-bottom: 8px;
-            }
-            
-            .task-item h4 {
-                font-size: 13px;
-                margin-bottom: 6px;
-            }
-            
-            .task-item p {
-                font-size: 12px;
-                margin-bottom: 8px;
-            }
-            
-            /* University Stats */
-            .uni-stats {
-                padding: 12px;
-                margin-bottom: 16px;
-            }
-            
-            .uni-stats h3 {
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            
-            .uni-stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-        }
-        
-        @media(max-width: 480px) {
-            /* Feature Cards */
-            .feature-card {
-                padding: 12px;
-                margin-bottom: 10px;
-            }
-            
-            .feature-card h4 {
-                font-size: 13px;
-                margin-bottom: 6px;
-            }
-            
-            .feature-card p {
-                font-size: 12px;
-                margin-bottom: 10px;
-            }
-            
-            /* Progress Cards */
-            .progress-card {
-                padding: 12px;
-                margin-bottom: 10px;
-            }
-            
-            .progress-card h4 {
-                font-size: 13px;
-                margin-bottom: 6px;
-            }
-            
-            /* Task Items */
-            .task-item {
-                padding: 10px;
-                margin-bottom: 6px;
-            }
-            
-            .task-item h4 {
-                font-size: 12px;
-                margin-bottom: 4px;
-            }
-            
-            .task-item p {
-                font-size: 11px;
-                margin-bottom: 6px;
-            }
-            
-            /* University Stats */
-            .uni-stats {
-                padding: 10px;
-                margin-bottom: 12px;
-            }
-            
-            .uni-stats h3 {
-                font-size: 13px;
-                margin-bottom: 8px;
-            }
-            
-            .uni-stats-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-        }
-        
-        /* University Distribution Statistics */
-        .uni-stats {
-            background: var(--bg-hover);
-            border: 1px solid var(--border-muted);
+            padding: 12px 40px 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            color: var(--text-main);
+            font-size: 14px;
         }
-        .uni-stats h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .uni-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-        }
-        .uni-stat-item {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .uni-stat-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .uni-stat-icon {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-        .uni-stat-number {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        .uni-stat-label {
-            font-size: 11px;
+
+        #map-drawer .search-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-muted);
-            text-transform: uppercase;
         }
-        
-        /* Progress Bar Feature */
-        .progress-section {
-            background: var(--bg-hover);
-            border: 1px solid var(--border-muted);
+
+        #map-container {
+            height: 300px;
             border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        #map { width: 100%; height: 100%; }
+
+        .uni-list {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .uni-card {
             padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .uni-card:hover {
+            border-color: var(--treasure-gold);
+            background: var(--bg-card-hover);
+        }
+
+        .uni-name {
+            font-size: 15px; font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .uni-location {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Achievement Drawer */
+        #achievement-drawer .add-form {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 20px;
         }
-        .progress-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+
+        #achievement-drawer .form-group {
+            margin-bottom: 16px;
         }
-        .progress-bar {
+
+        #achievement-drawer label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        #achievement-drawer input, #achievement-drawer select {
             width: 100%;
-            height: 8px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .btn-gold {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--treasure-gold), var(--treasure-gold-dark));
+            border: none;
+            border-radius: 8px;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .achievements-guide {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .achievements-guide i { color: var(--treasure-gold); margin-right: 8px; }
+
+        .achievement-list {
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .achievement-item {
+            padding: 14px;
             background: var(--bg-card);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-        .progress-info {
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
         }
-        .progress-text {
+
+        .achievement-item:hover {
+            border-color: var(--treasure-gold);
+            transform: translateX(4px);
+        }
+
+        .achievement-info { flex: 1; }
+
+        .achievement-title {
+            font-size: 14px; font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .achievement-type {
             font-size: 12px;
             color: var(--text-muted);
         }
-        .todo-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .todo-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-muted);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        .todo-item:hover {
-            transform: translateX(6px);
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .todo-status {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border-muted);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            background: var(--bg-primary);
-        }
-        .todo-status.completed {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-color: var(--primary);
-            color: var(--text-primary);
-            transform: scale(1.1);
-        }
-        .todo-text {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-        .todo-text.completed {
-            text-decoration: line-through;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-        .todo-remove {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 8px;
+
+        .achievement-delete {
             opacity: 0;
-            transition: all 0.3s ease;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: #FF4444;
+            transition: opacity 0.3s ease;
         }
-        .todo-item:hover .todo-remove {
-            opacity: 1;
-        }
-        .todo-remove:hover {
-            background: var(--bg-hover);
-            color: var(--danger-text);
-            transform: scale(1.1);
-        }
-        .todo-input {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-            align-items: center;
-        }
-        .todo-input input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 1px solid var(--border-muted);
-            border-radius: 8px;
+
+        .achievement-item:hover .achievement-delete { opacity: 1; }
+
+        .achievement-detail {
             background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .todo-input input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-        .todo-input button {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .todo-input button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
-        
-        /* AI Application Evaluation */
-        .ai-evaluation {
-            background: var(--bg-hover);
-            border: 1px solid var(--border-muted);
+            border: var(--border-gold);
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
+            margin-top: 16px;
         }
-        .ai-evaluation h3 {
+
+        /* Recommendation Drawer */
+        #recommend-drawer .question-container {
+            margin-bottom: 20px;
+        }
+
+        #recommend-drawer .question-text {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 16px;
+            color: var(--treasure-gold);
         }
-        .ai-evaluation select {
-            width: 100%;
-            padding: 10px;
+
+        #recommend-drawer .options-grid {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .recommend-option {
+            padding: 16px;
             background: var(--bg-card);
-            border: 1px solid var(--border-muted);
-            border-radius: 8px;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-        .ai-evaluation button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 14px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 12px;
+            text-align: left;
         }
-        .ai-evaluation button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,212,170,0.3);
+
+        .recommend-option:hover { border-color: var(--treasure-gold); }
+        .recommend-option.selected {
+            border-color: var(--treasure-gold);
+            background: rgba(255, 215, 0, 0.1);
         }
-        .ai-evaluation-result {
+
+        .recommend-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .recommend-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--treasure-gold), var(--treasure-gold-dark));
+            transition: width 0.3s ease;
+        }
+
+        .recommend-results {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .recommend-uni-card {
+            padding: 16px;
             background: var(--bg-card);
-            border: 1px solid var(--border-muted);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 13px;
-            line-height: 1.5;
+            border: var(--border-gold);
+            border-radius: 12px;
+        }
+
+        .recommend-uni-rank {
+            font-size: 24px; font-weight: 700;
+            color: var(--treasure-gold);
+            margin-bottom: 8px;
+        }
+
+        /* Emotion Support Drawer */
+        #emotion-drawer .moods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .mood-btn {
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mood-btn:hover { border-color: var(--treasure-gold); }
+        .mood-btn.active {
+            border-color: var(--treasure-gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .mood-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .mood-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .emotion-response {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
             min-height: 120px;
+        }
+
+        /* User Drawer */
+        #user-drawer .user-info {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .user-avatar {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--treasure-gold), var(--treasure-gold-dark));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+
+        .user-details h4 {
+            font-size: 18px; font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 24px; font-weight: 700;
+            color: var(--treasure-gold);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .api-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .api-section h4 {
+            font-size: 14px; font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--treasure-gold);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 800;
+            display: none;
+        }
+
+        .overlay.show { display: block; }
+
+        /* Responsive Design */
+        @media(max-width: 768px) {
+            #navbar { padding: 0 12px; }
+            
+            .nav-brand span { display: none; }
+            
+            .nav-btn { width: 36px; height: 36px; }
+            
+            .compass-container {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .compass-inner { width: 160px; height: 160px; }
+            
+            .home-title { font-size: 22px; }
+            
+            .adventure-grid { gap: 12px; }
+            
+            .adventure-btn { padding: 16px; }
+            
+            .drawer { max-width: 100%; }
+        }
+
+        @media(max-width: 480px) {
+            #main-container { padding: 12px; }
+            
+            .compass-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .compass-inner { width: 130px; height: 130px; }
+            
+            .home-title { font-size: 18px; }
+            
+            .home-subtitle { font-size: 12px; }
+            
+            .adventure-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body data-theme="light">
+<body>
     <nav id="navbar">
         <div class="nav-brand">
-            <i data-lucide="compass"></i> XJTLU Treasure Map for Study Abroad
+            <i data-lucide="compass" style="width:24px;"></i>
+            <span>Treasure Map</span>
         </div>
-        <div class="nav-links">
-            <button class="nav-link active" data-panel="home"><i data-lucide="layout-grid" style="width:16px;"></i> Explore</button>
-            <button class="nav-link" data-panel="recommend"><i data-lucide="sparkles" style="width:16px;"></i> Recommend</button>
-            <button class="nav-link" data-panel="emotion"><i data-lucide="heart" style="width:16px;"></i> Support</button>
-            <a href="index.html" class="nav-link external" target="_blank"><i data-lucide="info" style="width:16px;"></i> About</a>
-        </div>
-        <div class="nav-right">
-            <button class="icon-btn" id="theme-toggle" title="Toggle Theme"><i data-lucide="moon"></i></button>
-            <button class="icon-btn" id="achievement-btn" title="Achievements"><i data-lucide="trophy"></i></button>
-            <button class="icon-btn" id="user-avatar" title="Account"><i data-lucide="user"></i></button>
-            <button class="icon-btn" id="toggle-sidebar" style="display: none;"><i data-lucide="menu"></i></button>
+        <div class="nav-buttons">
+            <button class="nav-btn" id="open-map" title="Map Exploration"><i data-lucide="map" style="width:18px;"></i></button>
+            <button class="nav-btn" id="open-achievements" title="Achievements"><i data-lucide="trophy" style="width:18px;"></i></button>
+            <button class="nav-btn" id="open-recommend" title="School Recommendation"><i data-lucide="sparkles" style="width:18px;"></i></button>
+            <button class="nav-btn" id="open-emotion" title="Emotional Support"><i data-lucide="heart" style="width:18px;"></i></button>
+            <button class="nav-btn" id="open-user" title="Profile"><i data-lucide="user" style="width:18px;"></i></button>
         </div>
     </nav>
 
     <div id="main-container">
-        <aside id="left-sidebar">
-            <div class="sidebar-panel">
-                <div class="panel-header">
-                    <h3><i data-lucide="library"></i> Compass</h3>
+        <div id="compass-home">
+            <div class="compass-container">
+                <div class="compass-ring">
+                    <div class="compass-direction n">N</div>
+                    <div class="compass-direction e">E</div>
+                    <div class="compass-direction s">S</div>
+                    <div class="compass-direction w">W</div>
                 </div>
-                <div class="panel-tabs">
-                    <button class="panel-tab active" data-tab="user-tab">Account</button>
-                    <button class="panel-tab" data-tab="chat-tab">AI Advisor</button>
-                    <button class="panel-tab" data-tab="fav-tab">Favorites</button>
-                </div>
-
-                <div id="user-tab" class="tab-content active">
-                    <div class="user-section">
-                        <div class="user-info">
-                            <div class="user-avatar-large"><i data-lucide="user"></i></div>
-                            <div>
-                                <h4 id="user-name" style="font-size:16px; font-weight:600; margin-bottom:4px;">Unverified</h4>
-                                <p id="user-status" style="font-size:13px; color:var(--text-muted)">Login to sync progress</p>
-                            </div>
-                        </div>
-                        <div class="user-stats">
-                            <div class="stat-item"><div class="stat-num" id="stat-achievements">0</div><div class="stat-label">Achievements</div></div>
-                            <div class="stat-item"><div class="stat-num" id="stat-favorites">0</div><div class="stat-label">Favorites</div></div>
-                        </div>
-                    </div>
-                    
-                    <div class="api-section" id="api-section">
-                        <h4 style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase;">Configure API</h4>
-                        <input type="password" id="api-key-input" placeholder="Enter API Key...">
-                        <button class="btn-primary" id="submit-api"><i data-lucide="key" style="width:16px;"></i> Verify & Connect</button>
-                    </div>
-                    
-                    <div id="api-unlocked-section" class="user-section" style="display:none; display:flex; align-items:center; justify-content:space-between; padding: 16px 20px;">
-                        <div style="display:flex; align-items:center; gap:8px;"><i data-lucide="check-circle" style="color:var(--success-text); width:18px;"></i><span style="font-size:14px; font-weight:500;">AI Connected</span></div>
-                        <button class="btn-link" id="reset-api">Disconnect</button>
-                    </div>
-                    
-                    <div id="login-section">
-                        <button class="btn-primary" id="show-login">Login</button>
-                    </div>
-                </div>
-
-                <div id="chat-tab" class="tab-content">
-                    <div class="chat-box" id="chat-box">
-                        <div class="chat-msg chat-ai"><div class="msg">Hello. I am your study abroad planning assistant. Configure the API to ask me questions at any time.</div></div>
-                    </div>
-                    <div style="display:flex; gap:8px;">
-                        <input type="text" id="chat-input" placeholder="Ask a question..." style="margin-bottom:0; border-radius:24px;">
-                        <button class="btn-primary" id="chat-send" style="width:48px; border-radius:50%; padding:0; flex-shrink:0;"><i data-lucide="send" style="width:18px; margin-left:-2px;"></i></button>
-                    </div>
-                </div>
-
-                <div id="fav-tab" class="tab-content">
-                    <div style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i data-lucide="bookmark"></i> My Favorites</h3>
-                        <div id="favorites-list">
-                            </div>
-                    </div>
-                    
-                    <div class="uni-stats">
-                        <h3><i data-lucide="globe"></i> University Distribution</h3>
-                        <div class="uni-stats-grid">
-                            <div class="uni-stat-item">
-                                <div class="uni-stat-icon">🇬🇧</div>
-                                <div class="uni-stat-number" id="stat-uk">0</div>
-                                <div class="uni-stat-label">UK</div>
-                            </div>
-                            <div class="uni-stat-item">
-                                <div class="uni-stat-icon">🇺🇸</div>
-                                <div class="uni-stat-number" id="stat-us">0</div>
-                                <div class="uni-stat-label">US</div>
-                            </div>
-                            <div class="uni-stat-item">
-                                <div class="uni-stat-icon">🇦🇺</div>
-                                <div class="uni-stat-number" id="stat-aus">0</div>
-                                <div class="uni-stat-label">Australia</div>
-                            </div>
-                            <div class="uni-stat-item">
-                                <div class="uni-stat-icon">🌏</div>
-                                <div class="uni-stat-number" id="stat-total">0</div>
-                                <div class="uni-stat-label">Total</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-section">
-                        <h3><i data-lucide="trending-up"></i> Application Progress</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-                        </div>
-                        <div class="progress-info">
-                            <div class="progress-text" id="progress-text">0/0 Completed</div>
-                            <div class="progress-text" id="progress-percent">0%</div>
-                        </div>
-                        <div class="todo-list" id="todo-list">
-                            </div>
-                        <div class="todo-input">
-                            <input type="text" id="todo-input" placeholder="Add new task...">
-                            <button id="add-todo">Add</button>
-                        </div>
-                    </div>
-                    
-                    <div class="ai-evaluation">
-                        <h3><i data-lucide="brain"></i> Application Evaluation</h3>
-                        <select id="university-select">
-                            <option value="">Select a favorite university</option>
-                        </select>
-                        <button id="evaluate-application">Evaluate Application Success Rate</button>
-                        <div class="ai-evaluation-result" id="evaluation-result">
-                            Select a favorite university for evaluation
-                        </div>
-                    </div>
+                <div class="compass-inner">
+                    <div class="compass-needle"></div>
+                    <div class="compass-center"></div>
                 </div>
             </div>
-        </aside>
-
-        <div id="content-area">
-            <div id="content-tabs">
-                <button class="content-tab active" data-panel="map-panel"><i data-lucide="map" style="width:16px; margin-right:8px;"></i> Map Exploration</button>
-                <button class="content-tab" data-panel="achievement-panel"><i data-lucide="trophy" style="width:16px; margin-right:8px;"></i> Achievement Center</button>
-                <button class="content-tab" data-panel="recommend-panel"><i data-lucide="sparkles" style="width:16px; margin-right:8px;"></i> School Recommendation</button>
-                <button class="content-tab" data-panel="emotion-panel"><i data-lucide="heart" style="width:16px; margin-right:8px;"></i> Emotional Support</button>
-            </div>
-
-            <div id="content-panels">
-                <div class="content-panel active" id="map-panel">
-                    <div style="padding: 16px;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin: 0;">Explore Global Universities</h3>
-                            <button class="icon-btn" id="toggle-map-view" title="Toggle Map View"><i data-lucide="map"></i></button>
-                        </div>
-                        
-                        <div style="position: relative; margin-bottom: 16px;">
-                            <input type="text" id="university-search" placeholder="Search universities..." style="padding-left: 36px; font-size: 14px;">
-                            <i data-lucide="search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 14px;"></i>
-                        </div>
-                        
-                        <div id="map-container" style="height: 400px; margin-bottom: 16px; border-radius: 12px; overflow: hidden;">
-                            <div id="map"></div>
-                        </div>
-                        
-                        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Recommended Universities</h4>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Cambridge</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, UK</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Imperial College London</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">London, UK</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">ETH Zurich</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Zurich, Switzerland</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">MIT</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, USA</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Stanford University</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Stanford, USA</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Tokyo</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Tokyo, Japan</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-panel" id="achievement-panel">
-                    <div style="display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 16px; overflow-y: auto;">
-                        <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Add New Achievement</h3>
-                        
-                        <div id="inline-add-form" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; margin-bottom: 8px;">
-                            <div style="display: flex; flex-direction: column; gap: 12px;">
-                                <div>
-                                    <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Title</label>
-                                    <input type="text" id="achievement-title" placeholder="e.g., IELTS 7.5 Score" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                                </div>
-                                <div>
-                                    <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Type</label>
-                                    <select id="achievement-type" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                                        <option value="academic">Academic Achievement</option>
-                                        <option value="language">Language Proficiency</option>
-                                        <option value="experience">Internship/Research</option>
-                                        <option value="other">Other Achievement</option>
-                                    </select>
-                                </div>
-                                <button id="submit-add-achievement" style="width: 100%; padding: 10px 16px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-                                    <i data-lucide="plus" style="width: 14px; vertical-align: middle; margin-right: 6px;"></i>Add Achievement
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <h3 style="font-size: 16px; font-weight: 700; margin: 0;">My Achievements</h3>
-                        
-                        <div id="achievement-guide" style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 10px; padding: 12px; font-size: 12px; color: var(--text-muted);">
-                            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
-                                <i data-lucide="lightbulb" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
-                                <div><strong style="color: var(--text-primary);">Tip:</strong> Add achievements to track milestones. Click to view details, hover and click trash icon to delete.</div>
-                            </div>
-                            <div style="display: flex; align-items: flex-start; gap: 10px;">
-                                <i data-lucide="star" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
-                                <div><strong style="color: var(--text-primary);">Types:</strong> Academic, Language (IELTS/TOEFL), Internship/Research, Other</div>
-                            </div>
-                        </div>
-                        
-                        <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 10px;"></div>
-                        
-                        <div style="flex: 1;">
-                            <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 12px 0;">Achievement Details</h3>
-                            <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 12px; min-height: 150px;">
-                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-                                        <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
-                                    </div>
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select an Achievement</h5>
-                                    <p style="font-size: 12px; margin: 0;">Click on an achievement card to view its details</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-panel" id="recommend-panel">
-                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
-                        <div id="recommend-start">
-                            <div style="text-align:center; padding: 30px 0;">
-                                <i data-lucide="graduation-cap" style="width:48px; height:48px; color:var(--accent); margin-bottom:16px;"></i>
-                                <h3 style="font-size:18px; margin-bottom:10px;">Smart School Recommendation</h3>
-                                <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Answer a few questions to get personalized university recommendations.</p>
-                                <button class="btn-primary" id="start-recommend" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Recommendation</button>
-                            </div>
-                        </div>
-                        <div id="recommend-form" style="display:none;">
-                            <div class="progress-bar"><div class="progress-fill" id="recommend-progress-fill"></div></div>
-                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Question <span id="recommend-step-num">1</span> / <span id="recommend-total-num">5</span></p>
-                            <div id="recommend-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
-                            <div id="recommend-options"></div>
-                            <div style="display:flex; gap:12px; margin-top:20px;">
-                                <button class="btn-secondary" id="recommend-back" style="flex:1; max-width: 120px; padding: 10px 16px;">Back</button>
-                                <button class="btn-primary" id="recommend-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next</button>
-                            </div>
-                        </div>
-                        <div id="recommend-result" style="display:none;">
-                            <div style="text-align:center; margin-bottom:20px;">
-                                <i data-lucide="check-circle" style="width:48px; height:48px; color:var(--success-text);"></i>
-                                <h3 style="font-size:18px; margin-top:12px;">Recommended Universities</h3>
-                            </div>
-                            <div id="recommend-results-list" style="display:grid; gap:12px;"></div>
-                            <button class="btn-secondary" id="recommend-restart" style="width:100%; margin-top:20px; padding:12px;">Start Over</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-panel" id="emotion-panel">
-                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
-                        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">Mood Regulation</h3>
-                        <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Record your current preparation status:</p>
-                        <div class="emotion-moods" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                            <div class="emotion-mood" data-mood="great"><i data-lucide="sun" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Great</div></div>
-                            <div class="emotion-mood" data-mood="okay"><i data-lucide="minus" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Steady</div></div>
-                            <div class="emotion-mood" data-mood="stressed"><i data-lucide="cloud-lightning" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Stressed</div></div>
-                            <div class="emotion-mood" data-mood="anxious"><i data-lucide="cloud-rain" style="width:28px;height:28px; margin-bottom:10px;"></i><div style="font-size:11px; font-weight:500;">Anxious</div></div>
-                        </div>
-                        <div class="emotion-response" id="emotion-response" style="display:none; margin-top:20px; padding:16px;">
-                            <h4 id="emotion-title" style="font-size:14px; font-weight:600; margin-bottom:10px;"></h4>
-                            <p id="emotion-text" style="font-size:13px; color:var(--text-muted); line-height:1.6;"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-panel" id="university-panel">
-                    <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">University Profile Search</h3>
-                            <button class="btn-secondary" id="back-to-map" style="width: auto; padding: 6px 12px; font-size: 12px;"><i data-lucide="arrow-left" style="width:12px; margin-right:4px;"></i> Back to Map</button>
-                        </div>
-                        <div id="university-details" style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; min-height: 250px;">
-                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
-                                <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-                                    <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
-                                </div>
-                                <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select a University</h5>
-                                <p style="font-size: 12px; margin: 0;">Click on a university on the map to view detailed information</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
+            <h1 class="home-title">Welcome Aboard!</h1>
+            <p class="home-subtitle">Embark on your study abroad adventure. Discover universities, track achievements, and find your perfect destination.</p>
+            
+            <div class="adventure-grid">
+                <button class="adventure-btn" id="quick-map">
+                    <div class="adventure-btn-icon"><i data-lucide="map"></i></div>
+                    <div class="adventure-btn-title">Map Exploration</div>
+                    <div class="adventure-btn-desc">Discover global universities</div>
+                </button>
+                
+                <button class="adventure-btn" id="quick-achievements">
+                    <div class="adventure-btn-icon"><i data-lucide="trophy"></i></div>
+                    <div class="adventure-btn-title">Achievements</div>
+                    <div class="adventure-btn-desc">Track your milestones</div>
+                </button>
+                
+                <button class="adventure-btn" id="quick-recommend">
+                    <div class="adventure-btn-icon"><i data-lucide="sparkles"></i></div>
+                    <div class="adventure-btn-title">School Finder</div>
+                    <div class="adventure-btn-desc">Personalized recommendations</div>
+                </button>
+                
+                <button class="adventure-btn" id="quick-emotion">
+                    <div class="adventure-btn-icon"><i data-lucide="heart"></i></div>
+                    <div class="adventure-btn-title">Support</div>
+                    <div class="adventure-btn-desc">Emotional support</div>
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3><i data-lucide="log-in"></i> Account Access</h3><button class="icon-btn modal-close"><i data-lucide="x"></i></button></div>
-            <div class="modal-body">
-                <div id="login-form-container">
-                    <div class="form-group"><label>Account Name</label><input type="text" id="login-account" placeholder="Enter account"></div>
-                    <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="Enter password"></div>
-                    <button class="btn-primary" id="login-submit" style="margin-top:8px;">Login</button>
-                    <div style="display:flex; justify-content:space-between; margin-top:16px;">
-                        <button class="btn-link" id="show-register">Create New Account</button>
-                        <button class="btn-link">Forgot Password</button>
-                    </div>
-                </div>
-                <div id="register-form-container" style="display:none">
-                    <div class="form-group"><label>Name</label><input type="text" id="reg-username"></div>
-                    <div class="form-group"><label>Student ID</label><input type="text" id="reg-student-id"></div>
-                    <div class="form-group"><label>Account Name</label><input type="text" id="reg-account"></div>
-                    <div class="form-group"><label>Password</label><input type="password" id="reg-password"></div>
-                    <button class="btn-primary" id="register-submit" style="margin-top:8px;">Register</button>
-                    <button class="btn-secondary" id="back-to-login" style="margin-top:12px;">Back to Login</button>
-                </div>
+    <!-- Map Exploration Drawer -->
+    <div class="drawer" id="map-drawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title"><i data-lucide="map"></i> Map Exploration</h3>
+            <button class="drawer-close" id="close-map"><i data-lucide="x"></i></button>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="map-search" placeholder="Search universities...">
+            <i data-lucide="search"></i>
+        </div>
+        
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--treasure-gold);">Featured Universities</h4>
+        <div class="uni-list" id="uni-list">
+            <div class="uni-card">
+                <div class="uni-name">University of Cambridge</div>
+                <div class="uni-location">Cambridge, United Kingdom</div>
+            </div>
+            <div class="uni-card">
+                <div class="uni-name">Stanford University</div>
+                <div class="uni-location">Stanford, United States</div>
+            </div>
+            <div class="uni-card">
+                <div class="uni-name">ETH Zurich</div>
+                <div class="uni-location">Zurich, Switzerland</div>
+            </div>
+            <div class="uni-card">
+                <div class="uni-name">University of Melbourne</div>
+                <div class="uni-location">Melbourne, Australia</div>
             </div>
         </div>
     </div>
 
+    <!-- Achievement Drawer -->
+    <div class="drawer" id="achievement-drawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title"><i data-lucide="trophy"></i> Achievement Center</h3>
+            <button class="drawer-close" id="close-achievements"><i data-lucide="x"></i></button>
+        </div>
+        
+        <div class="add-form">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--treasure-gold);">Add New Achievement</h4>
+            <div class="form-group">
+                <label>Achievement Title</label>
+                <input type="text" id="achievement-title" placeholder="e.g., IELTS 7.5 Score">
+            </div>
+            <div class="form-group">
+                <label>Achievement Type</label>
+                <select id="achievement-type">
+                    <option value="academic">Academic Achievement</option>
+                    <option value="language">Language Proficiency</option>
+                    <option value="experience">Internship/Research</option>
+                    <option value="other">Other Achievement</option>
+                </select>
+            </div>
+            <button class="btn-gold" id="add-achievement">Add Achievement</button>
+        </div>
+        
+        <div class="achievements-guide">
+            <p><i data-lucide="lightbulb"></i><strong style="color: var(--treasure-gold);">Tip:</strong> Click achievements to view details, hover and click trash icon to delete.</p>
+        </div>
+        
+        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--treasure-gold);">My Achievements</h4>
+        <div class="achievement-list" id="achievement-list">
+            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                <i data-lucide="trophy" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.3;"></i>
+                <p>No achievements yet. Start tracking your milestones!</p>
+            </div>
+        </div>
+        
+        <div id="achievement-detail-view"></div>
+    </div>
 
+    <!-- Recommendation Drawer -->
+    <div class="drawer" id="recommend-drawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title"><i data-lucide="sparkles"></i> School Recommendation</h3>
+            <button class="drawer-close" id="close-recommend"><i data-lucide="x"></i></button>
+        </div>
+        
+        <div id="recommend-start">
+            <div style="text-align: center; padding: 40px 20px;">
+                <i data-lucide="graduation-cap" style="width: 64px; height: 64px; color: var(--treasure-gold); margin-bottom: 16px;"></i>
+                <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Find Your Perfect Match</h4>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Answer a few questions to get personalized university recommendations.</p>
+                <button class="btn-gold" id="start-recommend">Start Journey</button>
+            </div>
+        </div>
+        
+        <div id="recommend-questions" style="display: none;">
+            <div class="recommend-progress">
+                <div class="recommend-progress-fill" id="recommend-progress"></div>
+            </div>
+            <p style="text-align: right; font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Question <span id="current-question">1</span> / 5</p>
+            
+            <div class="question-container">
+                <div class="question-text" id="question-text"></div>
+                <div class="options-grid" id="question-options"></div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 20px;">
+                <button class="btn-gold" style="flex: 1;" id="recommend-next">Next</button>
+            </div>
+        </div>
+        
+        <div id="recommend-results" style="display: none;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <i data-lucide="check-circle" style="width: 48px; height: 48px; color: var(--treasure-gold);"></i>
+                <h4 style="font-size: 18px; font-weight: 600; margin-top: 12px;">Your Journey Awaits!</h4>
+            </div>
+            <div class="recommend-results" id="results-list"></div>
+            <button class="btn-gold" style="margin-top: 20px;" id="restart-recommend">Start Over</button>
+        </div>
+    </div>
 
+    <!-- Emotion Support Drawer -->
+    <div class="drawer" id="emotion-drawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title"><i data-lucide="heart"></i> Emotional Support</h3>
+            <button class="drawer-close" id="close-emotion"><i data-lucide="x"></i></button>
+        </div>
+        
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">How are you feeling today?</p>
+        
+        <div class="moods-grid">
+            <button class="mood-btn" data-mood="happy">
+                <div class="mood-icon">😊</div>
+                <div class="mood-label">Happy</div>
+            </button>
+            <button class="mood-btn" data-mood="anxious">
+                <div class="mood-icon">😰</div>
+                <div class="mood-label">Anxious</div>
+            </button>
+            <button class="mood-btn" data-mood="stressed">
+                <div class="mood-icon">😫</div>
+                <div class="mood-label">Stressed</div>
+            </button>
+            <button class="mood-btn" data-mood="hopeful">
+                <div class="mood-icon">🌟</div>
+                <div class="mood-label">Hopeful</div>
+            </button>
+        </div>
+        
+        <div class="emotion-response" id="emotion-response">
+            <p style="text-align: center; color: var(--text-muted);">Select your mood to receive support</p>
+        </div>
+    </div>
 
+    <!-- User Profile Drawer -->
+    <div class="drawer" id="user-drawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title"><i data-lucide="user"></i> My Profile</h3>
+            <button class="drawer-close" id="close-user"><i data-lucide="x"></i></button>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar"><i data-lucide="user"></i></div>
+            <div class="user-details">
+                <h4>Explorer</h4>
+                <p>Level 1 - Novice Traveler</p>
+            </div>
+        </div>
+        
+        <div class="user-stats">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-achieve">0</div>
+                <div class="stat-label">Achievements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-favs">0</div>
+                <div class="stat-label">Favorites</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-progress">0%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h4>AI Advisor Setup</h4>
+            <input type="password" id="api-input" placeholder="Enter API Key..." style="margin-bottom: 12px;">
+            <button class="btn-gold" id="submit-api">Connect AI Advisor</button>
+        </div>
+        
+        <div style="margin-top: 16px; text-align: center;">
+            <button class="btn-gold" id="login-btn">Login to Sync</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
 
     <script>
-        // ==================== 1. Basic Configuration and Theme Management ====================
-        lucide.createIcons();
-        function refreshIcons() { lucide.createIcons(); }
+        // Initialize icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            initializeMap();
+            setupEventListeners();
+            loadData();
+        });
 
-        let currentTheme = localStorage.getItem('theme') || 'light';
-        function setTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            currentTheme = theme;
-            localStorage.setItem('theme', theme);
-            const btn = document.getElementById('theme-toggle');
-            if(btn) {
-                btn.innerHTML = theme === 'light' ? '<i data-lucide="moon"></i>' : '<i data-lucide="sun"></i>';
-                refreshIcons();
-            }
-            updateMapStyle();
-        }
-        document.getElementById('theme-toggle').onclick = () => setTheme(currentTheme === 'light' ? 'dark' : 'light');
+        // Data storage
+        let achievements = [];
+        let favorites = [];
+        let recommendAnswers = [];
 
-        // Responsive handling
-        function checkResize() {
-            const btn = document.getElementById('toggle-sidebar');
-            if(window.innerWidth <= 1024) { btn.style.display = 'flex'; } else { btn.style.display = 'none'; document.getElementById('left-sidebar').classList.remove('open');}
-        }
-        window.addEventListener('resize', checkResize);
-        checkResize();
-
-        // ==================== 2. Data Storage and User System ====================
-        let API_KEY = null;
-        let currentUser = JSON.parse(localStorage.getItem('xjlu_user')) || null;
-        let favorites = JSON.parse(localStorage.getItem('xjlu_favorites')) || [];
-        let achievements = JSON.parse(localStorage.getItem('xjlu_achievements')) || [];
-        let quizProgress = JSON.parse(localStorage.getItem('xjlu_quiz_progress')) || {completed:[]};
-
-        // Check API key expiration
-        function checkAPIKeyExpiration() {
-            const apiData = JSON.parse(localStorage.getItem('xjlu_api_key_data'));
-            if (apiData) {
-                const now = Date.now();
-                const expirationTime = apiData.timestamp + (5 * 60 * 1000); // 5 minutes
-                if (now <= expirationTime) {
-                    API_KEY = apiData.key;
-                } else {
-                    // API key expired
-                    localStorage.removeItem('xjlu_api_key_data');
-                    API_KEY = null;
-                }
-            }
-        }
-
-        function updateUserUI() {
-            if (currentUser) {
-                document.getElementById('user-name').textContent = currentUser.username;
-                document.getElementById('user-status').textContent = 'Identity Verified';
-                document.getElementById('login-section').innerHTML = '<button class="btn-secondary" id="logout-btn">Logout</button>';
-                document.getElementById('logout-btn').onclick = () => { currentUser = null; localStorage.removeItem('xjlu_user'); updateUserUI(); };
-            } else {
-                document.getElementById('user-name').textContent = 'Unverified';
-                document.getElementById('user-status').textContent = 'Login required to sync data';
-                document.getElementById('login-section').innerHTML = '<button class="btn-primary" id="show-login">Login</button>';
-                document.getElementById('show-login').onclick = () => document.getElementById('login-modal').style.display = 'flex';
-            }
-            document.getElementById('stat-achievements').textContent = achievements.length;
-            document.getElementById('stat-favorites').textContent = favorites.length;
-        }
-
-        document.getElementById('login-submit').onclick = () => {
-            const acc = document.getElementById('login-account').value;
-            const users = JSON.parse(localStorage.getItem('xjlu_users')) || [];
-            const user = users.find(u => u.account === acc && u.password === document.getElementById('login-password').value);
-            if(user) { currentUser = user; localStorage.setItem('xjlu_user', JSON.stringify(user)); document.getElementById('login-modal').style.display='none'; updateUserUI(); } 
-            else { alert('Authentication failed'); }
-        };
-
-        document.getElementById('register-submit').onclick = () => {
-            const acc = document.getElementById('reg-account').value;
-            const users = JSON.parse(localStorage.getItem('xjlu_users')) || [];
-            if(users.find(u => u.account === acc)) return alert('Account already exists');
-            users.push({
-                username: document.getElementById('reg-username').value, studentId: document.getElementById('reg-student-id').value,
-                account: acc, password: document.getElementById('reg-password').value
+        // Map initialization
+        let map;
+        function initializeMap() {
+            map = L.map('map').setView([40, 0], 2);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            const universities = [
+                { name: 'Cambridge', lat: 52.2053, lng: 0.1218 },
+                { name: 'Stanford', lat: 37.4241, lng: -122.1662 },
+                { name: 'ETH Zurich', lat: 47.3769, lng: 8.5417 },
+                { name: 'Melbourne', lat: -37.8136, lng: 144.9631 }
+            ];
+            
+            universities.forEach(uni => {
+                L.marker([uni.lat, uni.lng], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '<div style="width:24px;height:24px;border-radius:50%;background:var(--treasure-gold);display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px var(--treasure-gold);"><i data-lucide="school" style="width:14px;height:14px;color:#1a1a2e;"></i></div>',
+                        iconSize: [24, 24]
+                    })
+                }).addTo(map).bindPopup(uni.name);
             });
-            localStorage.setItem('xjlu_users', JSON.stringify(users));
-            alert('Registration successful'); document.getElementById('back-to-login').click();
-        };
-
-        // User avatar button click event
-        document.getElementById('user-avatar').onclick = () => {
-            document.getElementById('login-modal').style.display = 'flex';
-        };
-
-        // ==================== Achievement System Functions ====================
-        function getAchievementTypeText(type) {
-            const types = {
-                academic: 'Academic Achievement',
-                language: 'Language Ability',
-                experience: 'Internship/Research',
-                other: 'Other Achievement'
-            };
-            return types[type] || 'Other Achievement';
         }
-        
+
+        // Event listeners setup
+        function setupEventListeners() {
+            // Nav buttons
+            document.getElementById('open-map').addEventListener('click', () => openDrawer('map-drawer'));
+            document.getElementById('open-achievements').addEventListener('click', () => openDrawer('achievement-drawer'));
+            document.getElementById('open-recommend').addEventListener('click', () => openDrawer('recommend-drawer'));
+            document.getElementById('open-emotion').addEventListener('click', () => openDrawer('emotion-drawer'));
+            document.getElementById('open-user').addEventListener('click', () => openDrawer('user-drawer'));
+            
+            // Quick access buttons
+            document.getElementById('quick-map').addEventListener('click', () => openDrawer('map-drawer'));
+            document.getElementById('quick-achievements').addEventListener('click', () => openDrawer('achievement-drawer'));
+            document.getElementById('quick-recommend').addEventListener('click', () => openDrawer('recommend-drawer'));
+            document.getElementById('quick-emotion').addEventListener('click', () => openDrawer('emotion-drawer'));
+            
+            // Close buttons
+            document.getElementById('close-map').addEventListener('click', () => closeDrawer('map-drawer'));
+            document.getElementById('close-achievements').addEventListener('click', () => closeDrawer('achievement-drawer'));
+            document.getElementById('close-recommend').addEventListener('click', () => closeDrawer('recommend-drawer'));
+            document.getElementById('close-emotion').addEventListener('click', () => closeDrawer('emotion-drawer'));
+            document.getElementById('close-user').addEventListener('click', () => closeDrawer('user-drawer'));
+            
+            // Overlay click
+            document.getElementById('overlay').addEventListener('click', closeAllDrawers);
+            
+            // Achievement form
+            document.getElementById('add-achievement').addEventListener('click', addAchievement);
+            
+            // Recommendation
+            document.getElementById('start-recommend').addEventListener('click', startRecommendation);
+            document.getElementById('recommend-next').addEventListener('click', nextQuestion);
+            document.getElementById('restart-recommend').addEventListener('click', restartRecommendation);
+            
+            // Emotion support
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.addEventListener('click', handleMoodSelect);
+            });
+        }
+
+        // Drawer functions
+        function openDrawer(drawerId) {
+            document.getElementById(drawerId).classList.add('open');
+            document.getElementById('overlay').classList.add('show');
+        }
+
+        function closeDrawer(drawerId) {
+            document.getElementById(drawerId).classList.remove('open');
+            document.getElementById('overlay').classList.remove('show');
+        }
+
+        function closeAllDrawers() {
+            document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+            document.getElementById('overlay').classList.remove('show');
+        }
+
+        // Achievement functions
+        function addAchievement() {
+            const title = document.getElementById('achievement-title').value;
+            const type = document.getElementById('achievement-type').value;
+            
+            if (!title.trim()) return;
+            
+            const achievement = {
+                id: Date.now(),
+                title: title,
+                type: type,
+                date: new Date().toLocaleDateString()
+            };
+            
+            achievements.push(achievement);
+            saveData();
+            renderAchievements();
+            
+            // Clear form
+            document.getElementById('achievement-title').value = '';
+        }
+
         function renderAchievements() {
-            const tree = document.getElementById('achievement-tree');
-            if (!tree) return;
+            const list = document.getElementById('achievement-list');
             
             if (achievements.length === 0) {
-                tree.innerHTML = `
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; color: var(--text-muted);">
-                        <div style="width: 100px; height: 100px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-                            <i data-lucide="trophy" style="width: 50px; height: 50px;"></i>
-                        </div>
-                        <h4 style="font-size: 18px; font-weight: 600; margin: 0 0 12px 0;">No Achievements Yet</h4>
-                        <p style="font-size: 14px; margin: 0 0 24px 0; max-width: 280px;">Start recording your milestones: language exams, academic awards, internships, research experience, and more.</p>
-                        <p style="font-size: 13px; color: var(--accent);">Fill in the form above to add your first achievement</p>
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                        <i data-lucide="trophy" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.3;"></i>
+                        <p>No achievements yet. Start tracking your milestones!</p>
                     </div>
                 `;
-                refreshIcons();
                 return;
             }
             
-            tree.innerHTML = '';
-            achievements.forEach((achievement, index) => {
-                const achievementItem = document.createElement('div');
-                achievementItem.className = 'achievement-item';
-                achievementItem.style.cssText = `
-                    display: flex; align-items: center; gap: 16px; padding: 16px;
-                    background: var(--bg-card); border: 1px solid var(--border-muted);
-                    border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
-                    position: relative;
-                `;
-                achievementItem.innerHTML = `
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent));
-                        display: flex; align-items: center; justify-content: center; color: var(--text-primary); flex-shrink: 0;">
-                        <i data-lucide="award" style="width: 20px;"></i>
+            list.innerHTML = achievements.map((ach, index) => `
+                <div class="achievement-item" onclick="showAchievementDetail(${index})">
+                    <div class="achievement-info">
+                        <div class="achievement-title">${ach.title}</div>
+                        <div class="achievement-type">${getTypeLabel(ach.type)} · ${ach.date}</div>
                     </div>
-                    <div style="flex: 1;">
-                        <div style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">${achievement.title}</div>
-                        <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 12px;">
-                            <span>${getAchievementTypeText(achievement.type)}</span>
-                            <span>·</span>
-                            <span>${achievement.date}</span>
-                        </div>
-                    </div>
-                    <button class="icon-btn" style="color: var(--text-muted); opacity: 0; transition: all 0.3s ease; padding: 8px;" onclick="removeAchievement(${index}); event.stopPropagation();">
-                        <i data-lucide="trash-2" style="width: 16px;"></i>
+                    <button class="achievement-delete" onclick="deleteAchievement(${index}); event.stopPropagation();">
+                        <i data-lucide="trash-2"></i>
                     </button>
-                `;
-                
-                achievementItem.onmouseenter = () => {
-                    achievementItem.style.transform = 'translateX(4px)';
-                    achievementItem.style.borderColor = 'var(--primary)';
-                    achievementItem.querySelector('.icon-btn').style.opacity = '1';
-                };
-                
-                achievementItem.onmouseleave = () => {
-                    achievementItem.style.transform = 'translateX(0)';
-                    achievementItem.style.borderColor = 'var(--border-muted)';
-                    achievementItem.querySelector('.icon-btn').style.opacity = '0';
-                };
-                
-                achievementItem.onclick = () => {
-                    showAchievementDetails(achievement);
-                };
-                
-                tree.appendChild(achievementItem);
-            });
+                </div>
+            `).join('');
             
-            refreshIcons();
+            lucide.createIcons();
         }
-        
-        function showAchievementDetails(achievement) {
-            const detailsDiv = document.getElementById('achievement-details');
-            if (!detailsDiv) return;
-            
-            detailsDiv.innerHTML = `
-                <div style="display: flex; flex-direction: column; gap: 24px;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent));
-                            display: flex; align-items: center; justify-content: center; color: var(--text-primary); flex-shrink: 0;">
-                            <i data-lucide="award" style="width: 40px;"></i>
+
+        function getTypeLabel(type) {
+            const labels = {
+                academic: 'Academic',
+                language: 'Language',
+                experience: 'Experience',
+                other: 'Other'
+            };
+            return labels[type] || 'Other';
+        }
+
+        function deleteAchievement(index) {
+            achievements.splice(index, 1);
+            saveData();
+            renderAchievements();
+            document.getElementById('achievement-detail-view').innerHTML = '';
+        }
+
+        function showAchievementDetail(index) {
+            const ach = achievements[index];
+            document.getElementById('achievement-detail-view').innerHTML = `
+                <div class="achievement-detail">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--treasure-gold), var(--treasure-gold-dark)); display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="award" style="width: 28px; color: #1a1a2e;"></i>
                         </div>
-                        <div style="flex: 1;">
-                            <h5 style="font-size: 20px; font-weight: 700; margin: 0 0 8px 0;">${achievement.title}</h5>
-                            <div style="display: flex; gap: 16px; font-size: 14px; color: var(--text-muted);">
-                                <span>${getAchievementTypeText(achievement.type)}</span>
-                                <span>·</span>
-                                <span>${achievement.date}</span>
-                            </div>
+                        <div>
+                            <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">${ach.title}</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">${getTypeLabel(ach.type)} · ${ach.date}</p>
                         </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border-muted); padding-top: 24px;">
-                        <h6 style="font-size: 14px; font-weight: 600; margin: 0 0 16px 0;">Achievement Details</h6>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                            <div style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 8px; padding: 16px;">
-                                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Date Obtained</div>
-                                <div style="font-size: 14px; font-weight: 500;">${achievement.date}</div>
-                            </div>
-                            <div style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 8px; padding: 16px;">
-                                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Achievement ID</div>
-                                <div style="font-size: 14px; font-weight: 500;">#${achievements.indexOf(achievement) + 1}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h6 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Achievement Significance</h6>
-                        <p style="font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-muted);">
-                            This achievement showcases important milestones in your study abroad journey and will help enhance your application competitiveness. Each achievement is a testament to your efforts and a highlight in your future application materials.
-                        </p>
                     </div>
                 </div>
             `;
-            
-            refreshIcons();
-        }
-        
-        function removeAchievement(index) {
-            if (confirm('Are you sure you want to delete this achievement?')) {
-                achievements.splice(index, 1);
-                localStorage.setItem('xjlu_achievements', JSON.stringify(achievements));
-                renderAchievements();
-                document.getElementById('achievement-details').innerHTML = `
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
-                        <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <i data-lucide="trophy" style="width: 40px; height: 40px;"></i>
-                        </div>
-                        <h5 style="font-size: 18px; font-weight: 600; margin: 0 0 8px 0;">Select an Achievement</h5>
-                        <p style="font-size: 14px; margin: 0;">Click on an achievement on the left to view detailed information</p>
-                    </div>
-                `;
-            }
-        }
-        
-        function addNewAchievement() {
-            const title = document.getElementById('achievement-title').value.trim();
-            const type = document.getElementById('achievement-type').value;
-            
-            if (!title) {
-                alert('Please enter achievement title');
-                return;
-            }
-            
-            const today = new Date().toISOString().split('T')[0];
-            const newAchievement = {
-                title: title,
-                type: type,
-                date: today
-            };
-            
-            achievements.push(newAchievement);
-            localStorage.setItem('xjlu_achievements', JSON.stringify(achievements));
-            
-            // Reset form
-            document.getElementById('achievement-title').value = '';
-            document.getElementById('achievement-type').value = 'academic';
-            document.getElementById('add-achievement-form').style.display = 'none';
-            
-            // Re-render
-            renderAchievements();
-            updateUserUI();
-        }
-        
-        // Achievement button click event
-        document.getElementById('achievement-btn').onclick = () => {
-            document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-            document.querySelector('[data-panel="achievement-panel"]').classList.add('active');
-            document.getElementById('achievement-panel').classList.add('active');
-            renderAchievements();
-        };
-        
-        // Submit adding achievement
-        document.getElementById('submit-add-achievement').onclick = addNewAchievement;
-        
-        // Press Enter key to add achievement
-        document.getElementById('achievement-title').onkeypress = (e) => {
-            if (e.key === 'Enter') {
-                addNewAchievement();
-            }
-        };
-        
-
-        
-        // Back to map button click event
-        document.getElementById('back-to-map').onclick = () => {
-            document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-            document.querySelector('[data-panel="map-panel"]').classList.add('active');
-            document.getElementById('map-panel').classList.add('active');
-        };
-        
-        // ==================== 3. Map System and Complete 30 Universities ====================
-        const map = L.map('map', { 
-            zoomControl: false, 
-            minZoom: 2, 
-            maxZoom: 10,
-            maxBounds: [[-90, -180], [90, 180]],
-            maxBoundsViscosity: 0.9
-        }).setView([20, 0], 2);
-        let tileLayer;
-
-        function updateMapStyle() {
-            if (tileLayer) map.removeLayer(tileLayer);
-            const style = currentTheme === 'light' 
-                ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-                : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-            tileLayer = L.tileLayer(style, { attribution: '&copy; CARTO' }).addTo(map);
-            renderMarkers();
+            lucide.createIcons();
         }
 
-        const universities = [
-            // UK (18 institutions)
-            {name:"University of Oxford",lat:51.7548,lng:-1.2544, state:"Oxfordshire", country:"UK", city:"Oxford", comment:"Oxford's libraries are breathtaking, admission requirements are extremely high, and independent research skills are heavily emphasized."},
-            {name:"University of Cambridge",lat:52.2053,lng:0.1192, state:"Cambridgeshire", country:"UK", city:"Cambridge", comment:"Punting on the River Cam is romantic; STEM fields are incredibly strong."},
-            {name:"Imperial College London (ICL)",lat:51.4988,lng:-0.1749, state:"Greater London", country:"UK", city:"London", comment:"Top in engineering and business, high course density, extremely strong employment competitiveness."},
-            {name:"University College London (UCL)",lat:51.5246,lng:-0.1340, state:"Greater London", country:"UK", city:"London", comment:"UCL has a perfect location and a highly comprehensive range of disciplines."},
-            {name:"King's College London (KCL)",lat:51.5115,lng:-0.1160, state:"Greater London", country:"UK", city:"London", comment:"Historic architecture, renowned in medicine and law."},
-            {name:"London School of Economics (LSE)",lat:51.5144,lng:-0.1165, state:"Greater London", country:"UK", city:"London", comment:"A palace of social sciences with a massive alumni network in politics and business."},
-            {name:"University of Edinburgh",lat:55.9445,lng:-3.1892, state:"Scotland", country:"UK", city:"Edinburgh", comment:"Picturesque scenery, one of the birthplaces of AI and computing sciences."},
-            {name:"University of Manchester",lat:53.4668,lng:-2.2339, state:"Greater Manchester", country:"UK", city:"Manchester", comment:"Head of the Red Brick universities, very strong in business and engineering materials."},
-            {name:"University of Bristol",lat:51.4585,lng:-2.6022, state:"Bristol", country:"UK", city:"Bristol", comment:"Strong in engineering and physical sciences, vibrant campus life."},
-            {name:"University of Warwick",lat:52.3793,lng:-1.5615, state:"Coventry", country:"UK", city:"Coventry", comment:"Top in business and economics, highly modernized and internationalized campus."},
-            {name:"University of Glasgow",lat:55.8721,lng:-4.2882, state:"Scotland", country:"UK", city:"Glasgow", comment:"One of Scotland's oldest universities, famous for medicine and law."},
-            {name:"University of Birmingham",lat:52.4508,lng:-1.9305, state:"Birmingham", country:"UK", city:"Birmingham", comment:"Member of the Red Brick group, strong in sports science and business."},
-            {name:"University of Southampton",lat:50.9375,lng:-1.3972, state:"Southampton", country:"UK", city:"Southampton", comment:"Oceanography and engineering are globally renowned; computer science is also excellent."},
-            {name:"University of Leeds",lat:53.8067,lng:-1.5550, state:"West Yorkshire", country:"UK", city:"Leeds", comment:"Outstanding media and translation programs, one of the best student union experiences in the UK."},
-            {name:"Durham University",lat:54.7650,lng:-1.5786, state:"County Durham", country:"UK", city:"Durham", comment:"Deep collegiate tradition, known as the third oldest university in England."},
-            {name:"University of Sheffield",lat:53.3813,lng:-1.4886, state:"South Yorkshire", country:"UK", city:"Sheffield", comment:"Leading in materials science and journalism, green campus environment."},
-            {name:"University of Nottingham",lat:52.9390,lng:-1.1970, state:"Nottinghamshire", country:"UK", city:"Nottingham", comment:"World-leading in pharmacy and veterinary science, known as one of the most beautiful campuses."},
-            {name:"University of St Andrews",lat:56.3417,lng:-2.7967, state:"Scotland", country:"UK", city:"St Andrews", comment:"Prince William's alma mater, highly rated student satisfaction, known for classical academic traditions."},
-            
-            // US (30 institutions)
-            {name:"Massachusetts Institute of Technology (MIT)",lat:42.3601,lng:-71.0942, state:"Massachusetts", country:"US", city:"Cambridge", comment:"The holy land for STEM, heavily emphasizes math/physics foundations and innovative practice."},
-            {name:"Harvard University",lat:42.3770,lng:-71.1167, state:"Massachusetts", country:"US", city:"Cambridge", comment:"Unquestionable comprehensive academic strength, has cultivated countless industry leaders."},
-            {name:"Stanford University",lat:37.4275,lng:-122.1697, state:"California", country:"US", city:"Stanford", comment:"Located in the heart of Silicon Valley, strong entrepreneurial vibe, requires high interdisciplinary skills."},
-            {name:"California Institute of Technology (Caltech)",lat:34.1377,lng:-118.1253, state:"California", country:"US", city:"Pasadena", comment:"Small in size but extremely high research density, true hardcore STEM."},
-            {name:"University of Chicago",lat:41.7897,lng:-87.5997, state:"Illinois", country:"US", city:"Chicago", comment:"Super strong academic atmosphere, economics and law hold a dominant position."},
-            {name:"Yale University",lat:41.3163,lng:-72.9223, state:"Connecticut", country:"US", city:"New Haven", comment:"The pinnacle of humanities and arts, top-ranked law school in the US."},
-            {name:"Columbia University",lat:40.8075,lng:-73.9626, state:"New York", country:"US", city:"New York", comment:"Occupies a prime location in Manhattan, uniquely advantageous for journalism and finance."},
-            {name:"Cornell University",lat:42.4534,lng:-76.4735, state:"New York", country:"US", city:"Ithaca", comment:"The most down-to-earth Ivy, outstanding in agriculture, engineering, and hospitality management."},
-            {name:"UC Berkeley",lat:37.8719,lng:-122.2585, state:"California", country:"US", city:"Berkeley", comment:"The benchmark for public universities, extremely dominant in CS and physics."},
-            {name:"UCLA",lat:34.0689,lng:-118.4452, state:"California", country:"US", city:"Los Angeles", comment:"Sunny beaches coexist with academics, equal emphasis on arts/film and applied sciences."},
-            {name:"Princeton University",lat:40.3431,lng:-74.6551, state:"New Jersey", country:"US", city:"Princeton", comment:"Top undergraduate education in the US, small and elite, highly values academic integrity."},
-            {name:"University of Pennsylvania",lat:39.9522,lng:-75.1932, state:"Pennsylvania", country:"US", city:"Philadelphia", comment:"Wharton School is globally leading, highly innovative interdisciplinary education model."},
-            {name:"Johns Hopkins University",lat:39.3299,lng:-76.6205, state:"Maryland", country:"US", city:"Baltimore", comment:"Absolute authority in medicine and public health, abundant research funding."},
-            {name:"University of Michigan",lat:42.2780,lng:-83.7382, state:"Michigan", country:"US", city:"Ann Arbor", comment:"Public Ivy, extremely strong comprehensive strength in engineering, business, and sports management."},
-            {name:"Northwestern University",lat:42.0565,lng:-87.6753, state:"Illinois", country:"US", city:"Evanston", comment:"#1 in journalism and communications in the US, drama and music schools are equally excellent."},
-            {name:"Duke University",lat:36.0014,lng:-78.9382, state:"North Carolina", country:"US", city:"Durham", comment:"Famous basketball school, Fuqua School of Business and Law School are highly competitive."},
-            {name:"New York University",lat:40.7295,lng:-73.9965, state:"New York", country:"US", city:"New York", comment:"University without walls, Tisch School of the Arts and Stern School of Business are world-renowned."},
-            {name:"Carnegie Mellon University",lat:40.4427,lng:-79.9430, state:"Pennsylvania", country:"US", city:"Pittsburgh", comment:"Top in both CS and drama, pioneer in the field of AI."},
-            {name:"UC San Diego",lat:32.8801,lng:-117.2340, state:"California", country:"US", city:"San Diego", comment:"Leading in biology and marine sciences, campus located on the beautiful La Jolla coast."},
-            {name:"Brown University",lat:41.8268,lng:-71.4025, state:"Rhode Island", country:"US", city:"Providence", comment:"Open curriculum system gives students great freedom, emphasizes personalized development."},
-            {name:"UT Austin",lat:30.2849,lng:-97.7341, state:"Texas", country:"US", city:"Austin", comment:"Famous public university, strong in CS and petroleum engineering, relatively low living costs."},
-            {name:"UW-Madison",lat:43.0766,lng:-89.4125, state:"Wisconsin", country:"US", city:"Madison", comment:"Benchmark for public research universities, long history in education and sociology."},
-            {name:"UIUC",lat:40.1020,lng:-88.2272, state:"Illinois", country:"US", city:"Champaign", comment:"Superior strength in CS and engineering, library system is a model for the US."},
-            {name:"University of Washington",lat:47.6587,lng:-122.3080, state:"Washington", country:"US", city:"Seattle", comment:"Top CS and medical research, close ties with Microsoft and Amazon."},
-            {name:"UNC Chapel Hill",lat:35.9049,lng:-79.0469, state:"North Carolina", country:"US", city:"Chapel Hill", comment:"Public Ivy, journalism and public health schools are top in the US."},
-            {name:"Boston University",lat:42.3503,lng:-71.0810, state:"Massachusetts", country:"US", city:"Boston", comment:"Located in downtown Boston, abundant resources in media and medical schools."},
-            {name:"University of Southern California",lat:34.0224,lng:-118.2851, state:"California", country:"US", city:"Los Angeles", comment:"Strong in both cinematic arts and engineering, alumni network spans Hollywood."},
-            {name:"UC Davis",lat:38.5382,lng:-121.7617, state:"California", country:"US", city:"Davis", comment:"World-leading in agriculture and environmental sciences, friendly and relaxed campus vibe."},
-            {name:"Purdue University",lat:40.4237,lng:-86.9212, state:"Indiana", country:"US", city:"West Lafayette", comment:"Cradle of aerospace engineering and CS, has trained many astronauts."},
-            {name:"Vanderbilt University",lat:36.1447,lng:-86.8027, state:"Tennessee", country:"US", city:"Nashville", comment:"Harvard of the South, outstanding education and medical research, park-like campus."},
-            
-            // Australia (8 institutions)
-            {name:"University of Melbourne",lat:-37.7983,lng:144.9610, state:"Victoria", country:"Australia", city:"Melbourne", comment:"Top comprehensive ranking in Australia, rich research resources, high quality of life."},
-            {name:"University of Sydney",lat:-33.8886,lng:151.1873, state:"New South Wales", country:"Australia", city:"Sydney", comment:"Extremely classical and beautiful campus, fierce competition for business and medicine applications."},
-            {name:"Australian National University",lat:-35.2809,lng:149.1300, state:"Australian Capital Territory", country:"Australia", city:"Canberra", comment:"Australia's only national university, leading in political science and international relations."},
-            {name:"UNSW Sydney",lat:-33.9173,lng:151.2313, state:"New South Wales", country:"Australia", city:"Sydney", comment:"Strong in engineering and business, graduate employment rate ranks at the top in Australia."},
-            {name:"University of Queensland",lat:-27.4975,lng:153.0137, state:"Queensland", country:"Australia", city:"Brisbane", comment:"Outstanding in biological sciences and medical research, campus rated as one of the most beautiful in the world."},
-            {name:"Monash University",lat:-37.8768,lng:145.0458, state:"Victoria", country:"Australia", city:"Melbourne", comment:"World-leading in pharmacy and chemical engineering, has a vast international campus network."},
-            {name:"University of Western Australia",lat:-31.9809,lng:115.8194, state:"Western Australia", country:"Australia", city:"Perth", comment:"Located on the Swan River, renowned for mining engineering and marine sciences."},
-            {name:"University of Adelaide",lat:-34.9205,lng:138.6062, state:"South Australia", country:"Australia", city:"Adelaide", comment:"Produced 5 Nobel laureates, unique viticulture and oenology programs."},
-            
-            // Canada (5 institutions)
-            {name:"University of Toronto",lat:43.6629,lng:-79.3957, state:"Ontario", country:"Canada", city:"Toronto", comment:"Strongest research institution in Canada, a major hub for AI."},
-            {name:"McGill University",lat:45.5048,lng:-73.5772, state:"Quebec", country:"Canada", city:"Montreal", comment:"The Harvard of Canada, globally renowned medical and legal research."},
-            {name:"University of British Columbia",lat:49.2606,lng:-123.2460, state:"British Columbia", country:"Canada", city:"Vancouver", comment:"Located on the Pacific coast, world-leading in forestry and environmental sciences."},
-            {name:"University of Waterloo",lat:43.4723,lng:-80.5449, state:"Ontario", country:"Canada", city:"Waterloo", comment:"Pioneer of the Co-op model, superior strength in CS and engineering."},
-            {name:"University of Alberta",lat:53.5232,lng:-113.5263, state:"Alberta", country:"Canada", city:"Edmonton", comment:"Leading in petroleum engineering and energy research, top-tier research funding in Canada."},
-            
-            // Singapore (2 institutions)
-            {name:"National University of Singapore",lat:1.2966,lng:103.7764, state:"", country:"Singapore", city:"Singapore", comment:"Top Asian institution, first-class facilities, white-hot application competition."},
-            {name:"Nanyang Technological University",lat:1.3483,lng:103.6831, state:"", country:"Singapore", city:"Singapore", comment:"Beautiful and modern campus, engineering and materials science are at the forefront of the world."},
-            
-            // Hong Kong (5 institutions)
-            {name:"University of Hong Kong",lat:22.2830,lng:114.1371, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Highly internationalized, prestigious business and law programs, excellent platform for career development in HK."},
-            {name:"Chinese University of Hong Kong",lat:22.4195,lng:114.2066, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Strong humanities atmosphere, spacious campus, highly reputed in translation and CS."},
-            {name:"Hong Kong University of Science and Technology",lat:22.3364,lng:114.2655, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Short history but rapid development, strong business and engineering schools."},
-            {name:"Hong Kong Polytechnic University",lat:22.3041,lng:114.1796, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Leading in hospitality management and design in Asia, strong practical education features."},
-            {name:"City University of Hong Kong",lat:22.3376,lng:114.1739, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Outstanding in electronic engineering and media research, strong atmosphere of innovation and creativity."},
-            
-            // China (6 institutions)
-            {name:"Tsinghua University",lat:40.0000,lng:116.3265, state:"Beijing", country:"China", city:"Beijing", comment:"The highest palace of engineering and applied sciences in China, extremely rigorous academic atmosphere."},
-            {name:"Peking University",lat:39.9915,lng:116.3056, state:"Beijing", country:"China", city:"Beijing", comment:"The highest palace of humanities, social sciences, and fundamental sciences in China, free thinking."},
-            {name:"Zhejiang University",lat:30.2636,lng:120.1212, state:"Zhejiang", country:"China", city:"Hangzhou", comment:"Strong comprehensive strength, rapid development in agriculture and CS."},
-            {name:"Fudan University",lat:31.2974,lng:121.5036, state:"Shanghai", country:"China", city:"Shanghai", comment:"Equal emphasis on humanities and sciences, journalism, communications, and economics are second to none in China."},
-            {name:"Shanghai Jiao Tong University",lat:31.0255,lng:121.4347, state:"Shanghai", country:"China", city:"Shanghai", comment:"Traditional powerhouse in naval architecture and mechanical engineering, rapid development in medical school recently."},
-            {name:"University of Science and Technology of China",lat:31.8226,lng:117.2814, state:"Anhui", country:"China", city:"Hefei", comment:"Major hub for basic scientific research, leading in quantum information and AI."},
-            
-            // Continental Europe (17 institutions)
-            {name:"ETH Zurich",lat:47.3763,lng:8.5477, state:"Zurich", country:"Switzerland", city:"Zurich", comment:"Top STEM institution in Continental Europe, low tuition but extremely challenging coursework."},
-            {name:"EPFL",lat:46.5197,lng:6.5657, state:"Vaud", country:"Switzerland", city:"Lausanne", comment:"Leading in CS and life sciences engineering, campus located on the shores of Lake Geneva."},
-            {name:"PSL University",lat:48.8534,lng:2.3488, state:"Île-de-France", country:"France", city:"Paris", comment:"Top French university alliance, long history in math and physics research."},
-            {name:"École Polytechnique",lat:48.7145,lng:2.2117, state:"Île-de-France", country:"France", city:"Palaiseau", comment:"Crown jewel of French engineering education, trained countless political and business leaders."},
-            {name:"Technical University of Munich",lat:48.1497,lng:11.5679, state:"Bavaria", country:"Germany", city:"Munich", comment:"One of Germany's Universities of Excellence, engineering and CS are renowned across Europe."},
-            {name:"LMU Munich",lat:48.1508,lng:11.5804, state:"Bavaria", country:"Germany", city:"Munich", comment:"One of Germany's oldest universities, strong in humanities, social sciences, and medicine."},
-            {name:"Heidelberg University",lat:49.4125,lng:8.7100, state:"Baden-Württemberg", country:"Germany", city:"Heidelberg", comment:"Germany's oldest university, medicine and life sciences enjoy a prestigious reputation."},
-            {name:"TU Delft",lat:52.0024,lng:4.3739, state:"South Holland", country:"Netherlands", city:"Delft", comment:"King of Dutch STEM, architecture and aerospace engineering are world-renowned."},
-            {name:"University of Amsterdam",lat:52.3558,lng:4.9553, state:"North Holland", country:"Netherlands", city:"Amsterdam", comment:"World-leading in media and communications, highly influential social sciences research."},
-            {name:"KU Leuven",lat:50.8778,lng:4.7008, state:"Flanders", country:"Belgium", city:"Leuven", comment:"Europe's oldest Catholic university, equal emphasis on engineering and theology."},
-            {name:"Sorbonne University",lat:48.8489,lng:2.3430, state:"Île-de-France", country:"France", city:"Paris", comment:"The holy land for humanities and social sciences, globally renowned for French literature and history."},
-            {name:"KTH Royal Institute of Technology",lat:59.3498,lng:18.0702, state:"Stockholm", country:"Sweden", city:"Stockholm", comment:"Largest STEM institution in the Nordics, leading in electronic engineering and CS."},
-            {name:"Lund University",lat:55.7110,lng:13.2035, state:"Skåne", country:"Sweden", city:"Lund", comment:"One of Sweden's oldest universities, strong in medical and legal research."},
-            {name:"University of Oslo",lat:59.9399,lng:10.7217, state:"Oslo", country:"Norway", city:"Oslo", comment:"Oldest university in the Scandinavian Peninsula, unique Arctic research."},
-            {name:"University of Copenhagen",lat:55.6806,lng:12.5735, state:"Capital Region", country:"Denmark", city:"Copenhagen", comment:"First university in the Nordics, leading in bioinformatics and environmental sciences."},
-            {name:"University of Bologna",lat:44.4938,lng:11.3430, state:"Emilia-Romagna", country:"Italy", city:"Bologuna", comment:"The mother of Western universities, long history in law and humanities."},
-            {name:"Polytechnic University of Milan",lat:45.4781,lng:9.2270, state:"Lombardy", country:"Italy", city:"Milan", comment:"Benchmark of Italian engineering and design education, highly prestigious in architecture."},
-            
-            // Japan & South Korea (4 institutions)
-            {name:"University of Tokyo",lat:35.7128,lng:139.7596, state:"Tokyo", country:"Japan", city:"Tokyo", comment:"Traditional Asian prestigious university, deep research heritage in basic sciences and engineering."},
-            {name:"Kyoto University",lat:35.0262,lng:135.7810, state:"Kyoto", country:"Japan", city:"Kyoto", comment:"Cradle of Japanese Nobel laureates, advocates free academic atmosphere, superior basic research."},
-            {name:"Osaka University",lat:34.8220,lng:135.5230, state:"Osaka", country:"Japan", city:"Suita", comment:"Highest academic institution in the Kansai region, leading in immunology and laser engineering."},
-            {name:"Seoul National University",lat:37.4602,lng:126.9527, state:"Seoul", country:"South Korea", city:"Seoul", comment:"Highest academic institution in South Korea, law and business administration dominate the country."}
+        // Recommendation questions
+        const questions = [
+            {
+                question: "Which year of study are you in?",
+                options: ["Sophomore (Year 2)", "Junior (Year 3)", "Senior (Year 4)"]
+            },
+            {
+                question: "Which college are you from?",
+                options: ["Business School", "Engineering", "Science", "Arts & Humanities"]
+            },
+            {
+                question: "What's your current GPA range?",
+                options: ["3.5-4.0", "3.0-3.5", "2.5-3.0", "Below 2.5"]
+            },
+            {
+                question: "What's your preferred study destination?",
+                options: ["United Kingdom", "United States", "Australia", "Europe (Other)"]
+            },
+            {
+                question: "What's your study habit like?",
+                options: ["Self-motivated", "Group study", "Structured schedule", "Flexible learning"]
+            }
         ];
 
-        let markers = [];
-        function renderMarkers() {
-            markers.forEach(m => map.removeLayer(m));
-            markers = [];
-            const color = getComputedStyle(document.body).getPropertyValue('--marker-fill').trim();
-            universities.forEach(uni => {
-                const marker = L.circleMarker([uni.lat, uni.lng], {
-                    radius: 6, fillColor: color, color: "#FFFFFF", weight: 2, opacity: 1, fillOpacity: 0.95
-                }).addTo(map);
-                marker.bindTooltip(uni.name, { direction: "top", className: "treasure-tooltip", offset: [0, -10] });
-                marker.on('click', () => {
-                    map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5, easeLinearity: 0.25 });
-                    showUniversityModal(uni);
-                });
-                markers.push(marker);
-            });
-        }
+        let currentQuestion = 0;
 
-        function showUniversityModal(uni) {
-            // 切换到大学详情面板
-            document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById('university-panel').classList.add('active');
-            
-            const content = document.getElementById('university-details');
-            content.innerHTML = `<div style="text-align:center;padding:40px 0;color:var(--text-muted)"><i data-lucide="loader" style="animation:spin 2s linear infinite;"></i></div>`;
-            refreshIcons();
-            
-            setTimeout(() => {
-                const locStr = uni.state ? `${uni.state}, ${uni.country}` : `${uni.country}`;
-                content.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
-                        <div style="width:48px;height:48px;background:var(--bg-hover);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="building-2"></i></div>
-                        <div style="font-size:20px; font-weight:600;">${uni.name}</div>
-                    </div>
-                    <div class="uni-stat" style="display:flex; align-items:center; gap:16px;">
-                        <i data-lucide="map-pin" style="color:var(--text-muted);"></i>
-                        <div><div style="font-size:12px;color:var(--text-muted);">Location</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
-                    </div>
-                    <div class="ai-senior-section">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> Profile Evaluation Report</div>
-                        <div style="font-size:14px;line-height:1.6;color:var(--text-muted);">${uni.comment}</div>
-                    </div>
-                    <button class="btn-primary" id="btn-fav-${uni.lat}"><i data-lucide="bookmark"></i> Save to Research List</button>
-                `;
-                refreshIcons();
-                document.getElementById(`btn-fav-${uni.lat}`).onclick = function() {
-                    if (!favorites.find(f => f.name === uni.name)) {
-                        favorites.push(uni); localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
-                        renderFavorites(); updateUserUI(); updateUniversitySelect();
-                        this.innerHTML = '<i data-lucide="check"></i> Saved to List';
-                        this.style.background = 'var(--success-text)';
-                        refreshIcons();
-                    }
-                };
-            }, 600);
-        }
-
-        function renderFavorites() {
-            const list = document.getElementById('favorites-list');
-            if (!list) return;
-            if (favorites.length === 0) {
-                list.innerHTML = `<div class="empty-state"><i data-lucide="bookmark" style="width:32px;height:32px;margin-bottom:16px;"></i><h4>List is Empty</h4><p style="font-size:13px;margin-top:8px;">Click on an institution on the map to add it to your list.</p></div>`;
-                refreshIcons(); return;
-            }
-            list.innerHTML = '';
-            favorites.forEach(f => {
-                const div = document.createElement('div');
-                div.className = 'fav-item';
-                div.innerHTML = `
-                    <div><div class="fav-name">${f.name}</div><div class="fav-meta">Coordinates: ${f.lat.toFixed(2)}, ${f.lng.toFixed(2)}</div></div>
-                    <button class="icon-btn" onclick="favorites=favorites.filter(x=>x.name!=='${f.name}');localStorage.setItem('xjlu_favorites',JSON.stringify(favorites));renderFavorites();updateUserUI();updateUniversitySelect();"><i data-lucide="trash-2" style="color:var(--danger-text);"></i></button>
-                `;
-                list.appendChild(div);
-            });
-            refreshIcons();
-            updateUniversitySelect();
-        }
-
-        // ==================== School Recommendation System ====================
-        const recommendQuestions = [
-            {
-                q: "Which year are you currently in?",
-                options: ["Year 2 (Sophomore)", "Year 3 (Junior)", "Year 4 (Senior)"],
-                key: "year"
-            },
-            {
-                q: "Which school/college are you from at XJTLU?",
-                options: ["School of Business", "School of Science", "School of Advanced Technology", "School of Film and Television", "School of Arts", "School of Humanities and Social Sciences"],
-                key: "school"
-            },
-            {
-                q: "What is your major?",
-                options: ["Finance & Accounting", "Economics & Management", "Computer Science & AI", "Mathematics & Statistics", "Mechanical & Energy Engineering", "English & Communications", "Architecture & Urban Planning", "Other"],
-                key: "major"
-            },
-            {
-                q: "What is your approximate GPA range?",
-                options: ["Below 2.5 (Below 60)", "2.5 - 3.0 (60 - 75)", "3.0 - 3.5 (75 - 85)", "Above 3.5 (Above 85)"],
-                key: "gpa"
-            },
-            {
-                q: "What is your study habit?",
-                options: ["Very diligent - consistent daily study", "Moderate - study before exams", "Flexible - study when motivated", "Need improvement - often procrastinate"],
-                key: "habit"
-            }
-        ];
-        
-        let recommendStep = 0;
-        let recommendAnswers = {};
-        let selectedRecommendOption = null;
-        
-        function loadRecommendQuestion() {
-            if (recommendStep >= recommendQuestions.length) return;
-            const q = recommendQuestions[recommendStep];
-            document.getElementById('recommend-step-num').textContent = recommendStep + 1;
-            document.getElementById('recommend-total-num').textContent = recommendQuestions.length;
-            document.getElementById('recommend-progress-fill').style.width = `${((recommendStep) / recommendQuestions.length) * 100}%`;
-            document.getElementById('recommend-question').textContent = q.q;
-            
-            const container = document.getElementById('recommend-options');
-            container.innerHTML = '';
-            q.options.forEach((opt, i) => {
-                const div = document.createElement('div');
-                div.className = 'quiz-option';
-                div.textContent = opt;
-                div.onclick = () => {
-                    document.querySelectorAll('#recommend-options .quiz-option').forEach(o => o.classList.remove('selected'));
-                    div.classList.add('selected');
-                    selectedRecommendOption = i;
-                };
-                container.appendChild(div);
-            });
-            
-            document.getElementById('recommend-back').style.visibility = recommendStep === 0 ? 'hidden' : 'visible';
-            document.getElementById('recommend-next').textContent = recommendStep === recommendQuestions.length - 1 ? 'Get Results' : 'Next';
-            refreshIcons();
-        }
-        
-        function getRecommendations() {
-            const { year, school, major, gpa, habit } = recommendAnswers;
-            
-            const recommendations = universities.filter(uni => {
-                let score = 0;
-                
-                // GPA scoring
-                if (gpa === 'Above 3.5 (Above 85)') score += 30;
-                else if (gpa === '3.0 - 3.5 (75 - 85)') score += 20;
-                else if (gpa === '2.5 - 3.0 (60 - 75)') score += 10;
-                
-                // Study habit scoring
-                if (habit === 'Very diligent - consistent daily study') score += 20;
-                else if (habit === 'Moderate - study before exams') score += 15;
-                else if (habit === 'Flexible - study when motivated') score += 10;
-                
-                // Major-based filtering
-                const stemMajors = ['Computer Science & AI', 'Mathematics & Statistics', 'Mechanical & Energy Engineering'];
-                const businessMajors = ['Finance & Accounting', 'Economics & Management'];
-                
-                if (stemMajors.includes(major)) {
-                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Canada' || uni.country === 'Germany' || uni.country === 'Switzerland') {
-                        score += 25;
-                    }
-                } else if (businessMajors.includes(major)) {
-                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Hong Kong' || uni.country === 'Singapore') {
-                        score += 25;
-                    }
-                } else {
-                    score += 15;
-                }
-                
-                // Year-based adjustment
-                if (year === 'Year 2 (Sophomore)') {
-                    score += (uni.comment.length > 50) ? 15 : 10;
-                } else if (year === 'Year 3 (Junior)') {
-                    score += 20;
-                } else {
-                    score += 15;
-                }
-                
-                uni.matchScore = score;
-                return score > 30;
-            });
-            
-            return recommendations.sort((a, b) => b.matchScore - a.matchScore).slice(0, 6);
-        }
-        
-        function showRecommendResults() {
-            const results = getRecommendations();
-            document.getElementById('recommend-form').style.display = 'none';
-            document.getElementById('recommend-result').style.display = 'block';
-            
-            const container = document.getElementById('recommend-results-list');
-            container.innerHTML = '';
-            
-            if (results.length === 0) {
-                container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">No exact matches found. Try adjusting your answers or browse the map directly.</p>';
-                return;
-            }
-            
-            results.forEach(uni => {
-                const card = document.createElement('div');
-                card.className = 'university-card';
-                card.style.cursor = 'pointer';
-                card.innerHTML = `
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
-                        <span style="font-size:11px;background:var(--accent);color:white;padding:2px 8px;border-radius:10px;">${uni.matchScore}pts</span>
-                    </div>
-                    <p style="font-size:12px;color:var(--text-muted);margin:0 0 6px 0;">${uni.city}, ${uni.country}</p>
-                    <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.4;">${uni.comment.substring(0, 80)}...</p>
-                `;
-                card.onclick = () => {
-                    map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5 });
-                    showUniversityModal(uni);
-                };
-                container.appendChild(card);
-            });
-            refreshIcons();
-        }
-        
-        document.getElementById('start-recommend').onclick = () => {
+        function startRecommendation() {
             document.getElementById('recommend-start').style.display = 'none';
-            document.getElementById('recommend-form').style.display = 'block';
-            recommendStep = 0;
-            recommendAnswers = {};
-            loadRecommendQuestion();
-        };
-        
-        document.getElementById('recommend-next').onclick = () => {
-            if (selectedRecommendOption === null) return;
-            const key = recommendQuestions[recommendStep].key;
-            recommendAnswers[key] = recommendQuestions[recommendStep].options[selectedRecommendOption];
-            selectedRecommendOption = null;
-            
-            if (recommendStep < recommendQuestions.length - 1) {
-                recommendStep++;
-                loadRecommendQuestion();
-            } else {
-                showRecommendResults();
-            }
-        };
-        
-        document.getElementById('recommend-back').onclick = () => {
-            if (recommendStep > 0) {
-                recommendStep--;
-                selectedRecommendOption = null;
-                loadRecommendQuestion();
-            }
-        };
-        
-        document.getElementById('recommend-restart').onclick = () => {
-            document.getElementById('recommend-result').style.display = 'none';
-            document.getElementById('recommend-start').style.display = 'block';
-            recommendStep = 0;
-            recommendAnswers = {};
-            selectedRecommendOption = null;
-        };
-
-        // ==================== 5. AI Chat & 其他模块 ====================
-        const CHAT_PROMPT = `You are a senior advisor graduated from XJTLU, objective, extremely professional, and concise. Answers must be direct and well-paragraphed.`;
-        function initAPI() {
-            // Check API key expiration
-            checkAPIKeyExpiration();
-            
-            if (API_KEY) {
-                document.getElementById('api-section').style.display = 'none';
-                document.getElementById('api-unlocked-section').style.display = 'flex';
-            } else {
-                document.getElementById('api-section').style.display = 'block';
-                document.getElementById('api-unlocked-section').style.display = 'none';
-            }
+            document.getElementById('recommend-questions').style.display = 'block';
+            currentQuestion = 0;
+            recommendAnswers = [];
+            showQuestion();
         }
-        
-        document.getElementById('submit-api').onclick = () => {
-            const val = document.getElementById('api-key-input').value.trim();
-            if(val) {
-                API_KEY = val;
-                // Store API key with timestamp for expiration
-                const apiData = {
-                    key: val,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('xjlu_api_key_data', JSON.stringify(apiData));
-                initAPI();
-            }
-        };
-        document.getElementById('reset-api').onclick = () => {
-            API_KEY = null;
-            localStorage.removeItem('xjlu_api_key_data');
-            document.getElementById('api-section').style.display = 'block';
-            document.getElementById('api-unlocked-section').style.display = 'none';
-        };
 
-        async function sendChat() {
-            const input = document.getElementById('chat-input'); const msg = input.value.trim();
-            if (!msg) return;
-            if (!API_KEY) return alert('System Prompt: Please configure API access in the account panel first.');
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            document.getElementById('recommend-progress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
             
-            const box = document.getElementById('chat-box');
-            box.innerHTML += `<div class="chat-msg chat-user"><div class="msg">${msg}</div></div>`;
-            input.value = ''; box.scrollTop = box.scrollHeight;
-            
-            const typingId = 'typing-' + Date.now();
-            box.innerHTML += `<div class="chat-msg chat-ai" id="${typingId}"><div class="msg"><i data-lucide="loader" style="animation:spin 2s linear infinite;width:16px;"></i></div></div>`;
-            refreshIcons(); box.scrollTop = box.scrollHeight;
-            
-            try {
-                const res = await fetch('https://api.deepseek.com/chat/completions', {
-                    method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}`},
-                    body: JSON.stringify({model: 'deepseek-chat', messages: [{role:'system',content:CHAT_PROMPT},{role:'user',content:msg}], temperature: 0.3})
-                });
-                const data = await res.json();
-                document.getElementById(typingId).remove();
-                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg">${data.choices[0].message.content.replace(/\n/g, '<br>')}</div></div>`;
-            } catch (e) {
-                document.getElementById(typingId).remove();
-                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg" style="color:var(--danger-text)">Communication failed, please check network connection or API configuration.</div></div>`;
-            }
-            box.scrollTop = box.scrollHeight;
+            const options = document.getElementById('question-options');
+            options.innerHTML = q.options.map((opt, i) => `
+                <div class="recommend-option" onclick="selectOption(${i})">${opt}</div>
+            `).join('');
         }
-        document.getElementById('chat-send').onclick = sendChat;
-        document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChat(); };
 
-        // Emotional Support System - Multiple random messages per mood
-        const emotionData = {
-            great: {
-                title: 'Status Assessment: Excellent',
-                messages: [
-                    'Outstanding performance! Your dedication is paying off. Keep up the excellent work and maintain this momentum.',
-                    'Fantastic progress! Your consistent effort is showing results. Take a moment to celebrate this achievement.',
-                    'Excellent work! Your preparation is on track. Consider this a well-deserved recognition of your hard work.',
-                    'Brilliant! You are making remarkable strides. Keep pushing forward - success is within your reach.',
-                    'Superb execution! Your commitment to excellence is evident. This positive trajectory will lead to great outcomes.'
-                ]
-            },
-            okay: {
-                title: 'Status Assessment: Steady',
-                messages: [
-                    'Plateaus are normal for long-term tasks. Please continue to advance preparations according to your schedule.',
-                    'Steady progress is still progress. Trust the process and keep working towards your goals consistently.',
-                    'Maintenance mode is valid. Focus on small daily improvements rather than dramatic breakthroughs.',
-                    'Consistency beats intensity. Your steady approach will compound over time into significant results.',
-                    'Progress may seem slow, but every step counts. Keep moving forward at your current pace.'
-                ]
-            },
-            stressed: {
-                title: 'Status Assessment: High Stress',
-                messages: [
-                    'Decompression protocol recommended: Pause current work, step away from the screen, and execute 15 minutes of physical relaxation or environment change.',
-                    'Stress is a signal, not a verdict. Take a short break, breathe deeply, and return with a clearer perspective.',
-                    'High stress affects decision-making. Consider a brief walk, stretching, or listening to calming music before continuing.',
-                    'Your wellbeing comes first. Step away from the task, hydrate, and give your mind a chance to reset.',
-                    'Feeling overwhelmed is temporary. Prioritize rest, then tackle one small task at a time to rebuild momentum.'
-                ]
-            },
-            anxious: {
-                title: 'Status Assessment: Anxious',
-                messages: [
-                    'Anxiety stems from a lack of control. It is recommended to break down grand goals into minimal task units executable within the next 24 hours and conquer them one by one.',
-                    'Uncertainty is natural in this process. Focus on what you can control: your daily actions and decisions.',
-                    'Anxiety often precedes growth. Channel this energy into structured preparation rather than worrying about outcomes.',
-                    'Take a deep breath. Break your preparation into smaller, manageable steps and address them one at a time.',
-                    'Your anxiety shows you care. Use it as motivation to prepare thoroughly, but remember to be kind to yourself.'
-                ]
-            }
-        };
-        
-        function getRandomEmotionMessage(mood) {
-            const messages = emotionData[mood].messages;
-            return messages[Math.floor(Math.random() * messages.length)];
-        }
-        
-        document.querySelectorAll('.emotion-mood').forEach(mood => {
-            mood.onclick = () => {
-                document.querySelectorAll('.emotion-mood').forEach(m => m.classList.remove('active'));
-                mood.classList.add('active');
-                document.getElementById('emotion-title').textContent = emotionData[mood.dataset.mood].title;
-                document.getElementById('emotion-text').textContent = getRandomEmotionMessage(mood.dataset.mood);
-                document.getElementById('emotion-response').style.display = 'block';
-            };
-        });
-
-        // 导航与模态框全局逻辑
-        document.querySelectorAll('.panel-tab').forEach(tab => {
-            tab.onclick = () => {
-                document.querySelectorAll('.panel-tab, .tab-content').forEach(el => el.classList.remove('active'));
-                tab.classList.add('active'); document.getElementById(tab.dataset.tab).classList.add('active');
-                if (tab.dataset.tab === 'fav-tab') {
-                    renderFavorites();
-                    updateUniversityStats();
-                }
-            };
-        });
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.onclick = () => {
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                const panel = link.dataset.panel;
-                
-                // 移除所有内容标签页的active类
-                document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-                // 隐藏所有内容面板
-                document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-                
-                if (panel === 'home') {
-                    // 切换到地图面板
-                    document.querySelector('[data-panel="map-panel"]').classList.add('active');
-                    document.getElementById('map-panel').classList.add('active');
-                    if (window.innerWidth <= 1024) {
-                        document.getElementById('left-sidebar').classList.add('open');
-                    }
-                } else if (panel === 'recommend') {
-                    document.querySelector('[data-panel="recommend-panel"]').classList.add('active');
-                    document.getElementById('recommend-panel').classList.add('active');
-                } else if (panel === 'emotion') {
-                    document.querySelector('[data-panel="emotion-panel"]').classList.add('active');
-                    document.getElementById('emotion-panel').classList.add('active');
-                }
-            };
-        });
-        document.getElementById('toggle-sidebar').onclick = () => document.getElementById('left-sidebar').classList.toggle('open');
-
-        // 点击内容区域关闭侧边栏
-        document.getElementById('content-area').onclick = function(e) {
-            if (!e.target.closest('#left-sidebar') && !e.target.closest('#toggle-sidebar')) {
-                document.getElementById('left-sidebar').classList.remove('open');
-            }
-        };
-        document.querySelectorAll('.modal-close').forEach(btn => btn.onclick = () => btn.closest('.modal').style.display = 'none');
-        window.onclick = e => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
-        
-        // Content tab click events
-        document.querySelectorAll('.content-tab').forEach(tab => {
-            tab.onclick = () => {
-                document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
-                const panelId = tab.dataset.panel;
-                document.getElementById(panelId).classList.add('active');
-                
-                // Special handling for specific panels
-                if (panelId === 'achievement-panel') {
-                    renderAchievements();
-                }
-            };
-        });
-        
-        document.getElementById('show-register').onclick = () => { document.getElementById('login-form-container').style.display = 'none'; document.getElementById('register-form-container').style.display = 'block'; };
-        document.getElementById('back-to-login').onclick = () => { document.getElementById('login-form-container').style.display = 'block'; document.getElementById('register-form-container').style.display = 'none'; };
-
-        // Spin 动画 CSS
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = "@keyframes spin { 100% { transform: rotate(360deg); } }";
-        document.head.appendChild(styleSheet);
-        
-        // ==================== 大学分布统计 ====================
-        function updateUniversityStats() {
-            const stats = {
-                uk: 0,
-                us: 0,
-                aus: 0,
-                total: universities.length
-            };
-            
-            universities.forEach(uni => {
-                if (uni.country === 'UK') stats.uk++;
-                else if (uni.country === 'US') stats.us++;
-                else if (uni.country === 'Australia') stats.aus++;
+        function selectOption(index) {
+            document.querySelectorAll('.recommend-option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
             });
-            
-            document.getElementById('stat-uk').textContent = stats.uk;
-            document.getElementById('stat-us').textContent = stats.us;
-            document.getElementById('stat-aus').textContent = stats.aus;
-            document.getElementById('stat-total').textContent = stats.total;
+            recommendAnswers[currentQuestion] = questions[currentQuestion].options[index];
         }
-        
-        // ==================== 进度条功能 ====================
-        let todoItems = JSON.parse(localStorage.getItem('xjlu_todo_items')) || [];
-        
-        // 添加默认的申请流程待办事项
-        function initDefaultTodoItems() {
-            const defaultTodos = [
-                { text: 'Determine intended major and target schools', completed: false, isDefault: true },
-                { text: 'Prepare for language exams (IELTS/TOEFL)', completed: false, isDefault: true },
-                { text: 'Organize transcripts and enrollment certificates', completed: false, isDefault: true },
-                { text: 'Prepare Personal Statement (PS)', completed: false, isDefault: true },
-                { text: 'Contact recommenders for recommendation letters', completed: false, isDefault: true },
-                { text: 'Prepare CV/Resume', completed: false, isDefault: true },
-                { text: 'Complete online application forms', completed: false, isDefault: true },
-                { text: 'Pay application fees', completed: false, isDefault: true },
-                { text: 'Track application status', completed: false, isDefault: true },
-                { text: 'Prepare for interviews (if required)', completed: false, isDefault: true }
+
+        function nextQuestion() {
+            if (!recommendAnswers[currentQuestion]) {
+                alert('Please select an option');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('recommend-questions').style.display = 'none';
+            document.getElementById('recommend-results').style.display = 'block';
+            
+            const recommended = [
+                { name: 'University of Oxford', reason: 'Excellent academic reputation' },
+                { name: 'University College London', reason: 'Strong research opportunities' },
+                { name: 'University of Manchester', reason: 'Diverse program offerings' }
             ];
             
-            // 检查每个默认待办事项是否已存在
-            let hasAllDefaultTodos = true;
-            defaultTodos.forEach(defaultTodo => {
-                const exists = todoItems.some(item => 
-                    item.isDefault && item.text === defaultTodo.text
-                );
-                if (!exists) {
-                    hasAllDefaultTodos = false;
-                }
-            });
-            
-            if (!hasAllDefaultTodos) {
-                // 移除所有现有的默认待办事项
-                todoItems = todoItems.filter(item => !item.isDefault);
-                // 添加所有默认待办事项
-                todoItems = [...defaultTodos, ...todoItems];
-                localStorage.setItem('xjlu_todo_items', JSON.stringify(todoItems));
-            }
-        }
-        
-        function renderTodoItems() {
-            const todoList = document.getElementById('todo-list');
-            todoList.innerHTML = '';
-            
-            todoItems.forEach((item, index) => {
-                const todoItem = document.createElement('div');
-                todoItem.className = 'todo-item';
-                todoItem.style.cssText = `
-                    display: flex; align-items: center; gap: 12px; padding: 12px;
-                    background: var(--bg-card); border: 1px solid var(--border-muted);
-                    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
-                    position: relative;
-                `;
-                todoItem.innerHTML = `
-                    <div class="todo-status ${item.completed ? 'completed' : ''}">
-                        ${item.completed ? '<i data-lucide="check" style="width:16px;"></i>' : '<i data-lucide="circle" style="width:16px;"></i>'}
+            document.getElementById('results-list').innerHTML = recommended.map((uni, i) => `
+                <div class="recommend-uni-card">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="recommend-uni-rank">${i + 1}</div>
+                        <div>
+                            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">${uni.name}</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">${uni.reason}</p>
+                        </div>
                     </div>
-                    <div class="todo-text ${item.completed ? 'completed' : ''}">${item.text}</div>
-                    ${!item.isDefault ? `<button class="todo-remove" onclick="removeTodo(${index}); event.stopPropagation();"><i data-lucide="trash-2" style="width:14px;"></i></button>` : ''}
-                `;
-                
-                todoItem.onclick = () => {
-                    toggleTodo(index);
-                };
-                
-                todoList.appendChild(todoItem);
-            });
-            
-            updateProgress();
-            refreshIcons();
+                </div>
+            `).join('');
         }
-        
-        function toggleTodo(index) {
-            todoItems[index].completed = !todoItems[index].completed;
-            localStorage.setItem('xjlu_todo_items', JSON.stringify(todoItems));
-            renderTodoItems();
+
+        function restartRecommendation() {
+            document.getElementById('recommend-results').style.display = 'none';
+            document.getElementById('recommend-start').style.display = 'block';
         }
-        
-        function removeTodo(index) {
-            todoItems.splice(index, 1);
-            localStorage.setItem('xjlu_todo_items', JSON.stringify(todoItems));
-            renderTodoItems();
-        }
-        
-        function addTodo() {
-            const input = document.getElementById('todo-input');
-            const text = input.value.trim();
-            if (text) {
-                todoItems.push({ text, completed: false });
-                localStorage.setItem('xjlu_todo_items', JSON.stringify(todoItems));
-                input.value = '';
-                renderTodoItems();
-            }
-        }
-        
-        function updateProgress() {
-            if (todoItems.length === 0) {
-                document.getElementById('progress-fill').style.width = '0%';
-                document.getElementById('progress-text').textContent = '0/0 Completed';
-                document.getElementById('progress-percent').textContent = '0%';
-                return;
-            }
-            
-            const completed = todoItems.filter(item => item.completed).length;
-            const percent = Math.round((completed / todoItems.length) * 100);
-            
-            document.getElementById('progress-fill').style.width = `${percent}%`;
-            document.getElementById('progress-text').textContent = `${completed}/${todoItems.length} Completed`;
-            document.getElementById('progress-percent').textContent = `${percent}%`;
-        }
-        
-        // ==================== AI申请评估 ====================
-        function updateUniversitySelect() {
-            const select = document.getElementById('university-select');
-            select.innerHTML = '<option value="">Select a favorite university</option>';
-            
-            favorites.forEach(uni => {
-                const option = document.createElement('option');
-                option.value = uni.name;
-                option.textContent = uni.name;
-                select.appendChild(option);
-            });
-        }
-        
-        async function evaluateApplication() {
-            const university = document.getElementById('university-select').value;
-            if (!university) {
-                document.getElementById('evaluation-result').textContent = 'Please select a favorite university';
-                return;
-            }
-            
-            if (!API_KEY) {
-                document.getElementById('evaluation-result').textContent = 'Please configure API Key first';
-                return;
-            }
-            
-            const resultDiv = document.getElementById('evaluation-result');
-            resultDiv.innerHTML = '<i data-lucide="loader" style="animation:spin 2s linear infinite;width:16px;"></i> Analyzing...';
-            refreshIcons();
-            
-            try {
-                const achievementsText = achievements.map(a => a.title).join(', ');
-                const prompt = `As a study abroad application expert, please evaluate the student's success rate in applying to ${university}. Student achievements: ${achievementsText || 'None'}. Please analyze based on the following factors: 1. Match between student background and school requirements 2. Success rate assessment (Low/Medium/High) 3. Improvement suggestions. Keep the answer objective, professional, and concise.`;
-                
-                const res = await fetch('https://api.deepseek.com/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: 'deepseek-chat',
-                        messages: [
-                            {role: 'system', content: CHAT_PROMPT},
-                            {role: 'user', content: prompt}
-                        ],
-                        temperature: 0.3
-                    })
-                });
-                
-                const data = await res.json();
-                resultDiv.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
-            } catch (e) {
-                resultDiv.textContent = 'Evaluation failed, please check network connection or API configuration';
-            }
-        }
-        
-        // ==================== University Search ====================
-        function renderSearchResults(results) {
-            let container = document.getElementById('search-results');
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'search-results';
-                container.style.display = 'grid';
-                container.style.gridTemplateColumns = '1fr';
-                container.style.gap = '12px';
-                container.style.marginTop = '16px';
-                container.style.marginBottom = '16px';
-                
-                const mapPanel = document.getElementById('map-panel');
-                const mapContainer = document.getElementById('map-container');
-                mapPanel.insertBefore(container, mapContainer.nextSibling);
-            }
-            
-            container.innerHTML = '';
-            
-            if (results.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px;">No universities found</div>';
-                return;
-            }
-            
-            results.forEach(uni => {
-                const card = document.createElement('div');
-                card.className = 'university-card';
-                card.style.cursor = 'pointer';
-                card.innerHTML = `
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
-                        <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                    </div>
-                    <p style="font-size:12px;color:var(--text-muted);margin:0;">${uni.city}, ${uni.country}</p>
-                `;
-                card.onclick = (e) => {
-                    if (!e.target.closest('.icon-btn')) {
-                        // Fly to the university on the map
-                        map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5, easeLinearity: 0.25 });
-                        // Show university modal
-                        showUniversityModal(uni);
-                        // Hide search results
-                        container.style.display = 'none';
-                    }
-                };
-                const bookmarkBtn = card.querySelector('.icon-btn');
-                bookmarkBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    if (!favorites.find(f => f.name === uni.name)) {
-                        favorites.push(uni);
-                        localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
-                        renderFavorites();
-                        updateUserUI();
-                        bookmarkBtn.innerHTML = '<i data-lucide="check"></i>';
-                        bookmarkBtn.style.color = 'var(--success-text)';
-                        refreshIcons();
-                    }
-                };
-                container.appendChild(card);
-            });
-            refreshIcons();
-        }
-        
-        document.getElementById('university-search').oninput = (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            let container = document.getElementById('search-results');
-            
-            if (query.length === 0) {
-                if (container) container.style.display = 'none';
-                return;
-            }
-            
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'search-results';
-                container.style.display = 'grid';
-                container.style.gridTemplateColumns = '1fr';
-                container.style.gap = '12px';
-                container.style.marginTop = '16px';
-                container.style.marginBottom = '16px';
-                
-                const mapPanel = document.getElementById('map-panel');
-                const mapContainer = document.getElementById('map-container');
-                mapPanel.insertBefore(container, mapContainer.nextSibling);
-            }
-            
-            container.style.display = 'grid';
-            const results = universities.filter(uni => 
-                uni.name.toLowerCase().includes(query) ||
-                uni.city.toLowerCase().includes(query) ||
-                uni.country.toLowerCase().includes(query) ||
-                (uni.state && uni.state.toLowerCase().includes(query))
-            );
-            renderSearchResults(results.slice(0, 10));
+
+        // Emotion support
+        const responses = {
+            happy: [
+                "Wonderful! Keep that positive energy going - you're doing great!",
+                "Awesome! Your positivity is contagious. Keep shining!",
+                "Fantastic! Happiness is the best fuel for your study journey."
+            ],
+            anxious: [
+                "It's okay to feel anxious - everyone does. Take a deep breath and tackle things one step at a time.",
+                "Anxiety means you care deeply. Remember, you're prepared and capable.",
+                "Take it easy. Break big tasks into small steps and celebrate each one."
+            ],
+            stressed: [
+                "You're carrying a lot, but you're stronger than you think. Take a moment for yourself.",
+                "Stress is your body's way of saying 'I'm invested'. Take breaks and recharge.",
+                "You don't have to do it all at once. Progress, not perfection, is the goal."
+            ],
+            hopeful: [
+                "Love that optimism! Your dreams are within reach - keep believing.",
+                "Hope is powerful. Every step brings you closer to your goals.",
+                "Great attitude! Your future self will thank you for this positivity."
+            ]
         };
-        
-        // ==================== 事件监听 ====================
-        document.getElementById('add-todo').onclick = addTodo;
-        document.getElementById('todo-input').onkeypress = (e) => {
-            if (e.key === 'Enter') addTodo();
-        };
-        
-        document.getElementById('evaluate-application').onclick = evaluateApplication;
-        
-        // ==================== 初始化 ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            setTheme(currentTheme);
-            // Check API key expiration on page load
-            checkAPIKeyExpiration();
-            updateUserUI();
-            initAPI();
-            updateUniversityStats();
-            initDefaultTodoItems();
-            renderTodoItems();
-            updateUniversitySelect();
+
+        function handleMoodSelect(e) {
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
             
-            // Initialize map
-            updateMapStyle();
-        });
+            const mood = e.target.getAttribute('data-mood') || e.target.parentElement.getAttribute('data-mood');
+            const responseList = responses[mood] || responses.happy;
+            const response = responseList[Math.floor(Math.random() * responseList.length)];
+            
+            document.getElementById('emotion-response').innerHTML = `<p>${response}</p>`;
+        }
+
+        // Data persistence
+        function loadData() {
+            const saved = localStorage.getItem('treasure_achievements');
+            if (saved) achievements = JSON.parse(saved);
+            renderAchievements();
+            
+            const savedFavs = localStorage.getItem('treasure_favorites');
+            if (savedFavs) favorites = JSON.parse(savedFavs);
+        }
+
+        function saveData() {
+            localStorage.setItem('treasure_achievements', JSON.stringify(achievements));
+            localStorage.setItem('treasure_favorites', JSON.stringify(favorites));
+        }
     </script>
 </body>
 </html>
