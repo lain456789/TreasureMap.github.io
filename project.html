@@ -61,179 +61,61 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* New Compact Layout - No Navbar */
-        #navbar { display: none; }
-        
-        #main-container { 
-            position: fixed; 
-            top: 0; left: 0; right: 0; bottom: 0; 
-            display: flex;
-            padding-top: 0;
-        }
-        
-        /* New Left Navigation - Compact Icons + Floating Header */
-        #left-sidebar {
-            width: 72px;
-            background: var(--bg-surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 16px 0;
-            gap: 8px;
-            z-index: 900;
-            position: relative;
-        }
-        
-        .sidebar-logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--accent), #8B5CF6);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-        
-        .sidebar-logo i { color: white; width: 22px; height: 22px; }
-        
-        .sidebar-nav-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            transition: all 0.2s;
-            position: relative;
-        }
-        
-        .sidebar-nav-btn i { width: 20px; height: 20px; }
-        .sidebar-nav-btn span { font-size: 9px; font-weight: 500; }
-        
-        .sidebar-nav-btn:hover {
-            background: var(--bg-hover);
-            color: var(--text-main);
-        }
-        
-        .sidebar-nav-btn.active {
-            background: linear-gradient(135deg, var(--accent), #8B5CF6);
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-        
-        .sidebar-nav-btn .notif-badge {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 8px;
-            height: 8px;
-            background: var(--danger-text);
-            border-radius: 50%;
-        }
-        
-        .sidebar-nav-btn.active .notif-badge { background: white; }
-        
-        .sidebar-spacer { flex: 1; }
-        
-        .sidebar-settings {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        
-        .sidebar-settings:hover { background: var(--bg-hover); color: var(--text-main); }
-        
-        /* New Content Area */
-        #content-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        /* Compact Header with Tabs */
-        #compact-header {
-            height: 56px;
-            background: var(--bg-surface);
+        /* Top Navigation Bar */
+        #navbar {
+            position: fixed; top: 0; left: 0; right: 0; height: 64px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 16px;
+            z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
-        
-        .header-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+
+        .nav-brand {
+            font-size: 16px; font-weight: 600; color: var(--text-main);
+            display: flex; align-items: center; gap: 12px; letter-spacing: -0.2px;
         }
-        
-        .header-title i { color: var(--accent); }
-        
-        .header-tabs {
-            display: flex;
-            gap: 4px;
-            margin-left: auto;
+
+        .nav-links { display: flex; gap: 8px; flex: 1; margin-left: 48px;}
+        .nav-link {
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s; font-size: 14px; font-weight: 500;
+            display: flex; align-items: center; gap: 8px;
         }
-        
-        .header-tab {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
+        .nav-link:hover, .nav-link.active { color: var(--text-main); background: var(--bg-hover); }
+        .nav-link.external {
             color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
-        
-        .header-tab i { width: 16px; height: 16px; }
-        
-        .header-tab:hover { background: var(--bg-hover); color: var(--text-main); }
-        .header-tab.active { background: var(--bg-hover); color: var(--text-main); }
-        
-        .header-actions {
-            display: flex;
-            gap: 8px;
-            margin-left: 16px;
+        .nav-link.external:hover {
+            color: var(--text-main);
         }
-        
-        /* Main Scrollable Content */
-        #main-content {
-            flex: 1;
-            overflow-y: auto;
-            background: var(--bg-body);
+
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .icon-btn {
+            background: transparent; border: 1px solid transparent; color: var(--text-muted);
+            width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .icon-btn:hover { background: var(--bg-hover); color: var(--text-main); border-color: var(--border); }
+
+        /* Main Container */
+        #main-container { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; display: flex; }
+
+        /* Left Sidebar Navigation */
+        #left-sidebar {
+            width: 480px; background: var(--bg-surface); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; z-index: 900;
+            transition: all 0.3s ease;
             position: relative;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
         }
-        
-        /* Content Panel Styles */
-        .content-panel {
-            height: 100%;
-        }
+
 
 
         /* Left Sidebar Content */
@@ -327,6 +209,27 @@
             width: 100%;
         }
 
+        /* Top Function Tabs */
+        #content-tabs {
+            height: 60px; background: var(--bg-surface); border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; padding: 0 32px; gap: 16px;
+            z-index: 800;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #content-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content-tab {
+            background: none; border: none; color: var(--text-muted); padding: 12px 16px;
+            cursor: pointer; font-size: 14px; font-weight: 500; position: relative;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
         .content-tab:hover {
             background: var(--bg-hover);
             color: var(--text-main);
@@ -349,163 +252,14 @@
         }
 
         .content-panel {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             display: none;
-            height: 100%;
-            overflow: hidden;
+            padding: 16px;
+            overflow-y: auto;
         }
 
         .content-panel.active {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Gamification Elements */
-        .xp-bar {
-            position: fixed;
-            top: 8px;
-            right: 16px;
-            width: 120px;
-            height: 6px;
-            background: var(--bg-hover);
-            border-radius: 3px;
-            overflow: hidden;
-            z-index: 999;
-        }
-        
-        .xp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #F59E0B);
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-        
-        .level-badge {
-            position: fixed;
-            top: 4px;
-            right: 144px;
-            background: linear-gradient(135deg, var(--accent), #8B5CF6);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            z-index: 999;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-        }
-        
-        .progress-ring {
-            position: relative;
-            width: 48px;
-            height: 48px;
-        }
-        
-        .progress-ring svg {
-            transform: rotate(-90deg);
-        }
-        
-        .progress-ring circle {
-            fill: none;
-            stroke-width: 4;
-        }
-        
-        .progress-ring .bg {
-            stroke: var(--bg-hover);
-        }
-        
-        .progress-ring .progress {
-            stroke: var(--accent);
-            stroke-linecap: round;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-        
-        .streak-flame {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            background: linear-gradient(135deg, #F59E0B, #EF4444);
-            border-radius: 16px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .streak-flame i {
-            animation: flicker 0.5s ease-in-out infinite alternate;
-        }
-        
-        @keyframes flicker {
-            from { transform: scale(1) rotate(-5deg); }
-            to { transform: scale(1.1) rotate(5deg); }
-        }
-        
-        .unlock-shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .unlock-shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            to { left: 100%; }
-        }
-        
-        .reward-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: var(--bg-surface);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            z-index: 2000;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: popIn 0.4s ease forwards;
-        }
-        
-        @keyframes popIn {
-            to { transform: translate(-50%, -50%) scale(1); }
-        }
-        
-        .quest-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-        
-        .quest-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .quest-card.completed {
-            opacity: 0.6;
-            border-color: var(--success-text);
-        }
-        
-        .quest-reward {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 8px;
-            background: linear-gradient(135deg, #F59E0B, #EF4444);
-            color: white;
-            font-size: 10px;
-            font-weight: 600;
-            border-radius: 8px;
+            display: block;
         }
 
         /* Map Area */
@@ -659,137 +413,173 @@
         }
 
         @media(max-width: 768px) {
-            /* Compact Layout - Mobile */
-            #main-container {
-                flex-direction: column;
+            /* Top Navigation Bar */
+            #navbar {
+                padding: 0 16px;
             }
             
-            #left-sidebar {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: 64px;
-                flex-direction: row;
-                justify-content: space-around;
-                padding: 8px 16px;
-                border-right: none;
-                border-top: 1px solid var(--border);
-                z-index: 1000;
+            .nav-brand {
+                font-size: 14px;
             }
             
-            .sidebar-logo { display: none; }
-            .sidebar-spacer { display: none; }
-            .sidebar-settings { display: none; }
-            
-            .sidebar-nav-btn {
-                width: 56px;
-                height: 48px;
+            /* Content Tabs */
+            #content-tabs {
+                padding: 0 8px;
+                gap: 8px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
             }
             
-            #content-area {
-                height: calc(100vh - 64px);
-                margin-bottom: 64px;
+            #content-tabs::-webkit-scrollbar {
+                display: none;
             }
             
-            #compact-header {
-                height: 48px;
-                padding: 0 12px;
+            .content-tab {
+                padding: 8px 12px;
+                font-size: 12px;
+                white-space: nowrap;
             }
             
-            .header-title { font-size: 13px; }
-            
-            .header-tabs {
-                gap: 2px;
-            }
-            
-            .header-tab {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-            
-            .header-tab i { width: 14px; height: 14px; }
-            
-            .header-actions { gap: 4px; }
-            
-            #main-content {
-                padding: 12px;
-            }
-            
-            .content-panel.active {
-                height: calc(100vh - 112px);
+            /* Content Panel */
+            .content-panel {
+                padding: 16px;
             }
             
             /* Map Area */
             #map-container {
-                height: calc(100vh - 180px);
+                height: 40vh;
             }
-        }
-        
-        /* Emotion Support Panel */
-        .emotion-moods {
-            gap: 12px;
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        /* University Details Panel */
-        #university-details {
-            padding: 16px;
-            min-height: 250px;
-        }
-        
-        /* University Cards */
-        .university-card {
-            margin-bottom: 12px;
+            
+            /* Achievement Panel */
+            #achievement-panel {
+                gap: 12px;
+            }
+            
+            #achievement-tree {
+                gap: 10px;
+            }
+            
+            /* Quiz Panel */
+            #quiz-start {
+                padding: 30px 0;
+            }
+            
+            #quiz-result {
+                padding: 30px 0;
+            }
+            
+            /* Emotion Support Panel */
+            .emotion-moods {
+                gap: 12px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* University Details Panel */
+            #university-details {
+                padding: 16px;
+                min-height: 250px;
+            }
+            
+            /* University Cards */
+            .university-card {
+                margin-bottom: 12px;
+            }
         }
 
         @media(max-width: 480px) {
-            /* Compact Layout - Small Mobile */
-            #compact-header {
-                padding: 0 8px;
-            }
-            
-            .header-title { font-size: 12px; }
-            .header-title i { display: none; }
-            
-            .header-tabs {
-                gap: 2px;
-                overflow-x: auto;
-            }
-            
-            .header-tab {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-            
-            .header-tab span { display: none; }
-            
-            .header-actions { display: none; }
-            
-            #left-sidebar {
+            /* Top Navigation Bar */
+            #navbar {
                 height: 56px;
-                padding: 4px 8px;
             }
             
-            .sidebar-nav-btn {
-                width: 48px;
-                height: 44px;
+            .nav-brand {
+                font-size: 12px;
+                gap: 8px;
             }
             
-            .sidebar-nav-btn span { display: none; }
-            
-            #content-area {
-                height: calc(100vh - 56px);
-                margin-bottom: 56px;
+            .icon-btn {
+                width: 32px;
+                height: 32px;
             }
             
-            .content-panel.active {
-                height: calc(100vh - 104px);
+            /* Main Container */
+            #main-container {
+                top: 56px;
             }
             
+            /* Left Sidebar */
+            #left-sidebar {
+                top: 56px;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            /* Content Tabs */
+            #content-tabs {
+                height: 48px;
+                padding: 0 6px;
+                gap: 6px;
+            }
+            
+            .content-tab {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            
+            /* Content Panel */
+            .content-panel {
+                padding: 12px;
+            }
+            
+            /* Map Area */
             #map-container {
-                height: calc(100vh - 150px);
+                height: 35vh;
+            }
+            
+            /* Achievement Panel */
+            #achievement-panel h3 {
+                font-size: 16px;
+            }
+            
+            /* Quiz Panel */
+            #quiz-start {
+                padding: 20px 0;
+            }
+            
+            #quiz-start h3 {
+                font-size: 18px;
+            }
+            
+            #quiz-result {
+                padding: 20px 0;
+            }
+            
+            #quiz-result h3 {
+                font-size: 18px;
+            }
+            
+            /* Emotion Support Panel */
+            #emotion-panel h3 {
+                font-size: 18px;
+            }
+            
+            /* University Details Panel */
+            #university-panel h3 {
+                font-size: 18px;
+            }
+            
+            /* University Cards */
+            .university-card {
+                padding: 12px;
+            }
+            
+            .university-card h5 {
+                font-size: 13px;
+            }
+            
+            .university-card p {
+                font-size: 11px;
             }
         }
         
@@ -1173,49 +963,211 @@
     </style>
 </head>
 <body data-theme="light">
+    <nav id="navbar">
+        <div class="nav-brand">
+            <i data-lucide="compass"></i> XJTLU Treasure Map for Study Abroad
+        </div>
+        <div class="nav-links">
+            <button class="nav-link active" data-panel="home"><i data-lucide="layout-grid" style="width:16px;"></i> Explore</button>
+            <button class="nav-link" data-panel="recommend"><i data-lucide="sparkles" style="width:16px;"></i> Recommend</button>
+            <button class="nav-link" data-panel="emotion"><i data-lucide="heart" style="width:16px;"></i> Support</button>
+            <a href="index.html" class="nav-link external" target="_blank"><i data-lucide="info" style="width:16px;"></i> About</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" id="theme-toggle" title="Toggle Theme"><i data-lucide="moon"></i></button>
+            <button class="icon-btn" id="achievement-btn" title="Achievements"><i data-lucide="trophy"></i></button>
+            <button class="icon-btn" id="user-avatar" title="Account"><i data-lucide="user"></i></button>
+            <button class="icon-btn" id="toggle-sidebar" style="display: none;"><i data-lucide="menu"></i></button>
+        </div>
+    </nav>
+
     <div id="main-container">
         <aside id="left-sidebar">
-            <div class="sidebar-logo"><i data-lucide="compass"></i></div>
-            <button class="sidebar-nav-btn active" data-nav="map" title="Map"><i data-lucide="map"></i><span>Map</span></button>
-            <button class="sidebar-nav-btn" data-nav="recommend" title="Recommend"><i data-lucide="sparkles"></i><span>Recommend</span></button>
-            <button class="sidebar-nav-btn" data-nav="emotion" title="Support"><i data-lucide="heart"></i><span>Support</span></button>
-            <button class="sidebar-nav-btn" data-nav="achievement" title="Achievements"><i data-lucide="trophy"></i><span>Trophy</span></button>
-            <button class="sidebar-nav-btn" data-nav="favorites" title="Favorites"><i data-lucide="bookmark"></i><span>Saved</span></button>
-            <div class="sidebar-spacer"></div>
-            <button class="sidebar-settings" id="theme-toggle" title="Theme"><i data-lucide="moon"></i></button>
-        </aside>
-        
-        <div id="content-area">
-            <div id="compact-header">
-                <div class="header-title"><i data-lucide="compass"></i> Treasure Map</div>
-                <div class="header-tabs">
-                    <button class="header-tab active" data-panel="map-panel"><i data-lucide="map"></i> Map</button>
-                    <button class="header-tab" data-panel="recommend-panel"><i data-lucide="sparkles"></i> Recommend</button>
-                    <button class="header-tab" data-panel="emotion-panel"><i data-lucide="heart"></i> Support</button>
-                    <button class="header-tab" data-panel="achievement-panel"><i data-lucide="trophy"></i> Trophy</button>
+            <div class="sidebar-panel">
+                <div class="panel-header">
+                    <h3><i data-lucide="library"></i> Compass</h3>
                 </div>
-                <div class="header-actions">
-                    <div class="streak-flame" id="streak-display" style="display: none;"><i data-lucide="flame" style="width:12px;"></i> <span id="streak-count">0</span></div>
-                    <div class="level-badge" id="level-badge">LV 1</div>
-                    <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width: 0%;"></div></div>
-                    <button class="icon-btn" id="achievement-btn" title="Achievements"><i data-lucide="trophy"></i></button>
-                    <button class="icon-btn" id="user-avatar" title="Account"><i data-lucide="user"></i></button>
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-tab="user-tab">Account</button>
+                    <button class="panel-tab" data-tab="chat-tab">AI Advisor</button>
+                    <button class="panel-tab" data-tab="fav-tab">Favorites</button>
                 </div>
-            </div>
-            
-            <div id="main-content">
-                <div class="content-panel active" id="map-panel">
-                    <div style="position: relative; height: 100%;">
-                        <div style="position: absolute; top: 16px; left: 16px; right: 16px; z-index: 1000; display: flex; gap: 12px;">
-                            <div style="position: relative; flex: 1; max-width: 400px;">
-                                <input type="text" id="university-search" placeholder="Search universities..." style="padding-left: 36px; font-size: 14px; width: 100%;">
-                                <i data-lucide="search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 14px;"></i>
+
+                <div id="user-tab" class="tab-content active">
+                    <div class="user-section">
+                        <div class="user-info">
+                            <div class="user-avatar-large"><i data-lucide="user"></i></div>
+                            <div>
+                                <h4 id="user-name" style="font-size:16px; font-weight:600; margin-bottom:4px;">Unverified</h4>
+                                <p id="user-status" style="font-size:13px; color:var(--text-muted)">Login to sync progress</p>
                             </div>
                         </div>
-                        <div id="map-container" style="height: calc(100vh - 56px); border-radius: 0;">
+                        <div class="user-stats">
+                            <div class="stat-item"><div class="stat-num" id="stat-achievements">0</div><div class="stat-label">Achievements</div></div>
+                            <div class="stat-item"><div class="stat-num" id="stat-favorites">0</div><div class="stat-label">Favorites</div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="api-section" id="api-section">
+                        <h4 style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase;">Configure API</h4>
+                        <input type="password" id="api-key-input" placeholder="Enter API Key...">
+                        <button class="btn-primary" id="submit-api"><i data-lucide="key" style="width:16px;"></i> Verify & Connect</button>
+                    </div>
+                    
+                    <div id="api-unlocked-section" class="user-section" style="display:none; display:flex; align-items:center; justify-content:space-between; padding: 16px 20px;">
+                        <div style="display:flex; align-items:center; gap:8px;"><i data-lucide="check-circle" style="color:var(--success-text); width:18px;"></i><span style="font-size:14px; font-weight:500;">AI Connected</span></div>
+                        <button class="btn-link" id="reset-api">Disconnect</button>
+                    </div>
+                    
+                    <div id="login-section">
+                        <button class="btn-primary" id="show-login">Login</button>
+                    </div>
+                </div>
+
+                <div id="chat-tab" class="tab-content">
+                    <div class="chat-box" id="chat-box">
+                        <div class="chat-msg chat-ai"><div class="msg">Hello. I am your study abroad planning assistant. Configure the API to ask me questions at any time.</div></div>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="chat-input" placeholder="Ask a question..." style="margin-bottom:0; border-radius:24px;">
+                        <button class="btn-primary" id="chat-send" style="width:48px; border-radius:50%; padding:0; flex-shrink:0;"><i data-lucide="send" style="width:18px; margin-left:-2px;"></i></button>
+                    </div>
+                </div>
+
+                <div id="fav-tab" class="tab-content">
+                    <div style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i data-lucide="bookmark"></i> My Favorites</h3>
+                        <div id="favorites-list">
+                            </div>
+                    </div>
+                    
+                    <div class="uni-stats">
+                        <h3><i data-lucide="globe"></i> University Distribution</h3>
+                        <div class="uni-stats-grid">
+                            <div class="uni-stat-item">
+                                <div class="uni-stat-icon">🇬🇧</div>
+                                <div class="uni-stat-number" id="stat-uk">0</div>
+                                <div class="uni-stat-label">UK</div>
+                            </div>
+                            <div class="uni-stat-item">
+                                <div class="uni-stat-icon">🇺🇸</div>
+                                <div class="uni-stat-number" id="stat-us">0</div>
+                                <div class="uni-stat-label">US</div>
+                            </div>
+                            <div class="uni-stat-item">
+                                <div class="uni-stat-icon">🇦🇺</div>
+                                <div class="uni-stat-number" id="stat-aus">0</div>
+                                <div class="uni-stat-label">Australia</div>
+                            </div>
+                            <div class="uni-stat-item">
+                                <div class="uni-stat-icon">🌏</div>
+                                <div class="uni-stat-number" id="stat-total">0</div>
+                                <div class="uni-stat-label">Total</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <h3><i data-lucide="trending-up"></i> Application Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-info">
+                            <div class="progress-text" id="progress-text">0/0 Completed</div>
+                            <div class="progress-text" id="progress-percent">0%</div>
+                        </div>
+                        <div class="todo-list" id="todo-list">
+                            </div>
+                        <div class="todo-input">
+                            <input type="text" id="todo-input" placeholder="Add new task...">
+                            <button id="add-todo">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-evaluation">
+                        <h3><i data-lucide="brain"></i> Application Evaluation</h3>
+                        <select id="university-select">
+                            <option value="">Select a favorite university</option>
+                        </select>
+                        <button id="evaluate-application">Evaluate Application Success Rate</button>
+                        <div class="ai-evaluation-result" id="evaluation-result">
+                            Select a favorite university for evaluation
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div id="content-area">
+            <div id="content-tabs">
+                <button class="content-tab active" data-panel="map-panel"><i data-lucide="map" style="width:16px; margin-right:8px;"></i> Map Exploration</button>
+                <button class="content-tab" data-panel="achievement-panel"><i data-lucide="trophy" style="width:16px; margin-right:8px;"></i> Achievement Center</button>
+                <button class="content-tab" data-panel="recommend-panel"><i data-lucide="sparkles" style="width:16px; margin-right:8px;"></i> School Recommendation</button>
+                <button class="content-tab" data-panel="emotion-panel"><i data-lucide="heart" style="width:16px; margin-right:8px;"></i> Emotional Support</button>
+            </div>
+
+            <div id="content-panels">
+                <div class="content-panel active" id="map-panel">
+                    <div style="padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <h3 style="font-size: 16px; font-weight: 600; margin: 0;">Explore Global Universities</h3>
+                            <button class="icon-btn" id="toggle-map-view" title="Toggle Map View"><i data-lucide="map"></i></button>
+                        </div>
+                        
+                        <div style="position: relative; margin-bottom: 16px;">
+                            <input type="text" id="university-search" placeholder="Search universities..." style="padding-left: 36px; font-size: 14px;">
+                            <i data-lucide="search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 14px;"></i>
+                        </div>
+                        
+                        <div id="map-container" style="height: 400px; margin-bottom: 16px; border-radius: 12px; overflow: hidden;">
                             <div id="map"></div>
                         </div>
-                        <div id="search-results" style="display: none; position: absolute; top: 60px; left: 16px; width: 380px; background: var(--bg-surface); border-radius: 12px; box-shadow: var(--shadow-modal); max-height: 400px; overflow-y: auto; z-index: 1001;"></div>
+                        
+                        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Recommended Universities</h4>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Cambridge</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, UK</p>
+                            </div>
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Imperial College London</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">London, UK</p>
+                            </div>
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">ETH Zurich</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Zurich, Switzerland</p>
+                            </div>
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">MIT</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, USA</p>
+                            </div>
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Stanford University</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Stanford, USA</p>
+                            </div>
+                            <div class="university-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Tokyo</h5>
+                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                                </div>
+                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Tokyo, Japan</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1229,6 +1181,22 @@
                                     Add Achievement
                                 </button>
                             </div>
+                            
+                            <div id="achievement-guide" style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 12px; color: var(--text-muted);">
+                                <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+                                    <i data-lucide="lightbulb" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
+                                    <div><strong style="color: var(--text-primary);">How to use:</strong> Add your personal achievements to track study abroad milestones. Click an achievement to view details, hover and click trash icon to delete.</div>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+                                    <i data-lucide="target" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
+                                    <div><strong style="color: var(--text-primary);">Achievement types:</strong> Academic (GPA, awards), Language (IELTS, TOEFL), Internship/Research, Other</div>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <i data-lucide="star" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
+                                    <div><strong style="color: var(--text-primary);">Why it matters:</strong> Documenting achievements enhances your application competitiveness and helps reflect on your growth journey.</div>
+                                </div>
+                            </div>
+                            
                             <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 10px;"></div>
                         </div>
                         
@@ -1237,10 +1205,10 @@
                             <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 12px; min-height: 180px;">
                                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
                                     <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-                                        <i data-lucide="trophy" style="width: 24px; height: 24px;"></i>
+                                        <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
                                     </div>
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select an Achievement</h5>
-                                    <p style="font-size: 12px; margin: 0;">Click on an achievement above to view details</p>
+                                    <p style="font-size: 12px; margin: 0;">Click on an achievement card to view its details</p>
                                 </div>
                             </div>
                         </div>
@@ -1481,7 +1449,7 @@
                             <i data-lucide="trophy" style="width: 50px; height: 50px;"></i>
                         </div>
                         <h4 style="font-size: 18px; font-weight: 600; margin: 0 0 12px 0;">No Achievements Yet</h4>
-                        <p style="font-size: 14px; margin: 0 0 24px 0;">Record your study abroad milestones and enhance application competitiveness</p>
+                        <p style="font-size: 14px; margin: 0 0 24px 0; max-width: 280px;">Start recording your milestones: language exams, academic awards, internships, research experience, and more.</p>
                         <button id="add-achievement-btn" style="padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px;">
                             <i data-lucide="plus" style="width: 14px;"></i>
                             Add First Achievement
@@ -2241,60 +2209,18 @@
         document.querySelectorAll('.modal-close').forEach(btn => btn.onclick = () => btn.closest('.modal').style.display = 'none');
         window.onclick = e => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
         
-        // Header tab click events (main content navigation)
-        document.querySelectorAll('.header-tab').forEach(tab => {
+        // Content tab click events
+        document.querySelectorAll('.content-tab').forEach(tab => {
             tab.onclick = () => {
-                document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
                 tab.classList.add('active');
                 const panelId = tab.dataset.panel;
                 document.getElementById(panelId).classList.add('active');
                 
-                // Update sidebar nav active state
-                const navMap = {
-                    'map-panel': 'map',
-                    'recommend-panel': 'recommend',
-                    'emotion-panel': 'emotion',
-                    'achievement-panel': 'achievement'
-                };
-                document.querySelectorAll('.sidebar-nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (navMap[panelId] && btn.dataset.nav === navMap[panelId]) {
-                        btn.classList.add('active');
-                    }
-                });
-                
                 // Special handling for specific panels
                 if (panelId === 'achievement-panel') {
                     renderAchievements();
-                }
-            };
-        });
-        
-        // Sidebar nav button click events
-        document.querySelectorAll('.sidebar-nav-btn').forEach(btn => {
-            btn.onclick = () => {
-                document.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const navId = btn.dataset.nav;
-                const panelMap = {
-                    'map': 'map-panel',
-                    'recommend': 'recommend-panel',
-                    'emotion': 'emotion-panel',
-                    'achievement': 'achievement-panel'
-                };
-                if (panelMap[navId]) {
-                    document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-                    const panel = document.getElementById(panelMap[navId]);
-                    if (panel) {
-                        panel.classList.add('active');
-                        const correspondingTab = document.querySelector(`.header-tab[data-panel="${panelMap[navId]}"]`);
-                        if (correspondingTab) correspondingTab.classList.add('active');
-                    }
-                }
-                if (navId === 'favorites') {
-                    updateFavoritesList();
                 }
             };
         });
