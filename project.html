@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -969,7 +969,7 @@
         </div>
         <div class="nav-links">
             <button class="nav-link active" data-panel="home"><i data-lucide="layout-grid" style="width:16px;"></i> Explore</button>
-            <button class="nav-link" data-panel="quiz"><i data-lucide="target" style="width:16px;"></i> Challenge</button>
+            <button class="nav-link" data-panel="recommend"><i data-lucide="sparkles" style="width:16px;"></i> Recommend</button>
             <button class="nav-link" data-panel="emotion"><i data-lucide="heart" style="width:16px;"></i> Support</button>
             <a href="index.html" class="nav-link external" target="_blank"><i data-lucide="info" style="width:16px;"></i> About</a>
         </div>
@@ -1035,15 +1035,12 @@
                 </div>
 
                 <div id="fav-tab" class="tab-content">
-                    <!-- My Favorites -->
                     <div style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
                         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i data-lucide="bookmark"></i> My Favorites</h3>
                         <div id="favorites-list">
-                            <!-- Favorites list will be dynamically added via JS -->
-                        </div>
+                            </div>
                     </div>
                     
-                    <!-- University Distribution Statistics -->
                     <div class="uni-stats">
                         <h3><i data-lucide="globe"></i> University Distribution</h3>
                         <div class="uni-stats-grid">
@@ -1070,7 +1067,6 @@
                         </div>
                     </div>
                     
-                    <!-- Progress Bar Feature -->
                     <div class="progress-section">
                         <h3><i data-lucide="trending-up"></i> Application Progress</h3>
                         <div class="progress-bar">
@@ -1081,19 +1077,17 @@
                             <div class="progress-text" id="progress-percent">0%</div>
                         </div>
                         <div class="todo-list" id="todo-list">
-                            <!-- Todo items will be dynamically added via JS -->
-                        </div>
+                            </div>
                         <div class="todo-input">
                             <input type="text" id="todo-input" placeholder="Add new task...">
                             <button id="add-todo">Add</button>
                         </div>
                     </div>
                     
-                    <!-- AI Application Evaluation -->
                     <div class="ai-evaluation">
                         <h3><i data-lucide="brain"></i> Application Evaluation</h3>
                         <select id="university-select">
-                            <option value="">Select favorite university</option>
+                            <option value="">Select a favorite university</option>
                         </select>
                         <button id="evaluate-application">Evaluate Application Success Rate</button>
                         <div class="ai-evaluation-result" id="evaluation-result">
@@ -1105,17 +1099,14 @@
         </aside>
 
         <div id="content-area">
-            <!-- Top Function Tabs -->
             <div id="content-tabs">
                 <button class="content-tab active" data-panel="map-panel"><i data-lucide="map" style="width:16px; margin-right:8px;"></i> Map Exploration</button>
                 <button class="content-tab" data-panel="achievement-panel"><i data-lucide="trophy" style="width:16px; margin-right:8px;"></i> Achievement Center</button>
-                <button class="content-tab" data-panel="quiz-panel"><i data-lucide="target" style="width:16px; margin-right:8px;"></i> Knowledge Challenge</button>
+                <button class="content-tab" data-panel="recommend-panel"><i data-lucide="sparkles" style="width:16px; margin-right:8px;"></i> School Recommendation</button>
                 <button class="content-tab" data-panel="emotion-panel"><i data-lucide="heart" style="width:16px; margin-right:8px;"></i> Emotional Support</button>
             </div>
 
-            <!-- Content Panels -->
             <div id="content-panels">
-                <!-- Map Panel -->
                 <div class="content-panel active" id="map-panel">
                     <div style="padding: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
@@ -1180,90 +1171,92 @@
                     </div>
                 </div>
 
-                <!-- Achievement Panel -->
                 <div class="content-panel" id="achievement-panel">
-                    <div style="display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 16px;">
-                        <!-- Achievement List -->
-                        <div style="flex: 1; overflow-y: auto;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <h3 style="font-size: 16px; font-weight: 700; margin: 0;">My Achievements</h3>
-                                <button id="add-achievement-btn" style="padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 4px;">
-                                    <i data-lucide="plus" style="width: 12px;"></i>
-                                    Add Achievement
+                    <div style="display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 16px; overflow-y: auto;">
+                        <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Add New Achievement</h3>
+                        
+                        <div id="inline-add-form" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px; margin-bottom: 8px;">
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Title</label>
+                                    <input type="text" id="achievement-title" placeholder="e.g., IELTS 7.5 Score" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Type</label>
+                                    <select id="achievement-type" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                                        <option value="academic">Academic Achievement</option>
+                                        <option value="language">Language Proficiency</option>
+                                        <option value="experience">Internship/Research</option>
+                                        <option value="other">Other Achievement</option>
+                                    </select>
+                                </div>
+                                <button id="submit-add-achievement" style="width: 100%; padding: 10px 16px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    <i data-lucide="plus" style="width: 14px; vertical-align: middle; margin-right: 6px;"></i>Add Achievement
                                 </button>
                             </div>
-                            <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 10px;"></div>
                         </div>
                         
-                        <!-- Achievement Details -->
-                        <div style="flex: 1; overflow-y: auto;">
+                        <h3 style="font-size: 16px; font-weight: 700; margin: 0;">My Achievements</h3>
+                        
+                        <div id="achievement-guide" style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 10px; padding: 12px; font-size: 12px; color: var(--text-muted);">
+                            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+                                <i data-lucide="lightbulb" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
+                                <div><strong style="color: var(--text-primary);">Tip:</strong> Add achievements to track milestones. Click to view details, hover and click trash icon to delete.</div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i data-lucide="star" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
+                                <div><strong style="color: var(--text-primary);">Types:</strong> Academic, Language (IELTS/TOEFL), Internship/Research, Other</div>
+                            </div>
+                        </div>
+                        
+                        <div id="achievement-tree" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                        
+                        <div style="flex: 1;">
                             <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 12px 0;">Achievement Details</h3>
-                            <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 12px; min-height: 180px;">
+                            <div id="achievement-details" style="background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 12px; padding: 12px; min-height: 150px;">
                                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted);">
                                     <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-                                        <i data-lucide="trophy" style="width: 24px; height: 24px;"></i>
+                                        <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
                                     </div>
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select an Achievement</h5>
-                                    <p style="font-size: 12px; margin: 0;">Click on an achievement above to view details</p>
+                                    <p style="font-size: 12px; margin: 0;">Click on an achievement card to view its details</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Add Achievement Form -->
-                    <div id="add-achievement-form" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-surface); border-top: 1px solid var(--border); padding: 12px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); z-index: 1000;">
-                        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Add New Achievement</h4>
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Title</label>
-                                <input type="text" id="achievement-title" placeholder="e.g., Completed Language Exam" style="width: 100%; padding: 8px 10px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px;">
-                            </div>
-                            <div>
-                                <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Type</label>
-                                <select id="achievement-type" style="width: 100%; padding: 8px 10px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px;">
-                                    <option value="academic">Academic Achievement</option>
-                                    <option value="language">Language Proficiency</option>
-                                    <option value="experience">Internship/Research</option>
-                                    <option value="other">Other Achievement</option>
-                                </select>
-                            </div>
-                            <div style="display: flex; gap: 8px;">
-                                <button id="cancel-add-achievement" style="flex: 1; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">Cancel</button>
-                                <button id="submit-add-achievement" style="flex: 1; padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Add</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Quiz Panel -->
-                <div class="content-panel" id="quiz-panel">
+                <div class="content-panel" id="recommend-panel">
                     <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
-                        <div id="quiz-start" style="text-align:center; padding: 30px 0;">
-                            <i data-lucide="book-open" style="width:40px; height:40px; color:var(--text-muted); margin-bottom:12px;"></i>
-                            <h3 style="font-size:18px; margin-bottom:10px;">Study Abroad Preparation Quiz</h3>
-                            <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Contains 30 core test questions to verify your readiness.</p>
-                            <button class="btn-primary" id="start-quiz" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Quiz</button>
-                        </div>
-                        <div id="quiz-game" style="display:none;">
-                            <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill"></div></div>
-                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Progress <span id="quiz-level-num">1</span> / 30</p>
-                            <div id="quiz-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
-                            <div id="quiz-options"></div>
-                            <button class="btn-primary" id="quiz-submit" style="margin-top:20px;">Submit Answer</button>
-                        </div>
-                        <div id="quiz-result" style="display:none; text-align:center; padding:30px 0;">
-                            <div id="quiz-result-icon-container" style="margin-bottom:12px; display:flex; justify-content:center;"></div>
-                            <h3 id="quiz-result-title" style="font-size:18px; margin-bottom:10px;"></h3>
-                            <p id="quiz-result-msg" style="color:var(--text-muted); margin-bottom:24px; font-size:13px;"></p>
-                            <div style="display:flex; gap:12px; justify-content:center;">
-                                <button class="btn-secondary" id="quiz-retry" style="flex:1; max-width: 120px; padding: 10px 16px;">Retry</button>
-                                <button class="btn-primary" id="quiz-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next Question</button>
+                        <div id="recommend-start">
+                            <div style="text-align:center; padding: 30px 0;">
+                                <i data-lucide="graduation-cap" style="width:48px; height:48px; color:var(--accent); margin-bottom:16px;"></i>
+                                <h3 style="font-size:18px; margin-bottom:10px;">Smart School Recommendation</h3>
+                                <p style="color:var(--text-muted); margin-bottom:24px; font-size:13px;">Answer a few questions to get personalized university recommendations.</p>
+                                <button class="btn-primary" id="start-recommend" style="width: 100%; padding: 12px 20px; font-size: 14px;">Start Recommendation</button>
                             </div>
+                        </div>
+                        <div id="recommend-form" style="display:none;">
+                            <div class="progress-bar"><div class="progress-fill" id="recommend-progress-fill"></div></div>
+                            <p style="text-align:right; font-size:11px; color:var(--text-muted); margin-bottom:12px;">Question <span id="recommend-step-num">1</span> / <span id="recommend-total-num">5</span></p>
+                            <div id="recommend-question" style="font-size:15px; font-weight:500; line-height:1.5; margin-bottom:20px;"></div>
+                            <div id="recommend-options"></div>
+                            <div style="display:flex; gap:12px; margin-top:20px;">
+                                <button class="btn-secondary" id="recommend-back" style="flex:1; max-width: 120px; padding: 10px 16px;">Back</button>
+                                <button class="btn-primary" id="recommend-next" style="flex:1; max-width: 120px; padding: 10px 16px;">Next</button>
+                            </div>
+                        </div>
+                        <div id="recommend-result" style="display:none;">
+                            <div style="text-align:center; margin-bottom:20px;">
+                                <i data-lucide="check-circle" style="width:48px; height:48px; color:var(--success-text);"></i>
+                                <h3 style="font-size:18px; margin-top:12px;">Recommended Universities</h3>
+                            </div>
+                            <div id="recommend-results-list" style="display:grid; gap:12px;"></div>
+                            <button class="btn-secondary" id="recommend-restart" style="width:100%; margin-top:20px; padding:12px;">Start Over</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Emotion Support Panel -->
                 <div class="content-panel" id="emotion-panel">
                     <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
                         <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">Mood Regulation</h3>
@@ -1281,7 +1274,6 @@
                     </div>
                 </div>
 
-                <!-- University Details Panel -->
                 <div class="content-panel" id="university-panel">
                     <div style="max-width: 100%; margin: 0 auto; padding: 16px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -1445,16 +1437,10 @@
                             <i data-lucide="trophy" style="width: 50px; height: 50px;"></i>
                         </div>
                         <h4 style="font-size: 18px; font-weight: 600; margin: 0 0 12px 0;">No Achievements Yet</h4>
-                        <p style="font-size: 14px; margin: 0 0 24px 0;">Record your study abroad milestones and enhance application competitiveness</p>
-                        <button id="add-achievement-btn" style="padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--accent)); border: none; border-radius: 8px; color: var(--text-primary); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px;">
-                            <i data-lucide="plus" style="width: 14px;"></i>
-                            Add First Achievement
-                        </button>
+                        <p style="font-size: 14px; margin: 0 0 24px 0; max-width: 280px;">Start recording your milestones: language exams, academic awards, internships, research experience, and more.</p>
+                        <p style="font-size: 13px; color: var(--accent);">Fill in the form above to add your first achievement</p>
                     </div>
                 `;
-                document.getElementById('add-achievement-btn').onclick = () => {
-                    document.getElementById('add-achievement-form').style.display = 'block';
-                };
                 refreshIcons();
                 return;
             }
@@ -1609,16 +1595,6 @@
             renderAchievements();
         };
         
-        // Add achievement button click event
-        document.getElementById('add-achievement-btn').onclick = () => {
-            document.getElementById('add-achievement-form').style.display = 'block';
-        };
-        
-        // Cancel adding achievement
-        document.getElementById('cancel-add-achievement').onclick = () => {
-            document.getElementById('add-achievement-form').style.display = 'none';
-        };
-        
         // Submit adding achievement
         document.getElementById('submit-add-achievement').onclick = addNewAchievement;
         
@@ -1659,118 +1635,118 @@
         }
 
         const universities = [
-            // 英国 (18所)
-            {name:"牛津大学 (Oxford)",lat:51.7548,lng:-1.2544, state:"牛津郡", country:"英国", city:"牛津", comment:"牛津的图书馆美到窒息，录取要求极高，注重独立研究能力。"},
-            {name:"剑桥大学 (Cambridge)",lat:52.2053,lng:0.1192, state:"剑桥郡", country:"英国", city:"剑桥", comment:"在康河撑船很浪漫，理工科极其强悍。"},
-            {name:"帝国理工学院 (ICL)",lat:51.4988,lng:-0.1749, state:"大伦敦", country:"英国", city:"伦敦", comment:"工程与商科顶尖，课程密度大，就业竞争力极强。"},
-            {name:"伦敦大学学院 (UCL)",lat:51.5246,lng:-0.1340, state:"大伦敦", country:"英国", city:"伦敦", comment:"UCL地理位置绝佳，综合学科门类极其齐全。"},
-            {name:"伦敦国王学院 (KCL)",lat:51.5115,lng:-0.1160, state:"大伦敦", country:"英国", city:"伦敦", comment:"建筑超有历史感，医学和法学领域享有盛誉。"},
-            {name:"伦敦政治经济学院 (LSE)",lat:51.5144,lng:-0.1165, state:"大伦敦", country:"英国", city:"伦敦", comment:"社会科学的殿堂，政商界校友网络庞大。"},
-            {name:"爱丁堡大学 (Edinburgh)",lat:55.9445,lng:-3.1892, state:"苏格兰", country:"英国", city:"爱丁堡", comment:"风景美如画，人工智能与计算科学的发源地之一。"},
-            {name:"曼彻斯特大学 (Manchester)",lat:53.4668,lng:-2.2339, state:"大曼彻斯特", country:"英国", city:"曼彻斯特", comment:"红砖大学之首，商科及工程材料学非常强劲。"},
-            {name:"布里斯托大学 (Bristol)",lat:51.4585,lng:-2.6022, state:"布里斯托", country:"英国", city:"布里斯托", comment:"工程与物理科学实力雄厚，校园生活充满活力。"},
-            {name:"华威大学 (Warwick)",lat:52.3793,lng:-1.5615, state:"考文垂", country:"英国", city:"考文垂", comment:"商科与经济学顶尖，校园现代化且国际化程度高。"},
-            {name:"格拉斯哥大学 (Glasgow)",lat:55.8721,lng:-4.2882, state:"苏格兰", country:"英国", city:"格拉斯哥", comment:"苏格兰历史最悠久的大学之一，医学与法律专业闻名。"},
-            {name:"伯明翰大学 (Birmingham)",lat:52.4508,lng:-1.9305, state:"伯明翰", country:"英国", city:"伯明翰", comment:"红砖大学联盟成员，体育科学与商科实力强劲。"},
-            {name:"南安普顿大学 (Southampton)",lat:50.9375,lng:-1.3972, state:"南安普顿", country:"英国", city:"南安普顿", comment:"海洋学与工程学享誉全球，计算机科学亦十分出色。"},
-            {name:"利兹大学 (Leeds)",lat:53.8067,lng:-1.5550, state:"西约克郡", country:"英国", city:"利兹", comment:"传媒与翻译专业突出，学生会体验全英最佳之一。"},
-            {name:"杜伦大学 (Durham)",lat:54.7650,lng:-1.5786, state:"杜伦郡", country:"英国", city:"杜伦", comment:"学院制传统深厚，被誉为英格兰第三古老的大学。"},
-            {name:"谢菲尔德大学 (Sheffield)",lat:53.3813,lng:-1.4886, state:"南约克郡", country:"英国", city:"谢菲尔德", comment:"材料科学与新闻学领先，校园环境绿意盎然。"},
-            {name:"诺丁汉大学 (Nottingham)",lat:52.9390,lng:-1.1970, state:"诺丁汉郡", country:"英国", city:"诺丁汉", comment:"药学与兽医科学世界顶尖，校园被誉为最美校园之一。"},
-            {name:"圣安德鲁斯大学 (St Andrews)",lat:56.3417,lng:-2.7967, state:"苏格兰", country:"英国", city:"圣安德鲁斯", comment:"威廉王子母校，学生满意度极高，以古典学术传统著称。"},
+            // UK (18 institutions)
+            {name:"University of Oxford",lat:51.7548,lng:-1.2544, state:"Oxfordshire", country:"UK", city:"Oxford", comment:"Oxford's libraries are breathtaking, admission requirements are extremely high, and independent research skills are heavily emphasized."},
+            {name:"University of Cambridge",lat:52.2053,lng:0.1192, state:"Cambridgeshire", country:"UK", city:"Cambridge", comment:"Punting on the River Cam is romantic; STEM fields are incredibly strong."},
+            {name:"Imperial College London (ICL)",lat:51.4988,lng:-0.1749, state:"Greater London", country:"UK", city:"London", comment:"Top in engineering and business, high course density, extremely strong employment competitiveness."},
+            {name:"University College London (UCL)",lat:51.5246,lng:-0.1340, state:"Greater London", country:"UK", city:"London", comment:"UCL has a perfect location and a highly comprehensive range of disciplines."},
+            {name:"King's College London (KCL)",lat:51.5115,lng:-0.1160, state:"Greater London", country:"UK", city:"London", comment:"Historic architecture, renowned in medicine and law."},
+            {name:"London School of Economics (LSE)",lat:51.5144,lng:-0.1165, state:"Greater London", country:"UK", city:"London", comment:"A palace of social sciences with a massive alumni network in politics and business."},
+            {name:"University of Edinburgh",lat:55.9445,lng:-3.1892, state:"Scotland", country:"UK", city:"Edinburgh", comment:"Picturesque scenery, one of the birthplaces of AI and computing sciences."},
+            {name:"University of Manchester",lat:53.4668,lng:-2.2339, state:"Greater Manchester", country:"UK", city:"Manchester", comment:"Head of the Red Brick universities, very strong in business and engineering materials."},
+            {name:"University of Bristol",lat:51.4585,lng:-2.6022, state:"Bristol", country:"UK", city:"Bristol", comment:"Strong in engineering and physical sciences, vibrant campus life."},
+            {name:"University of Warwick",lat:52.3793,lng:-1.5615, state:"Coventry", country:"UK", city:"Coventry", comment:"Top in business and economics, highly modernized and internationalized campus."},
+            {name:"University of Glasgow",lat:55.8721,lng:-4.2882, state:"Scotland", country:"UK", city:"Glasgow", comment:"One of Scotland's oldest universities, famous for medicine and law."},
+            {name:"University of Birmingham",lat:52.4508,lng:-1.9305, state:"Birmingham", country:"UK", city:"Birmingham", comment:"Member of the Red Brick group, strong in sports science and business."},
+            {name:"University of Southampton",lat:50.9375,lng:-1.3972, state:"Southampton", country:"UK", city:"Southampton", comment:"Oceanography and engineering are globally renowned; computer science is also excellent."},
+            {name:"University of Leeds",lat:53.8067,lng:-1.5550, state:"West Yorkshire", country:"UK", city:"Leeds", comment:"Outstanding media and translation programs, one of the best student union experiences in the UK."},
+            {name:"Durham University",lat:54.7650,lng:-1.5786, state:"County Durham", country:"UK", city:"Durham", comment:"Deep collegiate tradition, known as the third oldest university in England."},
+            {name:"University of Sheffield",lat:53.3813,lng:-1.4886, state:"South Yorkshire", country:"UK", city:"Sheffield", comment:"Leading in materials science and journalism, green campus environment."},
+            {name:"University of Nottingham",lat:52.9390,lng:-1.1970, state:"Nottinghamshire", country:"UK", city:"Nottingham", comment:"World-leading in pharmacy and veterinary science, known as one of the most beautiful campuses."},
+            {name:"University of St Andrews",lat:56.3417,lng:-2.7967, state:"Scotland", country:"UK", city:"St Andrews", comment:"Prince William's alma mater, highly rated student satisfaction, known for classical academic traditions."},
             
-            // 美国 (30所)
-            {name:"麻省理工学院 (MIT)",lat:42.3601,lng:-71.0942, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"理工科圣地，极重数理基础与创新实践。"},
-            {name:"哈佛大学 (Harvard)",lat:42.3770,lng:-71.1167, state:"马萨诸塞州", country:"美国", city:"剑桥市", comment:"综合学术实力毋庸置疑，培养了无数行业领袖。"},
-            {name:"斯坦福大学 (Stanford)",lat:37.4275,lng:-122.1697, state:"加州", country:"美国", city:"斯坦福", comment:"地处硅谷核心，创业氛围浓厚，对跨学科综合能力要求高。"},
-            {name:"加州理工学院 (Caltech)",lat:34.1377,lng:-118.1253, state:"加州", country:"美国", city:"帕萨迪纳", comment:"规模小巧但科研密度极高，真正的硬核理工。"},
-            {name:"芝加哥大学 (UChicago)",lat:41.7897,lng:-87.5997, state:"伊利诺伊州", country:"美国", city:"芝加哥", comment:"学术氛围超浓，经济学和法学具有统治级地位。"},
-            {name:"耶鲁大学 (Yale)",lat:41.3163,lng:-72.9223, state:"康涅狄格州", country:"美国", city:"纽黑文", comment:"人文与艺术学科的巅峰，法学院全美首屈一指。"},
-            {name:"哥伦比亚大学 (Columbia)",lat:40.8075,lng:-73.9626, state:"纽约州", country:"美国", city:"纽约", comment:"占据曼哈顿绝佳位置，新闻与金融专业得天独厚。"},
-            {name:"康奈尔大学 (Cornell)",lat:42.4534,lng:-76.4735, state:"纽约州", country:"美国", city:"伊萨卡", comment:"常青藤中最接地气的一所，农学、工科与酒店管理出众。"},
-            {name:"加州大学伯克利 (UCB)",lat:37.8719,lng:-122.2585, state:"加州", country:"美国", city:"伯克利", comment:"公立大学的标杆，计算机与物理学极具统治力。"},
-            {name:"加州大学洛杉矶 (UCLA)",lat:34.0689,lng:-118.4452, state:"加州", country:"美国", city:"洛杉矶", comment:"阳光海滩与学术并存，艺术影视与应用科学并重。"},
-            {name:"普林斯顿大学 (Princeton)",lat:40.3431,lng:-74.6551, state:"新泽西州", country:"美国", city:"普林斯顿", comment:"本科教育全美顶尖，规模小而精，重视学术诚信。"},
-            {name:"宾夕法尼亚大学 (UPenn)",lat:39.9522,lng:-75.1932, state:"宾夕法尼亚州", country:"美国", city:"费城", comment:"沃顿商学院全球领先，跨学科教育模式极具创新。"},
-            {name:"约翰霍普金斯大学 (JHU)",lat:39.3299,lng:-76.6205, state:"马里兰州", country:"美国", city:"巴尔的摩", comment:"医学与公共卫生领域的绝对权威，研究经费充足。"},
-            {name:"密歇根大学 (UMich)",lat:42.2780,lng:-83.7382, state:"密歇根州", country:"美国", city:"安娜堡", comment:"公立常春藤，工程、商科与体育管理综合实力极强。"},
-            {name:"西北大学 (Northwestern)",lat:42.0565,lng:-87.6753, state:"伊利诺伊州", country:"美国", city:"埃文斯顿", comment:"新闻学与传播学全美第一，戏剧与音乐学院同样出色。"},
-            {name:"杜克大学 (Duke)",lat:36.0014,lng:-78.9382, state:"北卡罗来纳州", country:"美国", city:"达勒姆", comment:"篮球名校， Fuqua商学院与法学院极具竞争力。"},
-            {name:"纽约大学 (NYU)",lat:40.7295,lng:-73.9965, state:"纽约州", country:"美国", city:"纽约", comment:"没有围墙的大学，Tisch艺术学院与Stern商学院闻名遐迩。"},
-            {name:"卡内基梅隆大学 (CMU)",lat:40.4427,lng:-79.9430, state:"宾夕法尼亚州", country:"美国", city:"匹兹堡", comment:"计算机科学与戏剧艺术双顶尖，人工智能领域的开创者。"},
-            {name:"加州大学圣地亚哥 (UCSD)",lat:32.8801,lng:-117.2340, state:"加州", country:"美国", city:"圣地亚哥", comment:"生物与海洋科学领先，校园位于美丽的拉霍亚海滨。"},
-            {name:"布朗大学 (Brown)",lat:41.8268,lng:-71.4025, state:"罗德岛州", country:"美国", city:"普罗维登斯", comment:"开放式课程体系给予学生极大自由，注重个性化发展。"},
-            {name:"德克萨斯大学奥斯汀 (UT Austin)",lat:30.2849,lng:-97.7341, state:"德州", country:"美国", city:"奥斯汀", comment:"公立名校，计算机与石油工程实力强劲，生活成本较低。"},
-            {name:"威斯康星大学麦迪逊 (UW-Madison)",lat:43.0766,lng:-89.4125, state:"威斯康星州", country:"美国", city:"麦迪逊", comment:"公立研究型大学标杆，教育学与社会学历史悠久。"},
-            {name:"伊利诺伊大学香槟分校 (UIUC)",lat:40.1020,lng:-88.2272, state:"伊利诺伊州", country:"美国", city:"香槟", comment:"计算机与工程实力超群，图书馆系统是美国的典范。"},
-            {name:"华盛顿大学 (UW)",lat:47.6587,lng:-122.3080, state:"华盛顿州", country:"美国", city:"西雅图", comment:"计算机科学与医学研究顶尖，与微软、亚马逊关系密切。"},
-            {name:"北卡罗来纳大学教堂山 (UNC)",lat:35.9049,lng:-79.0469, state:"北卡罗来纳州", country:"美国", city:"教堂山", comment:"公立常春藤，新闻学与公共卫生学院全美顶尖。"},
-            {name:"波士顿大学 (BU)",lat:42.3503,lng:-71.0810, state:"马萨诸塞州", country:"美国", city:"波士顿", comment:"位于波士顿市中心，传媒与医学院资源丰富。"},
-            {name:"南加州大学 (USC)",lat:34.0224,lng:-118.2851, state:"加州", country:"美国", city:"洛杉矶", comment:"电影艺术学院与工程学院双强，校友网络遍布好莱坞。"},
-            {name:"加州大学戴维斯分校 (UCD)",lat:38.5382,lng:-121.7617, state:"加州", country:"美国", city:"戴维斯", comment:"农业与环境科学世界领先，校园氛围友好悠闲。"},
-            {name:"普渡大学 (Purdue)",lat:40.4237,lng:-86.9212, state:"印第安纳州", country:"美国", city:"西拉法叶", comment:"航空航天工程与计算机科学的摇篮，培养了众多宇航员。"},
-            {name:"范德堡大学 (Vanderbilt)",lat:36.1447,lng:-86.8027, state:"田纳西州", country:"美国", city:"纳什维尔", comment:"南方哈佛，教育与医学研究实力突出，校园优美如公园。"},
+            // US (30 institutions)
+            {name:"Massachusetts Institute of Technology (MIT)",lat:42.3601,lng:-71.0942, state:"Massachusetts", country:"US", city:"Cambridge", comment:"The holy land for STEM, heavily emphasizes math/physics foundations and innovative practice."},
+            {name:"Harvard University",lat:42.3770,lng:-71.1167, state:"Massachusetts", country:"US", city:"Cambridge", comment:"Unquestionable comprehensive academic strength, has cultivated countless industry leaders."},
+            {name:"Stanford University",lat:37.4275,lng:-122.1697, state:"California", country:"US", city:"Stanford", comment:"Located in the heart of Silicon Valley, strong entrepreneurial vibe, requires high interdisciplinary skills."},
+            {name:"California Institute of Technology (Caltech)",lat:34.1377,lng:-118.1253, state:"California", country:"US", city:"Pasadena", comment:"Small in size but extremely high research density, true hardcore STEM."},
+            {name:"University of Chicago",lat:41.7897,lng:-87.5997, state:"Illinois", country:"US", city:"Chicago", comment:"Super strong academic atmosphere, economics and law hold a dominant position."},
+            {name:"Yale University",lat:41.3163,lng:-72.9223, state:"Connecticut", country:"US", city:"New Haven", comment:"The pinnacle of humanities and arts, top-ranked law school in the US."},
+            {name:"Columbia University",lat:40.8075,lng:-73.9626, state:"New York", country:"US", city:"New York", comment:"Occupies a prime location in Manhattan, uniquely advantageous for journalism and finance."},
+            {name:"Cornell University",lat:42.4534,lng:-76.4735, state:"New York", country:"US", city:"Ithaca", comment:"The most down-to-earth Ivy, outstanding in agriculture, engineering, and hospitality management."},
+            {name:"UC Berkeley",lat:37.8719,lng:-122.2585, state:"California", country:"US", city:"Berkeley", comment:"The benchmark for public universities, extremely dominant in CS and physics."},
+            {name:"UCLA",lat:34.0689,lng:-118.4452, state:"California", country:"US", city:"Los Angeles", comment:"Sunny beaches coexist with academics, equal emphasis on arts/film and applied sciences."},
+            {name:"Princeton University",lat:40.3431,lng:-74.6551, state:"New Jersey", country:"US", city:"Princeton", comment:"Top undergraduate education in the US, small and elite, highly values academic integrity."},
+            {name:"University of Pennsylvania",lat:39.9522,lng:-75.1932, state:"Pennsylvania", country:"US", city:"Philadelphia", comment:"Wharton School is globally leading, highly innovative interdisciplinary education model."},
+            {name:"Johns Hopkins University",lat:39.3299,lng:-76.6205, state:"Maryland", country:"US", city:"Baltimore", comment:"Absolute authority in medicine and public health, abundant research funding."},
+            {name:"University of Michigan",lat:42.2780,lng:-83.7382, state:"Michigan", country:"US", city:"Ann Arbor", comment:"Public Ivy, extremely strong comprehensive strength in engineering, business, and sports management."},
+            {name:"Northwestern University",lat:42.0565,lng:-87.6753, state:"Illinois", country:"US", city:"Evanston", comment:"#1 in journalism and communications in the US, drama and music schools are equally excellent."},
+            {name:"Duke University",lat:36.0014,lng:-78.9382, state:"North Carolina", country:"US", city:"Durham", comment:"Famous basketball school, Fuqua School of Business and Law School are highly competitive."},
+            {name:"New York University",lat:40.7295,lng:-73.9965, state:"New York", country:"US", city:"New York", comment:"University without walls, Tisch School of the Arts and Stern School of Business are world-renowned."},
+            {name:"Carnegie Mellon University",lat:40.4427,lng:-79.9430, state:"Pennsylvania", country:"US", city:"Pittsburgh", comment:"Top in both CS and drama, pioneer in the field of AI."},
+            {name:"UC San Diego",lat:32.8801,lng:-117.2340, state:"California", country:"US", city:"San Diego", comment:"Leading in biology and marine sciences, campus located on the beautiful La Jolla coast."},
+            {name:"Brown University",lat:41.8268,lng:-71.4025, state:"Rhode Island", country:"US", city:"Providence", comment:"Open curriculum system gives students great freedom, emphasizes personalized development."},
+            {name:"UT Austin",lat:30.2849,lng:-97.7341, state:"Texas", country:"US", city:"Austin", comment:"Famous public university, strong in CS and petroleum engineering, relatively low living costs."},
+            {name:"UW-Madison",lat:43.0766,lng:-89.4125, state:"Wisconsin", country:"US", city:"Madison", comment:"Benchmark for public research universities, long history in education and sociology."},
+            {name:"UIUC",lat:40.1020,lng:-88.2272, state:"Illinois", country:"US", city:"Champaign", comment:"Superior strength in CS and engineering, library system is a model for the US."},
+            {name:"University of Washington",lat:47.6587,lng:-122.3080, state:"Washington", country:"US", city:"Seattle", comment:"Top CS and medical research, close ties with Microsoft and Amazon."},
+            {name:"UNC Chapel Hill",lat:35.9049,lng:-79.0469, state:"North Carolina", country:"US", city:"Chapel Hill", comment:"Public Ivy, journalism and public health schools are top in the US."},
+            {name:"Boston University",lat:42.3503,lng:-71.0810, state:"Massachusetts", country:"US", city:"Boston", comment:"Located in downtown Boston, abundant resources in media and medical schools."},
+            {name:"University of Southern California",lat:34.0224,lng:-118.2851, state:"California", country:"US", city:"Los Angeles", comment:"Strong in both cinematic arts and engineering, alumni network spans Hollywood."},
+            {name:"UC Davis",lat:38.5382,lng:-121.7617, state:"California", country:"US", city:"Davis", comment:"World-leading in agriculture and environmental sciences, friendly and relaxed campus vibe."},
+            {name:"Purdue University",lat:40.4237,lng:-86.9212, state:"Indiana", country:"US", city:"West Lafayette", comment:"Cradle of aerospace engineering and CS, has trained many astronauts."},
+            {name:"Vanderbilt University",lat:36.1447,lng:-86.8027, state:"Tennessee", country:"US", city:"Nashville", comment:"Harvard of the South, outstanding education and medical research, park-like campus."},
             
-            // 澳大利亚 (8所)
-            {name:"墨尔本大学 (UniMelb)",lat:-37.7983,lng:144.9610, state:"维多利亚州", country:"澳大利亚", city:"墨尔本", comment:"澳洲综合排名榜首，研究资源丰富，生活质量高。"},
-            {name:"悉尼大学 (USYD)",lat:-33.8886,lng:151.1873, state:"新南威尔士", country:"澳大利亚", city:"悉尼", comment:"校园极具古典美，商科与医学申请竞争激烈。"},
-            {name:"澳大利亚国立大学 (ANU)",lat:-35.2809,lng:149.1300, state:"首都领地", country:"澳大利亚", city:"堪培拉", comment:"澳洲唯一国立大学，政治学与国际关系研究领先。"},
-            {name:"新南威尔士大学 (UNSW)",lat:-33.9173,lng:151.2313, state:"新南威尔士", country:"澳大利亚", city:"悉尼", comment:"工程与商科实力强劲，毕业生就业率在澳洲名列前茅。"},
-            {name:"昆士兰大学 (UQ)",lat:-27.4975,lng:153.0137, state:"昆士兰州", country:"澳大利亚", city:"布里斯班", comment:"生物科学与医学研究突出，校园被评为世界最美之一。"},
-            {name:"蒙纳士大学 (Monash)",lat:-37.8768,lng:145.0458, state:"维多利亚州", country:"澳大利亚", city:"墨尔本", comment:"药学与化学工程世界领先，拥有广泛的国际校区网络。"},
-            {name:"西澳大学 (UWA)",lat:-31.9809,lng:115.8194, state:"西澳大利亚", country:"澳大利亚", city:"珀斯", comment:"位于天鹅河畔，采矿工程与海洋科学享有盛誉。"},
-            {name:"阿德莱德大学 (Adelaide)",lat:-34.9205,lng:138.6062, state:"南澳大利亚", country:"澳大利亚", city:"阿德莱德", comment:"培养了5位诺贝尔奖得主，葡萄酒酿造专业独具特色。"},
+            // Australia (8 institutions)
+            {name:"University of Melbourne",lat:-37.7983,lng:144.9610, state:"Victoria", country:"Australia", city:"Melbourne", comment:"Top comprehensive ranking in Australia, rich research resources, high quality of life."},
+            {name:"University of Sydney",lat:-33.8886,lng:151.1873, state:"New South Wales", country:"Australia", city:"Sydney", comment:"Extremely classical and beautiful campus, fierce competition for business and medicine applications."},
+            {name:"Australian National University",lat:-35.2809,lng:149.1300, state:"Australian Capital Territory", country:"Australia", city:"Canberra", comment:"Australia's only national university, leading in political science and international relations."},
+            {name:"UNSW Sydney",lat:-33.9173,lng:151.2313, state:"New South Wales", country:"Australia", city:"Sydney", comment:"Strong in engineering and business, graduate employment rate ranks at the top in Australia."},
+            {name:"University of Queensland",lat:-27.4975,lng:153.0137, state:"Queensland", country:"Australia", city:"Brisbane", comment:"Outstanding in biological sciences and medical research, campus rated as one of the most beautiful in the world."},
+            {name:"Monash University",lat:-37.8768,lng:145.0458, state:"Victoria", country:"Australia", city:"Melbourne", comment:"World-leading in pharmacy and chemical engineering, has a vast international campus network."},
+            {name:"University of Western Australia",lat:-31.9809,lng:115.8194, state:"Western Australia", country:"Australia", city:"Perth", comment:"Located on the Swan River, renowned for mining engineering and marine sciences."},
+            {name:"University of Adelaide",lat:-34.9205,lng:138.6062, state:"South Australia", country:"Australia", city:"Adelaide", comment:"Produced 5 Nobel laureates, unique viticulture and oenology programs."},
             
-            // 加拿大 (5所)
-            {name:"多伦多大学 (UofT)",lat:43.6629,lng:-79.3957, state:"安大略省", country:"加拿大", city:"多伦多", comment:"加拿大科研实力最强学府，AI领域的重镇。"},
-            {name:"麦吉尔大学 (McGill)",lat:45.5048,lng:-73.5772, state:"魁北克省", country:"加拿大", city:"蒙特利尔", comment:"加拿大的哈佛，医学与法学研究享誉全球。"},
-            {name:"不列颠哥伦比亚大学 (UBC)",lat:49.2606,lng:-123.2460, state:"不列颠哥伦比亚", country:"加拿大", city:"温哥华", comment:"位于太平洋畔，林业与环境科学世界顶尖。"},
-            {name:"滑铁卢大学 (Waterloo)",lat:43.4723,lng:-80.5449, state:"安大略省", country:"加拿大", city:"滑铁卢", comment:"带薪实习(Co-op)模式的先驱，计算机与工程实力超群。"},
-            {name:"阿尔伯塔大学 (Alberta)",lat:53.5232,lng:-113.5263, state:"阿尔伯塔省", country:"加拿大", city:"埃德蒙顿", comment:"石油工程与能源研究领先，研究经费在加拿大名列前茅。"},
+            // Canada (5 institutions)
+            {name:"University of Toronto",lat:43.6629,lng:-79.3957, state:"Ontario", country:"Canada", city:"Toronto", comment:"Strongest research institution in Canada, a major hub for AI."},
+            {name:"McGill University",lat:45.5048,lng:-73.5772, state:"Quebec", country:"Canada", city:"Montreal", comment:"The Harvard of Canada, globally renowned medical and legal research."},
+            {name:"University of British Columbia",lat:49.2606,lng:-123.2460, state:"British Columbia", country:"Canada", city:"Vancouver", comment:"Located on the Pacific coast, world-leading in forestry and environmental sciences."},
+            {name:"University of Waterloo",lat:43.4723,lng:-80.5449, state:"Ontario", country:"Canada", city:"Waterloo", comment:"Pioneer of the Co-op model, superior strength in CS and engineering."},
+            {name:"University of Alberta",lat:53.5232,lng:-113.5263, state:"Alberta", country:"Canada", city:"Edmonton", comment:"Leading in petroleum engineering and energy research, top-tier research funding in Canada."},
             
-            // 新加坡 (2所)
-            {name:"新加坡国立大学 (NUS)",lat:1.2966,lng:103.7764, state:"", country:"新加坡", city:"新加坡", comment:"亚洲顶尖学府，软硬件设施一流，申请竞争白热化。"},
-            {name:"南洋理工大学 (NTU)",lat:1.3483,lng:103.6831, state:"", country:"新加坡", city:"新加坡", comment:"校园绝美且现代化，工程与材料科学世界前列。"},
+            // Singapore (2 institutions)
+            {name:"National University of Singapore",lat:1.2966,lng:103.7764, state:"", country:"Singapore", city:"Singapore", comment:"Top Asian institution, first-class facilities, white-hot application competition."},
+            {name:"Nanyang Technological University",lat:1.3483,lng:103.6831, state:"", country:"Singapore", city:"Singapore", comment:"Beautiful and modern campus, engineering and materials science are at the forefront of the world."},
             
-            // 香港 (5所)
-            {name:"香港大学 (HKU)",lat:22.2830,lng:114.1371, state:"香港", country:"中国", city:"香港", comment:"国际化程度高，商科及法学极具声望，留港发展的优质平台。"},
-            {name:"香港中文大学 (CUHK)",lat:22.4195,lng:114.2066, state:"香港", country:"中国", city:"香港", comment:"人文气息浓厚，校园广阔，翻译与计算机科学极强。"},
-            {name:"香港科技大学 (HKUST)",lat:22.3364,lng:114.2655, state:"香港", country:"中国", city:"香港", comment:"建校历史短但发展迅猛，商学院和工学院实力雄厚。"},
-            {name:"香港理工大学 (PolyU)",lat:22.3041,lng:114.1796, state:"香港", country:"中国", city:"香港", comment:"酒店管理与设计专业亚洲领先，实践导向教育特色鲜明。"},
-            {name:"香港城市大学 (CityU)",lat:22.3376,lng:114.1739, state:"香港", country:"中国", city:"香港", comment:"电子工程与传媒研究突出，创新与创意氛围浓厚。"},
+            // Hong Kong (5 institutions)
+            {name:"University of Hong Kong",lat:22.2830,lng:114.1371, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Highly internationalized, prestigious business and law programs, excellent platform for career development in HK."},
+            {name:"Chinese University of Hong Kong",lat:22.4195,lng:114.2066, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Strong humanities atmosphere, spacious campus, highly reputed in translation and CS."},
+            {name:"Hong Kong University of Science and Technology",lat:22.3364,lng:114.2655, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Short history but rapid development, strong business and engineering schools."},
+            {name:"Hong Kong Polytechnic University",lat:22.3041,lng:114.1796, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Leading in hospitality management and design in Asia, strong practical education features."},
+            {name:"City University of Hong Kong",lat:22.3376,lng:114.1739, state:"Hong Kong", country:"China", city:"Hong Kong", comment:"Outstanding in electronic engineering and media research, strong atmosphere of innovation and creativity."},
             
-            // 中国 (6所)
-            {name:"清华大学 (Tsinghua)",lat:40.0000,lng:116.3265, state:"北京", country:"中国", city:"北京", comment:"国内工科与应用科学的最高殿堂，学风极其严谨。"},
-            {name:"北京大学 (PKU)",lat:39.9915,lng:116.3056, state:"北京", country:"中国", city:"北京", comment:"国内人文社科与理学基础的最高殿堂，思想自由。"},
-            {name:"浙江大学 (ZJU)",lat:30.2636,lng:120.1212, state:"浙江", country:"中国", city:"杭州", comment:"综合实力强劲，农业与计算机科学发展迅猛。"},
-            {name:"复旦大学 (Fudan)",lat:31.2974,lng:121.5036, state:"上海", country:"中国", city:"上海", comment:"文理并重，新闻传播与经济学在国内首屈一指。"},
-            {name:"上海交通大学 (SJTU)",lat:31.0255,lng:121.4347, state:"上海", country:"中国", city:"上海", comment:"船舶海洋与机械工程传统强校，医学院近年发展迅猛。"},
-            {name:"中国科学技术大学 (USTC)",lat:31.8226,lng:117.2814, state:"安徽", country:"中国", city:"合肥", comment:"基础科学研究重镇，量子信息与人工智能领域领先。"},
+            // China (6 institutions)
+            {name:"Tsinghua University",lat:40.0000,lng:116.3265, state:"Beijing", country:"China", city:"Beijing", comment:"The highest palace of engineering and applied sciences in China, extremely rigorous academic atmosphere."},
+            {name:"Peking University",lat:39.9915,lng:116.3056, state:"Beijing", country:"China", city:"Beijing", comment:"The highest palace of humanities, social sciences, and fundamental sciences in China, free thinking."},
+            {name:"Zhejiang University",lat:30.2636,lng:120.1212, state:"Zhejiang", country:"China", city:"Hangzhou", comment:"Strong comprehensive strength, rapid development in agriculture and CS."},
+            {name:"Fudan University",lat:31.2974,lng:121.5036, state:"Shanghai", country:"China", city:"Shanghai", comment:"Equal emphasis on humanities and sciences, journalism, communications, and economics are second to none in China."},
+            {name:"Shanghai Jiao Tong University",lat:31.0255,lng:121.4347, state:"Shanghai", country:"China", city:"Shanghai", comment:"Traditional powerhouse in naval architecture and mechanical engineering, rapid development in medical school recently."},
+            {name:"University of Science and Technology of China",lat:31.8226,lng:117.2814, state:"Anhui", country:"China", city:"Hefei", comment:"Major hub for basic scientific research, leading in quantum information and AI."},
             
-            // 欧洲大陆 (17所)
-            {name:"苏黎世联邦理工 (ETH)",lat:47.3763,lng:8.5477, state:"苏黎世州", country:"瑞士", city:"苏黎世", comment:"欧洲大陆顶尖理工院校，学费低廉但课业挑战极大。"},
-            {name:"洛桑联邦理工 (EPFL)",lat:46.5197,lng:6.5657, state:"沃州", country:"瑞士", city:"洛桑", comment:"计算机与生命科学工程领先，校园坐落于日内瓦湖畔。"},
-            {name:"巴黎文理研究大学 (PSL)",lat:48.8534,lng:2.3488, state:"法兰西岛", country:"法国", city:"巴黎", comment:"法国顶尖大学联盟，数学与物理研究历史悠久。"},
-            {name:"巴黎综合理工学院 (X)",lat:48.7145,lng:2.2117, state:"法兰西岛", country:"法国", city:"帕莱索", comment:"法国工程师教育皇冠明珠，培养了无数法国政商界领袖。"},
-            {name:"慕尼黑工业大学 (TUM)",lat:48.1497,lng:11.5679, state:"巴伐利亚", country:"德国", city:"慕尼黑", comment:"德国精英大学之一，工程与计算机科学享誉欧洲。"},
-            {name:"慕尼黑大学 (LMU)",lat:48.1508,lng:11.5804, state:"巴伐利亚", country:"德国", city:"慕尼黑", comment:"德国最古老大学之一，人文社科与医学实力雄厚。"},
-            {name:"海德堡大学 (Heidelberg)",lat:49.4125,lng:8.7100, state:"巴登符腾堡", country:"德国", city:"海德堡", comment:"德国最古老大学，医学与生命科学享有崇高声誉。"},
-            {name:"代尔夫特理工 (TU Delft)",lat:52.0024,lng:4.3739, state:"南荷兰省", country:"荷兰", city:"代尔夫特", comment:"荷兰理工王者，建筑学与航空航天工程世界闻名。"},
-            {name:"阿姆斯特丹大学 (UvA)",lat:52.3558,lng:4.9553, state:"北荷兰省", country:"荷兰", city:"阿姆斯特丹", comment:"传媒与传播学世界顶尖，社会科学研究极具影响力。"},
-            {name:"鲁汶大学 (KU Leuven)",lat:50.8778,lng:4.7008, state:"弗拉芒区", country:"比利时", city:"鲁汶", comment:"欧洲最古老的天主教大学，工程与神学研究并重。"},
-            {name:"索邦大学 (Sorbonne)",lat:48.8489,lng:2.3430, state:"法兰西岛", country:"法国", city:"巴黎", comment:"人文社科的圣地，法语文学与历史研究享誉全球。"},
-            {name:"皇家理工学院 (KTH)",lat:59.3498,lng:18.0702, state:"斯德哥尔摩省", country:"瑞典", city:"斯德哥尔摩", comment:"北欧最大理工院校，电子工程与计算机科学领先。"},
-            {name:"隆德大学 (Lund)",lat:55.7110,lng:13.2035, state:"斯科纳省", country:"瑞典", city:"隆德", comment:"瑞典历史最悠久大学之一，医学与法学研究实力强劲。"},
-            {name:"奥斯陆大学 (UiO)",lat:59.9399,lng:10.7217, state:"奥斯陆", country:"挪威", city:"奥斯陆", comment:"斯堪的纳维亚半岛最古老大学，北极研究独具特色。"},
-            {name:"哥本哈根大学 (KU)",lat:55.6806,lng:12.5735, state:"首都大区", country:"丹麦", city:"哥本哈根", comment:"北欧第一所大学，生物信息学与环境科学研究领先。"},
-            {name:"博洛尼亚大学 (UniBo)",lat:44.4938,lng:11.3430, state:"艾米利亚-罗马涅", country:"意大利", city:"博洛尼亚", comment:"西方大学之母，法学与人文学科历史悠久。"},
-            {name:"米兰理工大学 (PoliMi)",lat:45.4781,lng:9.2270, state:"伦巴第", country:"意大利", city:"米兰", comment:"意大利工程与设计教育的标杆，建筑学极具声望。"},
+            // Continental Europe (17 institutions)
+            {name:"ETH Zurich",lat:47.3763,lng:8.5477, state:"Zurich", country:"Switzerland", city:"Zurich", comment:"Top STEM institution in Continental Europe, low tuition but extremely challenging coursework."},
+            {name:"EPFL",lat:46.5197,lng:6.5657, state:"Vaud", country:"Switzerland", city:"Lausanne", comment:"Leading in CS and life sciences engineering, campus located on the shores of Lake Geneva."},
+            {name:"PSL University",lat:48.8534,lng:2.3488, state:"Île-de-France", country:"France", city:"Paris", comment:"Top French university alliance, long history in math and physics research."},
+            {name:"École Polytechnique",lat:48.7145,lng:2.2117, state:"Île-de-France", country:"France", city:"Palaiseau", comment:"Crown jewel of French engineering education, trained countless political and business leaders."},
+            {name:"Technical University of Munich",lat:48.1497,lng:11.5679, state:"Bavaria", country:"Germany", city:"Munich", comment:"One of Germany's Universities of Excellence, engineering and CS are renowned across Europe."},
+            {name:"LMU Munich",lat:48.1508,lng:11.5804, state:"Bavaria", country:"Germany", city:"Munich", comment:"One of Germany's oldest universities, strong in humanities, social sciences, and medicine."},
+            {name:"Heidelberg University",lat:49.4125,lng:8.7100, state:"Baden-Württemberg", country:"Germany", city:"Heidelberg", comment:"Germany's oldest university, medicine and life sciences enjoy a prestigious reputation."},
+            {name:"TU Delft",lat:52.0024,lng:4.3739, state:"South Holland", country:"Netherlands", city:"Delft", comment:"King of Dutch STEM, architecture and aerospace engineering are world-renowned."},
+            {name:"University of Amsterdam",lat:52.3558,lng:4.9553, state:"North Holland", country:"Netherlands", city:"Amsterdam", comment:"World-leading in media and communications, highly influential social sciences research."},
+            {name:"KU Leuven",lat:50.8778,lng:4.7008, state:"Flanders", country:"Belgium", city:"Leuven", comment:"Europe's oldest Catholic university, equal emphasis on engineering and theology."},
+            {name:"Sorbonne University",lat:48.8489,lng:2.3430, state:"Île-de-France", country:"France", city:"Paris", comment:"The holy land for humanities and social sciences, globally renowned for French literature and history."},
+            {name:"KTH Royal Institute of Technology",lat:59.3498,lng:18.0702, state:"Stockholm", country:"Sweden", city:"Stockholm", comment:"Largest STEM institution in the Nordics, leading in electronic engineering and CS."},
+            {name:"Lund University",lat:55.7110,lng:13.2035, state:"Skåne", country:"Sweden", city:"Lund", comment:"One of Sweden's oldest universities, strong in medical and legal research."},
+            {name:"University of Oslo",lat:59.9399,lng:10.7217, state:"Oslo", country:"Norway", city:"Oslo", comment:"Oldest university in the Scandinavian Peninsula, unique Arctic research."},
+            {name:"University of Copenhagen",lat:55.6806,lng:12.5735, state:"Capital Region", country:"Denmark", city:"Copenhagen", comment:"First university in the Nordics, leading in bioinformatics and environmental sciences."},
+            {name:"University of Bologna",lat:44.4938,lng:11.3430, state:"Emilia-Romagna", country:"Italy", city:"Bologuna", comment:"The mother of Western universities, long history in law and humanities."},
+            {name:"Polytechnic University of Milan",lat:45.4781,lng:9.2270, state:"Lombardy", country:"Italy", city:"Milan", comment:"Benchmark of Italian engineering and design education, highly prestigious in architecture."},
             
-            // 日韩 (4所)
-            {name:"东京大学 (UTokyo)",lat:35.7128,lng:139.7596, state:"东京都", country:"日本", city:"东京", comment:"亚洲传统名校，基础理科与工程领域科研底蕴深厚。"},
-            {name:"京都大学 (Kyoto)",lat:35.0262,lng:135.7810, state:"京都府", country:"日本", city:"京都", comment:"日本诺奖得主摇篮，崇尚自由学风，基础研究实力超群。"},
-            {name:"大阪大学 (Osaka)",lat:34.8220,lng:135.5230, state:"大阪府", country:"日本", city:"吹田", comment:"关西地区最高学府，免疫学与激光工程研究领先。"},
-            {name:"首尔国立大学 (SNU)",lat:37.4602,lng:126.9527, state:"首尔", country:"韩国", city:"首尔", comment:"韩国最高学府，法学与工商管理学在韩国独占鳌头。"}
+            // Japan & South Korea (4 institutions)
+            {name:"University of Tokyo",lat:35.7128,lng:139.7596, state:"Tokyo", country:"Japan", city:"Tokyo", comment:"Traditional Asian prestigious university, deep research heritage in basic sciences and engineering."},
+            {name:"Kyoto University",lat:35.0262,lng:135.7810, state:"Kyoto", country:"Japan", city:"Kyoto", comment:"Cradle of Japanese Nobel laureates, advocates free academic atmosphere, superior basic research."},
+            {name:"Osaka University",lat:34.8220,lng:135.5230, state:"Osaka", country:"Japan", city:"Suita", comment:"Highest academic institution in the Kansai region, leading in immunology and laser engineering."},
+            {name:"Seoul National University",lat:37.4602,lng:126.9527, state:"Seoul", country:"South Korea", city:"Seoul", comment:"Highest academic institution in South Korea, law and business administration dominate the country."}
         ];
 
         let markers = [];
@@ -1810,20 +1786,20 @@
                     </div>
                     <div class="uni-stat" style="display:flex; align-items:center; gap:16px;">
                         <i data-lucide="map-pin" style="color:var(--text-muted);"></i>
-                        <div><div style="font-size:12px;color:var(--text-muted);">地理位置</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
+                        <div><div style="font-size:12px;color:var(--text-muted);">Location</div><div style="font-size:14px;font-weight:500;">${uni.city}, ${locStr}</div></div>
                     </div>
                     <div class="ai-senior-section">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> 档案评估报告</div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px;"><i data-lucide="file-text" style="width:16px;"></i> Profile Evaluation Report</div>
                         <div style="font-size:14px;line-height:1.6;color:var(--text-muted);">${uni.comment}</div>
                     </div>
-                    <button class="btn-primary" id="btn-fav-${uni.lat}"><i data-lucide="bookmark"></i> 存入研究清单</button>
+                    <button class="btn-primary" id="btn-fav-${uni.lat}"><i data-lucide="bookmark"></i> Save to Research List</button>
                 `;
                 refreshIcons();
                 document.getElementById(`btn-fav-${uni.lat}`).onclick = function() {
                     if (!favorites.find(f => f.name === uni.name)) {
                         favorites.push(uni); localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
                         renderFavorites(); updateUserUI(); updateUniversitySelect();
-                        this.innerHTML = '<i data-lucide="check"></i> 已存入清单';
+                        this.innerHTML = '<i data-lucide="check"></i> Saved to List';
                         this.style.background = 'var(--success-text)';
                         refreshIcons();
                     }
@@ -1835,7 +1811,7 @@
             const list = document.getElementById('favorites-list');
             if (!list) return;
             if (favorites.length === 0) {
-                list.innerHTML = `<div class="empty-state"><i data-lucide="bookmark" style="width:32px;height:32px;margin-bottom:16px;"></i><h4>清单为空</h4><p style="font-size:13px;margin-top:8px;">在地图上点击院校将其加入清单。</p></div>`;
+                list.innerHTML = `<div class="empty-state"><i data-lucide="bookmark" style="width:32px;height:32px;margin-bottom:16px;"></i><h4>List is Empty</h4><p style="font-size:13px;margin-top:8px;">Click on an institution on the map to add it to your list.</p></div>`;
                 refreshIcons(); return;
             }
             list.innerHTML = '';
@@ -1843,7 +1819,7 @@
                 const div = document.createElement('div');
                 div.className = 'fav-item';
                 div.innerHTML = `
-                    <div><div class="fav-name">${f.name}</div><div class="fav-meta">地理坐标: ${f.lat.toFixed(2)}, ${f.lng.toFixed(2)}</div></div>
+                    <div><div class="fav-name">${f.name}</div><div class="fav-meta">Coordinates: ${f.lat.toFixed(2)}, ${f.lng.toFixed(2)}</div></div>
                     <button class="icon-btn" onclick="favorites=favorites.filter(x=>x.name!=='${f.name}');localStorage.setItem('xjlu_favorites',JSON.stringify(favorites));renderFavorites();updateUserUI();updateUniversitySelect();"><i data-lucide="trash-2" style="color:var(--danger-text);"></i></button>
                 `;
                 list.appendChild(div);
@@ -1852,99 +1828,188 @@
             updateUniversitySelect();
         }
 
-        // ==================== 4. 完整的 30 道测试题系统 ====================
-        const quizQuestions = [
-            {q:"申请海外研究生时，通常需要达到的最低雅思总分是？",o:["6.0","6.5","7.0","7.5"],a:1},
-            {q:"GPA（绩点）的全称是什么？",o:["Grade Point Average","Graduate Point Average","General Point Average","Global Point Average"],a:0},
-            {q:"申请研究生通常需要几封推荐信？",o:["1封","2-3封","4封","5封"],a:1},
-            {q:"GRE考试主要用于申请哪个国家的研究生？",o:["英国","加拿大","美国","澳大利亚"],a:2},
-            {q:"学术CV（简历）中不应该包含什么？",o:["教育背景","研究经历","个人兴趣爱好","发表论文"],a:2},
-            {q:"个人陈述（PS）的理想长度是多少字？",o:["100-200字","300-500字","800-1000字","1500字以上"],a:1},
-            {q:"申请研究生时，通常需要提供的成绩单是？",o:["高中成绩单","本科成绩单","研究生成绩单","无需成绩单"],a:1},
-            {q:"GMAT考试主要用于申请什么专业的研究生？",o:["理工科","文科","商科","艺术"],a:2},
-            {q:"申请截止日期（Deadline）的含义是？",o:["开始申请的日期","提交材料的最后日期","录取通知的日期","入学的日期"],a:1},
-            {q:"Conditional Offer 的中文意思是什么？",o:["无条件录取","有条件录取","拒绝录取","等待审核"],a:1},
-            {q:"申请研究生时，雅思成绩的有效期通常是？",o:["6个月","1年","2年","永久有效"],a:2},
-            {q:"学术推荐信最好应该由谁来写？",o:["同学","家人","任课老师或导师","自己"],a:2},
-            {q:"申请海外研究生时，提供资金证明的目的是什么？",o:["证明有能力支付学杂费","证明有投资能力","证明有工作经验","证明有社会关系"],a:0},
-            {q:"学术界 CV 和普通求职 Resume 的主要区别是？",o:["没有区别","CV更详细偏学术，Resume更简洁偏应用","CV更长，Resume更短","随意使用"],a:1},
-            {q:"除均分外，理工科研究生申请最看重什么？",o:["家庭背景","课外活动","科研经历和论文发表","社会关系"],a:2},
-            {q:"雅思考试的四个部分不包括哪个？",o:["听力","阅读","写作","翻译"],a:3},
-            {q:"申请研究生时，通常需要提前多久开始准备语言考试？",o:["1-3个月","4-6个月","至少提前1年","拿到offer后再准备"],a:2},
-            {q:"什么是 Personal Statement (PS)？",o:["个人简历","个人陈述，介绍申请动机和背景","推荐信","成绩单"],a:1},
-            {q:"申请商科研究生时，GRE和GMAT通常可以互相替代吗？",o:["完全可以","部分学校可以，但最好按要求准备","完全不可以","取决于是否跨专业"],a:1},
-            {q:"什么是 Rolling Admission？",o:["滚动录取，先到先得","固定日期统一录取","分批录取","随机抽取"],a:0},
-            {q:"申请研究生时，作品集（Portfolio）主要用于哪个专业大类？",o:["商科","理工科","艺术设计与建筑类","纯文科"],a:2},
-            {q:"被放入 Waitlist 意味着什么？",o:["已经被正式录取","被彻底拒绝","在等待名单中，仍有转正可能","要求重新面试"],a:2},
-            {q:"目前大多数海外院校推荐信是如何提交的？",o:["申请人直接邮寄纸质版","网申系统发送链接，推荐人自行上传","随成绩单一起打包提交","完全不需要提交"],a:1},
-            {q:"Transcript 在留学申请中指的是？",o:["个人陈述","官方成绩单","简历","推荐信"],a:1},
-            {q:"英国的大部分研究生项目，语言成绩可以后补吗？",o:["完全不可以","多数允许拿 conditional offer 后补","所有学校和专业都允许","只有商科允许"],a:1},
-            {q:"Reference Letter 在留学申请中指的是？",o:["推荐信","参考信","介绍信","证明信"],a:0},
-            {q:"海外院校通常要求提供的本科成绩单需要什么语言版本？",o:["仅中文即可","必须经过公证的英文版","中英文对照的官方盖章版","以上皆可"],a:2},
-            {q:"Statement of Purpose (SOP) 更侧重于说明什么？",o:["详细的研究兴趣和学术目标","个人的家庭背景","推荐人的评价","课外兴趣爱好"],a:0},
-            {q:"跨专业申请时，什么材料能够最大程度弥补专业背景的不足？",o:["更高的语言成绩","相关的实习经历和先修课程","更精美的排版","同学的推荐"],a:1},
-            {q:"Unconditional Offer 的含义是？",o:["有条件录取","无条件录取（正式录取）","等待录取","拒绝录取"],a:1}
+        // ==================== School Recommendation System ====================
+        const recommendQuestions = [
+            {
+                q: "Which year are you currently in?",
+                options: ["Year 2 (Sophomore)", "Year 3 (Junior)", "Year 4 (Senior)"],
+                key: "year"
+            },
+            {
+                q: "Which school/college are you from at XJTLU?",
+                options: ["School of Business", "School of Science", "School of Advanced Technology", "School of Film and Television", "School of Arts", "School of Humanities and Social Sciences"],
+                key: "school"
+            },
+            {
+                q: "What is your major?",
+                options: ["Finance & Accounting", "Economics & Management", "Computer Science & AI", "Mathematics & Statistics", "Mechanical & Energy Engineering", "English & Communications", "Architecture & Urban Planning", "Other"],
+                key: "major"
+            },
+            {
+                q: "What is your approximate GPA range?",
+                options: ["Below 2.5 (Below 60)", "2.5 - 3.0 (60 - 75)", "3.0 - 3.5 (75 - 85)", "Above 3.5 (Above 85)"],
+                key: "gpa"
+            },
+            {
+                q: "What is your study habit?",
+                options: ["Very diligent - consistent daily study", "Moderate - study before exams", "Flexible - study when motivated", "Need improvement - often procrastinate"],
+                key: "habit"
+            }
         ];
-
-        let currentQuestionIndex = 0;
-        let selectedOption = null;
-
-        function loadQuizQuestion() {
-            if (currentQuestionIndex >= quizQuestions.length) return;
-            const q = quizQuestions[currentQuestionIndex];
-            document.getElementById('quiz-level-num').textContent = currentQuestionIndex + 1;
-            document.getElementById('quiz-progress-fill').style.width = `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
-            document.getElementById('quiz-question').textContent = `${currentQuestionIndex + 1}. ${q.q}`;
+        
+        let recommendStep = 0;
+        let recommendAnswers = {};
+        let selectedRecommendOption = null;
+        
+        function loadRecommendQuestion() {
+            if (recommendStep >= recommendQuestions.length) return;
+            const q = recommendQuestions[recommendStep];
+            document.getElementById('recommend-step-num').textContent = recommendStep + 1;
+            document.getElementById('recommend-total-num').textContent = recommendQuestions.length;
+            document.getElementById('recommend-progress-fill').style.width = `${((recommendStep) / recommendQuestions.length) * 100}%`;
+            document.getElementById('recommend-question').textContent = q.q;
             
-            const container = document.getElementById('quiz-options');
+            const container = document.getElementById('recommend-options');
             container.innerHTML = '';
-            q.o.forEach((opt, i) => {
+            q.options.forEach((opt, i) => {
                 const div = document.createElement('div');
-                div.className = 'quiz-option'; div.textContent = opt;
+                div.className = 'quiz-option';
+                div.textContent = opt;
                 div.onclick = () => {
-                    document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
-                    div.classList.add('selected'); selectedOption = i;
+                    document.querySelectorAll('#recommend-options .quiz-option').forEach(o => o.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedRecommendOption = i;
                 };
                 container.appendChild(div);
             });
+            
+            document.getElementById('recommend-back').style.visibility = recommendStep === 0 ? 'hidden' : 'visible';
+            document.getElementById('recommend-next').textContent = recommendStep === recommendQuestions.length - 1 ? 'Get Results' : 'Next';
+            refreshIcons();
         }
-
-        document.getElementById('start-quiz').onclick = () => {
-            document.getElementById('quiz-start').style.display = 'none';
-            document.getElementById('quiz-game').style.display = 'block';
-            currentQuestionIndex = 0; loadQuizQuestion();
-        };
-
-        document.getElementById('quiz-submit').onclick = () => {
-            if (selectedOption === null) return;
-            const q = quizQuestions[currentQuestionIndex];
-            const options = document.querySelectorAll('.quiz-option');
+        
+        function getRecommendations() {
+            const { year, school, major, gpa, habit } = recommendAnswers;
             
-            if (selectedOption === q.a) { options[selectedOption].classList.add('correct'); } 
-            else { options[selectedOption].classList.add('incorrect'); options[q.a].classList.add('correct'); }
+            const recommendations = universities.filter(uni => {
+                let score = 0;
+                
+                // GPA scoring
+                if (gpa === 'Above 3.5 (Above 85)') score += 30;
+                else if (gpa === '3.0 - 3.5 (75 - 85)') score += 20;
+                else if (gpa === '2.5 - 3.0 (60 - 75)') score += 10;
+                
+                // Study habit scoring
+                if (habit === 'Very diligent - consistent daily study') score += 20;
+                else if (habit === 'Moderate - study before exams') score += 15;
+                else if (habit === 'Flexible - study when motivated') score += 10;
+                
+                // Major-based filtering
+                const stemMajors = ['Computer Science & AI', 'Mathematics & Statistics', 'Mechanical & Energy Engineering'];
+                const businessMajors = ['Finance & Accounting', 'Economics & Management'];
+                
+                if (stemMajors.includes(major)) {
+                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Canada' || uni.country === 'Germany' || uni.country === 'Switzerland') {
+                        score += 25;
+                    }
+                } else if (businessMajors.includes(major)) {
+                    if (uni.country === 'USA' || uni.country === 'UK' || uni.country === 'Hong Kong' || uni.country === 'Singapore') {
+                        score += 25;
+                    }
+                } else {
+                    score += 15;
+                }
+                
+                // Year-based adjustment
+                if (year === 'Year 2 (Sophomore)') {
+                    score += (uni.comment.length > 50) ? 15 : 10;
+                } else if (year === 'Year 3 (Junior)') {
+                    score += 20;
+                } else {
+                    score += 15;
+                }
+                
+                uni.matchScore = score;
+                return score > 30;
+            });
             
-            setTimeout(() => {
-                currentQuestionIndex++; selectedOption = null;
-                if (currentQuestionIndex >= quizQuestions.length) {
-                    document.getElementById('quiz-game').style.display = 'none';
-                    document.getElementById('quiz-result').style.display = 'block';
-                    document.getElementById('quiz-result-icon-container').innerHTML = '<i data-lucide="check-circle" style="width:56px;height:56px;color:var(--success-text);"></i>';
-                    document.getElementById('quiz-result-title').textContent = `测试全部完成`;
-                    document.getElementById('quiz-result-msg').textContent = '您已完成全部 30 道升学准备测试题，基础扎实！';
-                    document.getElementById('quiz-next').style.display = 'none';
-                    refreshIcons();
-                } else { loadQuizQuestion(); }
-            }, 800);
+            return recommendations.sort((a, b) => b.matchScore - a.matchScore).slice(0, 6);
+        }
+        
+        function showRecommendResults() {
+            const results = getRecommendations();
+            document.getElementById('recommend-form').style.display = 'none';
+            document.getElementById('recommend-result').style.display = 'block';
+            
+            const container = document.getElementById('recommend-results-list');
+            container.innerHTML = '';
+            
+            if (results.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">No exact matches found. Try adjusting your answers or browse the map directly.</p>';
+                return;
+            }
+            
+            results.forEach(uni => {
+                const card = document.createElement('div');
+                card.className = 'university-card';
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
+                        <span style="font-size:11px;background:var(--accent);color:white;padding:2px 8px;border-radius:10px;">${uni.matchScore}pts</span>
+                    </div>
+                    <p style="font-size:12px;color:var(--text-muted);margin:0 0 6px 0;">${uni.city}, ${uni.country}</p>
+                    <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.4;">${uni.comment.substring(0, 80)}...</p>
+                `;
+                card.onclick = () => {
+                    map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5 });
+                    showUniversityModal(uni);
+                };
+                container.appendChild(card);
+            });
+            refreshIcons();
+        }
+        
+        document.getElementById('start-recommend').onclick = () => {
+            document.getElementById('recommend-start').style.display = 'none';
+            document.getElementById('recommend-form').style.display = 'block';
+            recommendStep = 0;
+            recommendAnswers = {};
+            loadRecommendQuestion();
         };
-
-        document.getElementById('quiz-retry').onclick = () => {
-            document.getElementById('quiz-result').style.display = 'none';
-            document.getElementById('quiz-game').style.display = 'block';
-            currentQuestionIndex = 0; loadQuizQuestion();
+        
+        document.getElementById('recommend-next').onclick = () => {
+            if (selectedRecommendOption === null) return;
+            const key = recommendQuestions[recommendStep].key;
+            recommendAnswers[key] = recommendQuestions[recommendStep].options[selectedRecommendOption];
+            selectedRecommendOption = null;
+            
+            if (recommendStep < recommendQuestions.length - 1) {
+                recommendStep++;
+                loadRecommendQuestion();
+            } else {
+                showRecommendResults();
+            }
+        };
+        
+        document.getElementById('recommend-back').onclick = () => {
+            if (recommendStep > 0) {
+                recommendStep--;
+                selectedRecommendOption = null;
+                loadRecommendQuestion();
+            }
+        };
+        
+        document.getElementById('recommend-restart').onclick = () => {
+            document.getElementById('recommend-result').style.display = 'none';
+            document.getElementById('recommend-start').style.display = 'block';
+            recommendStep = 0;
+            recommendAnswers = {};
+            selectedRecommendOption = null;
         };
 
         // ==================== 5. AI Chat & 其他模块 ====================
-        const CHAT_PROMPT = `你是一位西浦(XJTLU)毕业的高级顾问，客观、极其专业、简练。回答需直接切中要害，分段清晰。`;
+        const CHAT_PROMPT = `You are a senior advisor graduated from XJTLU, objective, extremely professional, and concise. Answers must be direct and well-paragraphed.`;
         function initAPI() {
             // Check API key expiration
             checkAPIKeyExpiration();
@@ -1981,7 +2046,7 @@
         async function sendChat() {
             const input = document.getElementById('chat-input'); const msg = input.value.trim();
             if (!msg) return;
-            if (!API_KEY) return alert('系统提示：请先在账户面板配置 API 访问。');
+            if (!API_KEY) return alert('System Prompt: Please configure API access in the account panel first.');
             
             const box = document.getElementById('chat-box');
             box.innerHTML += `<div class="chat-msg chat-user"><div class="msg">${msg}</div></div>`;
@@ -2001,27 +2066,68 @@
                 box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg">${data.choices[0].message.content.replace(/\n/g, '<br>')}</div></div>`;
             } catch (e) {
                 document.getElementById(typingId).remove();
-                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg" style="color:var(--danger-text)">通信失败，请检查网络连接或 API 配置。</div></div>`;
+                box.innerHTML += `<div class="chat-msg chat-ai"><div class="msg" style="color:var(--danger-text)">Communication failed, please check network connection or API configuration.</div></div>`;
             }
             box.scrollTop = box.scrollHeight;
         }
         document.getElementById('chat-send').onclick = sendChat;
         document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChat(); };
 
-        // 情感系统
+        // Emotional Support System - Multiple random messages per mood
         const emotionData = {
-            great: {title: '状态评估：极佳', text: '已为您建立表现日志。保持当前节奏与执行力。'},
-            okay: {title: '状态评估：平稳', text: '平稳期是长期任务的常态。请继续按时间表推进各项准备。'},
-            stressed: {title: '状态评估：高压', text: '建议启动降压流程：暂停当前工作，离开屏幕，执行15分钟的物理放松或环境切换。'},
-            anxious: {title: '状态评估：焦虑', text: '焦虑源于控制感缺失。建议将宏大目标拆解为未来24小时内可执行的最小任务单元，逐一击破。'}
+            great: {
+                title: 'Status Assessment: Excellent',
+                messages: [
+                    'Outstanding performance! Your dedication is paying off. Keep up the excellent work and maintain this momentum.',
+                    'Fantastic progress! Your consistent effort is showing results. Take a moment to celebrate this achievement.',
+                    'Excellent work! Your preparation is on track. Consider this a well-deserved recognition of your hard work.',
+                    'Brilliant! You are making remarkable strides. Keep pushing forward - success is within your reach.',
+                    'Superb execution! Your commitment to excellence is evident. This positive trajectory will lead to great outcomes.'
+                ]
+            },
+            okay: {
+                title: 'Status Assessment: Steady',
+                messages: [
+                    'Plateaus are normal for long-term tasks. Please continue to advance preparations according to your schedule.',
+                    'Steady progress is still progress. Trust the process and keep working towards your goals consistently.',
+                    'Maintenance mode is valid. Focus on small daily improvements rather than dramatic breakthroughs.',
+                    'Consistency beats intensity. Your steady approach will compound over time into significant results.',
+                    'Progress may seem slow, but every step counts. Keep moving forward at your current pace.'
+                ]
+            },
+            stressed: {
+                title: 'Status Assessment: High Stress',
+                messages: [
+                    'Decompression protocol recommended: Pause current work, step away from the screen, and execute 15 minutes of physical relaxation or environment change.',
+                    'Stress is a signal, not a verdict. Take a short break, breathe deeply, and return with a clearer perspective.',
+                    'High stress affects decision-making. Consider a brief walk, stretching, or listening to calming music before continuing.',
+                    'Your wellbeing comes first. Step away from the task, hydrate, and give your mind a chance to reset.',
+                    'Feeling overwhelmed is temporary. Prioritize rest, then tackle one small task at a time to rebuild momentum.'
+                ]
+            },
+            anxious: {
+                title: 'Status Assessment: Anxious',
+                messages: [
+                    'Anxiety stems from a lack of control. It is recommended to break down grand goals into minimal task units executable within the next 24 hours and conquer them one by one.',
+                    'Uncertainty is natural in this process. Focus on what you can control: your daily actions and decisions.',
+                    'Anxiety often precedes growth. Channel this energy into structured preparation rather than worrying about outcomes.',
+                    'Take a deep breath. Break your preparation into smaller, manageable steps and address them one at a time.',
+                    'Your anxiety shows you care. Use it as motivation to prepare thoroughly, but remember to be kind to yourself.'
+                ]
+            }
         };
+        
+        function getRandomEmotionMessage(mood) {
+            const messages = emotionData[mood].messages;
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+        
         document.querySelectorAll('.emotion-mood').forEach(mood => {
             mood.onclick = () => {
                 document.querySelectorAll('.emotion-mood').forEach(m => m.classList.remove('active'));
                 mood.classList.add('active');
-                const d = emotionData[mood.dataset.mood];
-                document.getElementById('emotion-title').textContent = d.title;
-                document.getElementById('emotion-text').textContent = d.text;
+                document.getElementById('emotion-title').textContent = emotionData[mood.dataset.mood].title;
+                document.getElementById('emotion-text').textContent = getRandomEmotionMessage(mood.dataset.mood);
                 document.getElementById('emotion-response').style.display = 'block';
             };
         });
@@ -2055,12 +2161,10 @@
                     if (window.innerWidth <= 1024) {
                         document.getElementById('left-sidebar').classList.add('open');
                     }
-                } else if (panel === 'quiz') {
-                    // 切换到知识挑战面板
-                    document.querySelector('[data-panel="quiz-panel"]').classList.add('active');
-                    document.getElementById('quiz-panel').classList.add('active');
+                } else if (panel === 'recommend') {
+                    document.querySelector('[data-panel="recommend-panel"]').classList.add('active');
+                    document.getElementById('recommend-panel').classList.add('active');
                 } else if (panel === 'emotion') {
-                    // 切换到情感疏导面板
                     document.querySelector('[data-panel="emotion-panel"]').classList.add('active');
                     document.getElementById('emotion-panel').classList.add('active');
                 }
@@ -2111,9 +2215,9 @@
             };
             
             universities.forEach(uni => {
-                if (uni.country === '英国') stats.uk++;
-                else if (uni.country === '美国') stats.us++;
-                else if (uni.country === '澳大利亚') stats.aus++;
+                if (uni.country === 'UK') stats.uk++;
+                else if (uni.country === 'US') stats.us++;
+                else if (uni.country === 'Australia') stats.aus++;
             });
             
             document.getElementById('stat-uk').textContent = stats.uk;
@@ -2128,16 +2232,16 @@
         // 添加默认的申请流程待办事项
         function initDefaultTodoItems() {
             const defaultTodos = [
-                { text: '确定申请专业和目标院校', completed: false, isDefault: true },
-                { text: '准备语言考试（雅思/托福）', completed: false, isDefault: true },
-                { text: '整理成绩单和在读证明', completed: false, isDefault: true },
-                { text: '准备个人陈述(PS)', completed: false, isDefault: true },
-                { text: '联系推荐人准备推荐信', completed: false, isDefault: true },
-                { text: '准备CV简历', completed: false, isDefault: true },
-                { text: '完成网申表格填写', completed: false, isDefault: true },
-                { text: '缴纳申请费用', completed: false, isDefault: true },
-                { text: '跟踪申请状态', completed: false, isDefault: true },
-                { text: '准备面试（如需）', completed: false, isDefault: true }
+                { text: 'Determine intended major and target schools', completed: false, isDefault: true },
+                { text: 'Prepare for language exams (IELTS/TOEFL)', completed: false, isDefault: true },
+                { text: 'Organize transcripts and enrollment certificates', completed: false, isDefault: true },
+                { text: 'Prepare Personal Statement (PS)', completed: false, isDefault: true },
+                { text: 'Contact recommenders for recommendation letters', completed: false, isDefault: true },
+                { text: 'Prepare CV/Resume', completed: false, isDefault: true },
+                { text: 'Complete online application forms', completed: false, isDefault: true },
+                { text: 'Pay application fees', completed: false, isDefault: true },
+                { text: 'Track application status', completed: false, isDefault: true },
+                { text: 'Prepare for interviews (if required)', completed: false, isDefault: true }
             ];
             
             // 检查每个默认待办事项是否已存在
@@ -2218,7 +2322,7 @@
         function updateProgress() {
             if (todoItems.length === 0) {
                 document.getElementById('progress-fill').style.width = '0%';
-                document.getElementById('progress-text').textContent = '0/0 已完成';
+                document.getElementById('progress-text').textContent = '0/0 Completed';
                 document.getElementById('progress-percent').textContent = '0%';
                 return;
             }
@@ -2227,14 +2331,14 @@
             const percent = Math.round((completed / todoItems.length) * 100);
             
             document.getElementById('progress-fill').style.width = `${percent}%`;
-            document.getElementById('progress-text').textContent = `${completed}/${todoItems.length} 已完成`;
+            document.getElementById('progress-text').textContent = `${completed}/${todoItems.length} Completed`;
             document.getElementById('progress-percent').textContent = `${percent}%`;
         }
         
         // ==================== AI申请评估 ====================
         function updateUniversitySelect() {
             const select = document.getElementById('university-select');
-            select.innerHTML = '<option value="">选择收藏的大学</option>';
+            select.innerHTML = '<option value="">Select a favorite university</option>';
             
             favorites.forEach(uni => {
                 const option = document.createElement('option');
@@ -2247,22 +2351,22 @@
         async function evaluateApplication() {
             const university = document.getElementById('university-select').value;
             if (!university) {
-                document.getElementById('evaluation-result').textContent = '请选择一所收藏的大学';
+                document.getElementById('evaluation-result').textContent = 'Please select a favorite university';
                 return;
             }
             
             if (!API_KEY) {
-                document.getElementById('evaluation-result').textContent = '请先配置API Key';
+                document.getElementById('evaluation-result').textContent = 'Please configure API Key first';
                 return;
             }
             
             const resultDiv = document.getElementById('evaluation-result');
-            resultDiv.innerHTML = '<i data-lucide="loader" style="animation:spin 2s linear infinite;width:16px;"></i> 正在分析...';
+            resultDiv.innerHTML = '<i data-lucide="loader" style="animation:spin 2s linear infinite;width:16px;"></i> Analyzing...';
             refreshIcons();
             
             try {
-                const achievementsText = achievements.map(a => a.title).join('、');
-                const prompt = `作为留学申请专家，请评估学生申请${university}的成功率。学生成就：${achievementsText || '暂无'}。请基于以下因素分析：1. 学生背景与学校要求的匹配度 2. 成功率评估（低/中/高） 3. 提升建议。回答要客观专业，语言简洁。`;
+                const achievementsText = achievements.map(a => a.title).join(', ');
+                const prompt = `As a study abroad application expert, please evaluate the student's success rate in applying to ${university}. Student achievements: ${achievementsText || 'None'}. Please analyze based on the following factors: 1. Match between student background and school requirements 2. Success rate assessment (Low/Medium/High) 3. Improvement suggestions. Keep the answer objective, professional, and concise.`;
                 
                 const res = await fetch('https://api.deepseek.com/chat/completions', {
                     method: 'POST',
@@ -2283,9 +2387,105 @@
                 const data = await res.json();
                 resultDiv.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
             } catch (e) {
-                resultDiv.textContent = '评估失败，请检查网络连接或API配置';
+                resultDiv.textContent = 'Evaluation failed, please check network connection or API configuration';
             }
         }
+        
+        // ==================== University Search ====================
+        function renderSearchResults(results) {
+            let container = document.getElementById('search-results');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'search-results';
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = '1fr';
+                container.style.gap = '12px';
+                container.style.marginTop = '16px';
+                container.style.marginBottom = '16px';
+                
+                const mapPanel = document.getElementById('map-panel');
+                const mapContainer = document.getElementById('map-container');
+                mapPanel.insertBefore(container, mapContainer.nextSibling);
+            }
+            
+            container.innerHTML = '';
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px;">No universities found</div>';
+                return;
+            }
+            
+            results.forEach(uni => {
+                const card = document.createElement('div');
+                card.className = 'university-card';
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <h5 style="font-size:14px;font-weight:600;margin:0;">${uni.name}</h5>
+                        <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
+                    </div>
+                    <p style="font-size:12px;color:var(--text-muted);margin:0;">${uni.city}, ${uni.country}</p>
+                `;
+                card.onclick = (e) => {
+                    if (!e.target.closest('.icon-btn')) {
+                        // Fly to the university on the map
+                        map.flyTo([uni.lat, uni.lng], 7, { animate: true, duration: 1.5, easeLinearity: 0.25 });
+                        // Show university modal
+                        showUniversityModal(uni);
+                        // Hide search results
+                        container.style.display = 'none';
+                    }
+                };
+                const bookmarkBtn = card.querySelector('.icon-btn');
+                bookmarkBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (!favorites.find(f => f.name === uni.name)) {
+                        favorites.push(uni);
+                        localStorage.setItem('xjlu_favorites', JSON.stringify(favorites));
+                        renderFavorites();
+                        updateUserUI();
+                        bookmarkBtn.innerHTML = '<i data-lucide="check"></i>';
+                        bookmarkBtn.style.color = 'var(--success-text)';
+                        refreshIcons();
+                    }
+                };
+                container.appendChild(card);
+            });
+            refreshIcons();
+        }
+        
+        document.getElementById('university-search').oninput = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let container = document.getElementById('search-results');
+            
+            if (query.length === 0) {
+                if (container) container.style.display = 'none';
+                return;
+            }
+            
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'search-results';
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = '1fr';
+                container.style.gap = '12px';
+                container.style.marginTop = '16px';
+                container.style.marginBottom = '16px';
+                
+                const mapPanel = document.getElementById('map-panel');
+                const mapContainer = document.getElementById('map-container');
+                mapPanel.insertBefore(container, mapContainer.nextSibling);
+            }
+            
+            container.style.display = 'grid';
+            const results = universities.filter(uni => 
+                uni.name.toLowerCase().includes(query) ||
+                uni.city.toLowerCase().includes(query) ||
+                uni.country.toLowerCase().includes(query) ||
+                (uni.state && uni.state.toLowerCase().includes(query))
+            );
+            renderSearchResults(results.slice(0, 10));
+        };
         
         // ==================== 事件监听 ====================
         document.getElementById('add-todo').onclick = addTodo;
