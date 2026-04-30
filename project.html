@@ -1373,16 +1373,20 @@
         };
         
         // ==================== 3. Map System and Complete 30 Universities ====================
-        const map = L.map('map', { 
-            zoomControl: false, 
-            minZoom: 2, 
-            maxZoom: 10,
-            maxBounds: [[-90, -180], [90, 180]],
-            maxBoundsViscosity: 0.9
-        }).setView([20, 0], 2);
+        let map;
         let tileLayer;
+        let markers = [];
 
         function updateMapStyle() {
+            if (!map) {
+                map = L.map('map', { 
+                    zoomControl: false, 
+                    minZoom: 2, 
+                    maxZoom: 10,
+                    maxBounds: [[-90, -180], [90, 180]],
+                    maxBoundsViscosity: 0.9
+                }).setView([20, 0], 2);
+            }
             if (tileLayer) map.removeLayer(tileLayer);
             const style = currentTheme === 'light' 
                 ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
@@ -1506,7 +1510,6 @@
             {name:"Seoul National University",lat:37.4602,lng:126.9527, state:"Seoul", country:"South Korea", city:"Seoul", comment:"Highest academic institution in South Korea, law and business administration dominate the country."}
         ];
 
-        let markers = [];
         function renderMarkers() {
             markers.forEach(m => map.removeLayer(m));
             markers = [];
