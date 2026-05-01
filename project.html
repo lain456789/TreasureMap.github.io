@@ -1011,7 +1011,7 @@
                     <div class="api-section" id="api-section">
                         <h4 style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase;">Configure API</h4>
                         <input type="password" id="api-key-input" placeholder="Enter API Key...">
-                        <button class="btn-primary" id="submit-api"><i data-lucide="key" style="width:16px;"></i> Verify & Connect</button>
+                        <button class="btn-primary" id="submit-api"><i data-lucide="key" style="width:16px;"></i> Verify</button>
                     </div>
                     
                     <div id="api-unlocked-section" class="user-section" style="display:none; display:flex; align-items:center; justify-content:space-between; padding: 16px 20px;">
@@ -1057,7 +1057,7 @@
                             <div class="uni-stat-item">
                                 <div class="uni-stat-icon">🇦🇺</div>
                                 <div class="uni-stat-number" id="stat-aus">0</div>
-                                <div class="uni-stat-label">Australia</div>
+                                <div class="uni-stat-label">AU</div>
                             </div>
                             <div class="uni-stat-item">
                                 <div class="uni-stat-icon">🌏</div>
@@ -1085,11 +1085,11 @@
                     </div>
                     
                     <div class="ai-evaluation">
-                        <h3><i data-lucide="brain"></i> Application Evaluation</h3>
+                        <h3><i data-lucide="brain"></i> AI Evaluation</h3>
                         <select id="university-select">
                             <option value="">Select a favorite university</option>
                         </select>
-                        <button id="evaluate-application">Evaluate Application Success Rate</button>
+                        <button id="evaluate-application">Evaluate</button>
                         <div class="ai-evaluation-result" id="evaluation-result">
                             Select a favorite university for evaluation
                         </div>
@@ -1123,7 +1123,7 @@
                             <div id="map"></div>
                         </div>
                         
-                        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Recommended Universities</h4>
+                        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Top Universities</h4>
                         <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
                             <div class="university-card">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -1141,31 +1141,10 @@
                             </div>
                             <div class="university-card">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">ETH Zurich</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Zurich, Switzerland</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0;">MIT</h5>
                                     <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
                                 </div>
                                 <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Cambridge, USA</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">Stanford University</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Stanford, USA</p>
-                            </div>
-                            <div class="university-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                    <h5 style="font-size: 14px; font-weight: 600; margin: 0;">University of Tokyo</h5>
-                                    <button class="icon-btn" title="Add to Favorites"><i data-lucide="bookmark"></i></button>
-                                </div>
-                                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Tokyo, Japan</p>
                             </div>
                         </div>
                     </div>
@@ -1179,7 +1158,7 @@
                             <div style="display: flex; flex-direction: column; gap: 12px;">
                                 <div>
                                     <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Title</label>
-                                    <input type="text" id="achievement-title" placeholder="e.g., IELTS 7.5 Score" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                                    <input type="text" id="achievement-title" placeholder="e.g., IELTS 7.5" style="width: 100%; padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; font-size: 14px; box-sizing: border-box;">
                                 </div>
                                 <div>
                                     <label style="display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--text-muted);">Achievement Type</label>
@@ -1201,11 +1180,11 @@
                         <div id="achievement-guide" style="background: var(--bg-hover); border: 1px solid var(--border-muted); border-radius: 10px; padding: 12px; font-size: 12px; color: var(--text-muted);">
                             <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
                                 <i data-lucide="lightbulb" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
-                                <div><strong style="color: var(--text-primary);">Tip:</strong> Add achievements to track milestones. Click to view details, hover and click trash icon to delete.</div>
+                                <div><strong style="color: var(--text-primary);">Tip:</strong> Click to view details, hover to delete.</div>
                             </div>
                             <div style="display: flex; align-items: flex-start; gap: 10px;">
                                 <i data-lucide="star" style="width: 14px; flex-shrink: 0; margin-top: 2px; color: var(--accent);"></i>
-                                <div><strong style="color: var(--text-primary);">Types:</strong> Academic, Language (IELTS/TOEFL), Internship/Research, Other</div>
+                                <div><strong style="color: var(--text-primary);">Types:</strong> Academic, Language, Internship/Research, Other</div>
                             </div>
                         </div>
                         
@@ -1219,7 +1198,7 @@
                                         <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
                                     </div>
                                     <h5 style="font-size: 14px; font-weight: 600; margin: 0 0 6px 0;">Select an Achievement</h5>
-                                    <p style="font-size: 12px; margin: 0;">Click on an achievement card to view its details</p>
+                                    <p style="font-size: 12px; margin: 0;">Click on an achievement card to view details</p>
                                 </div>
                             </div>
                         </div>
