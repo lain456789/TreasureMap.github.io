@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -597,6 +597,40 @@
             }
         }
 
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .lang-toggle i {
+            width: 18px;
+            height: 18px;
+            color: var(--primary-light);
+        }
+
+        .lang-toggle span {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
         @media (max-width: 480px) {
             h1 {
                 font-size: 1.65rem;
@@ -614,6 +648,10 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="lang-toggle" id="lang-toggle">
+        <i data-lucide="globe"></i>
+        <span id="lang-label">EN</span>
+    </div>
     <div class="container">
         <header>
             <h1>Treasure Map for Study Abroad</h1>
@@ -1030,6 +1068,378 @@
 
     <script>
         lucide.createIcons();
+
+        // Language System
+        const translations = {
+            en: {
+                "Treasure Map for Study Abroad": "Treasure Map for Study Abroad",
+                "Personalized Study Abroad Planning for XJTLU Students": "Personalized Study Abroad Planning for XJTLU Students",
+                "XJTLU Undergraduates": "XJTLU Undergraduates",
+                "Study Abroad Planning": "Study Abroad Planning",
+                "2026-05": "2026-05",
+                "Visit Application": "Visit Application",
+                "Explore Our Project": "Explore Our Project",
+                "Click on any module below to learn more": "Click on any module below to learn more",
+                "Project Introduction": "Project Introduction",
+                "Learn about our study abroad planning system and its objectives": "Learn about our study abroad planning system and its objectives",
+                "Target Users": "Target Users",
+                "Explore user personas and their unique needs": "Explore user personas and their unique needs",
+                "Core Features": "Core Features",
+                "Discover the key features of our system": "Discover the key features of our system",
+                "Design Process": "Design Process",
+                "Understand our design methodology and architecture": "Understand our design methodology and architecture",
+                "Project Evaluation": "Project Evaluation",
+                "View user testing results and performance metrics": "View user testing results and performance metrics",
+                "Project Summary": "Project Summary",
+                "Read about outcomes and future plans": "Read about outcomes and future plans",
+                "Team Members": "Team Members",
+                "Meet the development team": "Meet the development team",
+                "Close": "Close",
+                "Project Background": "Project Background",
+                "With globalization, more Chinese students choose to study abroad. However, the application process is complex, involving school selection, material preparation, language exams, and submission. Many students feel lost and stressed without effective tools.": "With globalization, more Chinese students choose to study abroad. However, the application process is complex, involving school selection, material preparation, language exams, and submission. Many students feel lost and stressed without effective tools.",
+                "Core Objectives": "Core Objectives",
+                "Provide an integrated study abroad planning platform": "Provide an integrated study abroad planning platform",
+                "Offer personalized recommendations": "Offer personalized recommendations",
+                "Track application progress effectively": "Track application progress effectively",
+                "Provide emotional support during the process": "Provide emotional support during the process",
+                "Year 1-2": "Year 1-2",
+                "Year 3-4": "Year 3-4",
+                "Advisors": "Advisors",
+                "Explorer Student": "Explorer Student",
+                "I want to plan early but I don't know where to start.": "I want to plan early but I don't know where to start.",
+                "Confused": "Confused",
+                "Curious": "Curious",
+                "Needs Guidance": "Needs Guidance",
+                "Goals": "Goals",
+                "Learn global university distribution": "Learn global university distribution",
+                "Build a clear academic plan": "Build a clear academic plan",
+                "Understand preparation timeline": "Understand preparation timeline",
+                "Proactive Learner": "Proactive Learner",
+                "I want to prepare early and stay ahead.": "I want to prepare early and stay ahead.",
+                "Proactive": "Proactive",
+                "Organized": "Organized",
+                "Goal-oriented": "Goal-oriented",
+                "Build target university list": "Build target university list",
+                "Create preparation timeline": "Create preparation timeline",
+                "Manage progress efficiently": "Manage progress efficiently",
+                "Application Candidate": "Application Candidate",
+                "I fear missing deadlines during application season.": "I fear missing deadlines during application season.",
+                "Efficient": "Efficient",
+                "Detail-oriented": "Detail-oriented",
+                "High-pressure": "High-pressure",
+                "Needs": "Needs",
+                "Complete application process clearly": "Complete application process clearly",
+                "Track real-time progress": "Track real-time progress",
+                "Manage deadlines effectively": "Manage deadlines effectively",
+                "Anxious Applicant": "Anxious Applicant",
+                "I always worry about failure.": "I always worry about failure.",
+                "Sensitive": "Sensitive",
+                "Anxious": "Anxious",
+                "Needs Support": "Needs Support",
+                "Stabilize mood and reduce anxiety": "Stabilize mood and reduce anxiety",
+                "Gain emotional support": "Gain emotional support",
+                "Stay confident": "Stay confident",
+                "Admission Counselor": "Admission Counselor",
+                "I need tools to reduce repetitive questions.": "I need tools to reduce repetitive questions.",
+                "Professional": "Professional",
+                "Responsible": "Responsible",
+                "Answer questions quickly": "Answer questions quickly",
+                "Track student progress": "Track student progress",
+                "Improve advising efficiency": "Improve advising efficiency",
+                "Career Planner": "Career Planner",
+                "I help students choose suitable study paths.": "I help students choose suitable study paths.",
+                "Analytical": "Analytical",
+                "Strategic": "Strategic",
+                "Systematic": "Systematic",
+                "Help with self-positioning": "Help with self-positioning",
+                "Provide personalized plans": "Provide personalized plans",
+                "Improve admission results": "Improve admission results",
+                "User Needs Summary": "User Needs Summary",
+                "Information Access": "Information Access",
+                "Global university info, application requirements": "Global university info, application requirements",
+                "Planning Management": "Planning Management",
+                "Progress tracking, task management": "Progress tracking, task management",
+                "Emotional Support": "Emotional Support",
+                "Stress relief, psychological support": "Stress relief, psychological support",
+                "Intelligent Assistance": "Intelligent Assistance",
+                "Personalized suggestions, AI help": "Personalized suggestions, AI help",
+                "Interactive Map": "Interactive Map",
+                "Intuitively display global university distribution. Click markers to view details including rankings, majors, and requirements.": "Intuitively display global university distribution. Click markers to view details including rankings, majors, and requirements.",
+                "Progress Tracking": "Progress Tracking",
+                "Visual progress bars track application steps: language exams, materials preparation, and online submissions.": "Visual progress bars track application steps: language exams, materials preparation, and online submissions.",
+                "Emotional Support": "Emotional Support",
+                "Mood tracking with inspirational quotes and stress relief methods. Gamification elements boost confidence.": "Mood tracking with inspirational quotes and stress relief methods. Gamification elements boost confidence.",
+                "AI Assistant": "AI Assistant",
+                "AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.": "AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.",
+                "Feature Highlights": "Feature Highlights",
+                "Gamified Design": "Gamified Design",
+                "Achievement systems increase engagement": "Achievement systems increase engagement",
+                "Personalized Experience": "Personalized Experience",
+                "Customized suggestions based on user data": "Customized suggestions based on user data",
+                "Data Visualization": "Data Visualization",
+                "Intuitive progress and university info display": "Intuitive progress and university info display",
+                "Multi-dimensional Support": "Multi-dimensional Support",
+                "Comprehensive support from info to emotions": "Comprehensive support from info to emotions",
+                "Design Methodology": "Design Methodology",
+                "User Research": "User Research",
+                "Questionnaires and interviews with XJTLU students to understand application challenges.": "Questionnaires and interviews with XJTLU students to understand application challenges.",
+                "Requirements Analysis": "Requirements Analysis",
+                "Organize feedback to identify core requirements and functional priorities.": "Organize feedback to identify core requirements and functional priorities.",
+                "Prototype Design": "Prototype Design",
+                "From low-fidelity sketches to high-fidelity prototypes.": "From low-fidelity sketches to high-fidelity prototypes.",
+                "User Testing": "User Testing",
+                "Invite users to test prototypes and collect feedback.": "Invite users to test prototypes and collect feedback.",
+                "System Implementation": "System Implementation",
+                "Implement complete functions with frontend technology.": "Implement complete functions with frontend technology.",
+                "Technical Architecture": "Technical Architecture",
+                "Frontend": "Frontend",
+                "HTML5, CSS3, JavaScript": "HTML5, CSS3, JavaScript",
+                "Map": "Map",
+                "Leaflet.js": "Leaflet.js",
+                "Storage": "Storage",
+                "localStorage": "localStorage",
+                "AI": "AI",
+                "DeepSeek API": "DeepSeek API",
+                "Style": "Style",
+                "CSS Variables, Responsive Design": "CSS Variables, Responsive Design",
+                "User Testing Results": "User Testing Results",
+                "Quantitative Data": "Quantitative Data",
+                "System Usability: 4.5/5": "System Usability: 4.5/5",
+                "Feature Satisfaction: 4.3/5": "Feature Satisfaction: 4.3/5",
+                "Interface Design: 4.6/5": "Interface Design: 4.6/5",
+                "Overall Recommendation: 4.4/5": "Overall Recommendation: 4.4/5",
+                "Qualitative Feedback": "Qualitative Feedback",
+                "The map function is very intuitive": "The map function is very intuitive",
+                "The to-do system makes my process clearer": "The to-do system makes my process clearer",
+                "AI chat provides useful suggestions": "AI chat provides useful suggestions",
+                "Achievement system adds fun": "Achievement system adds fun",
+                "System Performance": "System Performance",
+                "Page Load Time: Average 2.3 seconds": "Page Load Time: Average 2.3 seconds",
+                "Response Time: <100ms": "Response Time: <100ms",
+                "Compatibility: Supports mainstream browsers": "Compatibility: Supports mainstream browsers",
+                "Mobile Adaptation: Good": "Mobile Adaptation: Good",
+                "Project Outcomes": "Project Outcomes",
+                "Developed a fully functional study abroad planning system": "Developed a fully functional study abroad planning system",
+                "Implemented four core functional modules": "Implemented four core functional modules",
+                "Provided an intuitive user interface": "Provided an intuitive user interface",
+                "Received positive feedback from target users": "Received positive feedback from target users",
+                "Future Plans": "Future Plans",
+                "Integrate backend database for data persistence": "Integrate backend database for data persistence",
+                "Develop mobile applications": "Develop mobile applications",
+                "Add more university data": "Add more university data",
+                "Expand community features": "Expand community features",
+                "Develop personalized planning reports": "Develop personalized planning reports",
+                "Social Value": "Social Value",
+                "Treasure Map simplifies the application process and reduces student pressure, helping more students realize their study abroad dreams.": "Treasure Map simplifies the application process and reduces student pressure, helping more students realize their study abroad dreams.",
+                "Haocheng Tang": "Haocheng Tang",
+                "Project Leader & Frontend Developer": "Project Leader & Frontend Developer",
+                "Liqun Su": "Liqun Su",
+                "UI/UX Designer": "UI/UX Designer",
+                "Jinyu Zhu": "Jinyu Zhu",
+                "AI Integration Specialist": "AI Integration Specialist",
+                "Xiangyu Lou": "Xiangyu Lou",
+                "Quality Assurance": "Quality Assurance",
+                "© 2026 Treasure Map for Study Abroad | XJTLU Study Abroad Planning System": "© 2026 Treasure Map for Study Abroad | XJTLU Study Abroad Planning System"
+            },
+            zh: {
+                "Treasure Map for Study Abroad": "留学寻宝图",
+                "Personalized Study Abroad Planning for XJTLU Students": "西浦学生专属留学规划助手",
+                "XJTLU Undergraduates": "西浦本科生",
+                "Study Abroad Planning": "留学规划",
+                "2026-05": "2026-05",
+                "Visit Application": "访问应用",
+                "Explore Our Project": "探索我们的项目",
+                "Click on any module below to learn more": "点击下方任意模块了解更多",
+                "Project Introduction": "项目介绍",
+                "Learn about our study abroad planning system and its objectives": "了解我们的留学规划系统及其目标",
+                "Target Users": "目标用户",
+                "Explore user personas and their unique needs": "探索用户画像及其独特需求",
+                "Core Features": "核心功能",
+                "Discover the key features of our system": "发现我们系统的核心功能",
+                "Design Process": "设计流程",
+                "Understand our design methodology and architecture": "了解我们的设计方法和架构",
+                "Project Evaluation": "项目评估",
+                "View user testing results and performance metrics": "查看用户测试结果和性能指标",
+                "Project Summary": "项目总结",
+                "Read about outcomes and future plans": "阅读成果和未来计划",
+                "Team Members": "团队成员",
+                "Meet the development team": "认识开发团队",
+                "Close": "关闭",
+                "Project Background": "项目背景",
+                "With globalization, more Chinese students choose to study abroad. However, the application process is complex, involving school selection, material preparation, language exams, and submission. Many students feel lost and stressed without effective tools.": "随着全球化发展，越来越多的中国学生选择出国留学。然而，申请过程复杂，包括选校、材料准备、语言考试和提交。没有有效的工具，许多学生感到迷茫和压力。",
+                "Core Objectives": "核心目标",
+                "Provide an integrated study abroad planning platform": "提供一体化的留学规划平台",
+                "Offer personalized recommendations": "提供个性化推荐",
+                "Track application progress effectively": "有效追踪申请进度",
+                "Provide emotional support during the process": "在过程中提供情感支持",
+                "Year 1-2": "大一大二",
+                "Year 3-4": "大三大四",
+                "Advisors": "顾问",
+                "Explorer Student": "探索型学生",
+                "I want to plan early but I don't know where to start.": "我想提前规划，但不知道从哪里开始。",
+                "Confused": "迷茫",
+                "Curious": "好奇",
+                "Needs Guidance": "需要指导",
+                "Goals": "目标",
+                "Learn global university distribution": "了解全球大学分布",
+                "Build a clear academic plan": "制定清晰的学术计划",
+                "Understand preparation timeline": "理解准备时间线",
+                "Proactive Learner": "主动型学习者",
+                "I want to prepare early and stay ahead.": "我想提前准备，保持领先。",
+                "Proactive": "主动",
+                "Organized": "有条理",
+                "Goal-oriented": "目标导向",
+                "Build target university list": "建立目标大学名单",
+                "Create preparation timeline": "制定准备时间线",
+                "Manage progress efficiently": "高效管理进度",
+                "Application Candidate": "申请候选人",
+                "I fear missing deadlines during application season.": "我担心在申请季错过截止日期。",
+                "Efficient": "高效",
+                "Detail-oriented": "注重细节",
+                "High-pressure": "高压状态",
+                "Needs": "需求",
+                "Complete application process clearly": "清晰完成申请流程",
+                "Track real-time progress": "追踪实时进度",
+                "Manage deadlines effectively": "有效管理截止日期",
+                "Anxious Applicant": "焦虑型申请者",
+                "I always worry about failure.": "我总是担心失败。",
+                "Sensitive": "敏感",
+                "Anxious": "焦虑",
+                "Needs Support": "需要支持",
+                "Stabilize mood and reduce anxiety": "稳定情绪，减少焦虑",
+                "Gain emotional support": "获得情感支持",
+                "Stay confident": "保持自信",
+                "Admission Counselor": "招生顾问",
+                "I need tools to reduce repetitive questions.": "我需要工具来减少重复问题。",
+                "Professional": "专业",
+                "Responsible": "负责",
+                "Answer questions quickly": "快速回答问题",
+                "Track student progress": "追踪学生进度",
+                "Improve advising efficiency": "提高咨询效率",
+                "Career Planner": "职业规划师",
+                "I help students choose suitable study paths.": "我帮助学生选择合适的学习路径。",
+                "Analytical": "分析型",
+                "Strategic": "战略型",
+                "Systematic": "系统性",
+                "Help with self-positioning": "帮助自我定位",
+                "Provide personalized plans": "提供个性化计划",
+                "Improve admission results": "提高录取结果",
+                "User Needs Summary": "用户需求总结",
+                "Information Access": "信息获取",
+                "Global university info, application requirements": "全球大学信息，申请要求",
+                "Planning Management": "规划管理",
+                "Progress tracking, task management": "进度追踪，任务管理",
+                "Emotional Support": "情感支持",
+                "Stress relief, psychological support": "压力缓解，心理支持",
+                "Intelligent Assistance": "智能协助",
+                "Personalized suggestions, AI help": "个性化建议，AI帮助",
+                "Interactive Map": "交互式地图",
+                "Intuitively display global university distribution. Click markers to view details including rankings, majors, and requirements.": "直观展示全球大学分布。点击标记查看包括排名、专业和要求的详情。",
+                "Progress Tracking": "进度追踪",
+                "Visual progress bars track application steps: language exams, materials preparation, and online submissions.": "可视化进度条追踪申请步骤：语言考试、材料准备和在线提交。",
+                "Emotional Support": "情感支持",
+                "Mood tracking with inspirational quotes and stress relief methods. Gamification elements boost confidence.": "情绪追踪配合励志语录和减压方法。游戏化元素提升信心。",
+                "AI Assistant": "AI助手",
+                "AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.": "AI驱动的聊天提供个性化留学建议、成功率分析和文书指导。",
+                "Feature Highlights": "功能亮点",
+                "Gamified Design": "游戏化设计",
+                "Achievement systems increase engagement": "成就系统提升参与度",
+                "Personalized Experience": "个性化体验",
+                "Customized suggestions based on user data": "基于用户数据的定制化建议",
+                "Data Visualization": "数据可视化",
+                "Intuitive progress and university info display": "直观的进度和大学信息展示",
+                "Multi-dimensional Support": "多维支持",
+                "Comprehensive support from info to emotions": "从信息到情感的全面支持",
+                "Design Methodology": "设计方法",
+                "User Research": "用户研究",
+                "Questionnaires and interviews with XJTLU students to understand application challenges.": "对西浦学生进行问卷调查和访谈，了解申请挑战。",
+                "Requirements Analysis": "需求分析",
+                "Organize feedback to identify core requirements and functional priorities.": "整理反馈，识别核心需求和功能优先级。",
+                "Prototype Design": "原型设计",
+                "From low-fidelity sketches to high-fidelity prototypes.": "从低保真草图到高保真原型。",
+                "User Testing": "用户测试",
+                "Invite users to test prototypes and collect feedback.": "邀请用户测试原型并收集反馈。",
+                "System Implementation": "系统实现",
+                "Implement complete functions with frontend technology.": "用前端技术实现完整功能。",
+                "Technical Architecture": "技术架构",
+                "Frontend": "前端",
+                "HTML5, CSS3, JavaScript": "HTML5, CSS3, JavaScript",
+                "Map": "地图",
+                "Leaflet.js": "Leaflet.js",
+                "Storage": "存储",
+                "localStorage": "localStorage",
+                "AI": "AI",
+                "DeepSeek API": "DeepSeek API",
+                "Style": "样式",
+                "CSS Variables, Responsive Design": "CSS变量，响应式设计",
+                "User Testing Results": "用户测试结果",
+                "Quantitative Data": "定量数据",
+                "System Usability: 4.5/5": "系统可用性：4.5/5",
+                "Feature Satisfaction: 4.3/5": "功能满意度：4.3/5",
+                "Interface Design: 4.6/5": "界面设计：4.6/5",
+                "Overall Recommendation: 4.4/5": "整体推荐：4.4/5",
+                "Qualitative Feedback": "定性反馈",
+                "The map function is very intuitive": "地图功能非常直观",
+                "The to-do system makes my process clearer": "待办系统让我的流程更清晰",
+                "AI chat provides useful suggestions": "AI聊天提供了有用的建议",
+                "Achievement system adds fun": "成就系统增加了趣味性",
+                "System Performance": "系统性能",
+                "Page Load Time: Average 2.3 seconds": "页面加载时间：平均2.3秒",
+                "Response Time: <100ms": "响应时间：<100毫秒",
+                "Compatibility: Supports mainstream browsers": "兼容性：支持主流浏览器",
+                "Mobile Adaptation: Good": "移动端适配：良好",
+                "Project Outcomes": "项目成果",
+                "Developed a fully functional study abroad planning system": "开发了功能完整的留学规划系统",
+                "Implemented four core functional modules": "实现了四个核心功能模块",
+                "Provided an intuitive user interface": "提供了直观的用户界面",
+                "Received positive feedback from target users": "获得了目标用户的积极反馈",
+                "Future Plans": "未来计划",
+                "Integrate backend database for data persistence": "集成后端数据库实现数据持久化",
+                "Develop mobile applications": "开发移动应用",
+                "Add more university data": "添加更多大学数据",
+                "Expand community features": "扩展社区功能",
+                "Develop personalized planning reports": "开发个性化规划报告",
+                "Social Value": "社会价值",
+                "Treasure Map simplifies the application process and reduces student pressure, helping more students realize their study abroad dreams.": "留学寻宝图简化了申请流程，减轻了学生压力，帮助更多学生实现留学梦想。",
+                "Haocheng Tang": "汤浩铖",
+                "Project Leader & Frontend Developer": "项目负责人 & 前端开发者",
+                "Liqun Su": "苏立群",
+                "UI/UX Designer": "UI/UX设计师",
+                "Jinyu Zhu": "朱瑾昱",
+                "AI Integration Specialist": "AI集成专家",
+                "Xiangyu Lou": "楼翔宇",
+                "Quality Assurance": "质量保证",
+                "© 2026 Treasure Map for Study Abroad | XJTLU Study Abroad Planning System": "© 2026 留学寻宝图 | 西浦留学规划系统"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            document.getElementById('lang-label').textContent = lang.toUpperCase();
+            
+            // 简单直接的翻译
+            const t = translations[currentLang];
+            if (!t) return;
+            
+            document.querySelectorAll('h1, h2, h3, h4, p, span, button, label').forEach(el => {
+                const text = el.textContent.trim();
+                if (text && t[text]) {
+                    el.textContent = t[text];
+                }
+            });
+            
+            lucide.createIcons();
+        }
+
+        document.getElementById('lang-toggle').addEventListener('click', function() {
+            setLanguage(currentLang === 'en' ? 'zh' : 'en');
+        });
+
+        // Initialize
+        setLanguage(currentLang);
 
         function openPanel(panelId) {
             document.querySelectorAll('.content-panel').forEach(panel => {
