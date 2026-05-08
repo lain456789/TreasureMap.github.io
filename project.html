@@ -1388,40 +1388,6 @@
             font-size: 0.85rem;
         }
 
-        /* Language Toggle */
-        .lang-toggle {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-card);
-            padding: 0.75rem 1.25rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .lang-toggle:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .lang-toggle i {
-            width: 18px;
-            height: 18px;
-            color: var(--primary-light);
-        }
-
-        .lang-toggle #lang-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
         /* Onboarding Process */
         .onboarding-overlay {
             position: fixed;
@@ -1483,59 +1449,10 @@
             color: white;
         }
 
-        .language-options, .grade-options {
+        .grade-options {
             display: grid;
             gap: 1rem;
             margin: 2rem 0;
-        }
-
-        .option-card {
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-muted);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .option-card:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-3px);
-            background: rgba(79, 70, 229, 0.08);
-        }
-
-        .option-card.selected {
-            border-color: var(--primary);
-            background: rgba(79, 70, 229, 0.15);
-        }
-
-        .option-card i {
-            width: 32px;
-            height: 32px;
-            color: var(--primary-light);
-            flex-shrink: 0;
-        }
-
-        .option-text {
-            text-align: left;
-        }
-
-        .option-text h3 {
-            font-size: 1.15rem;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .option-text p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .grade-options {
             grid-template-columns: repeat(2, 1fr);
         }
 
@@ -1990,31 +1907,9 @@
                 font-size: 0.8rem;
             }
 
-            .language-options {
-                gap: 0.75rem;
-            }
-
-            .option-card {
-                padding: 1rem;
-            }
-
-            .option-card h3 {
-                font-size: 1rem;
-            }
-
-            .option-card p {
-                font-size: 0.8rem;
-            }
-
             .onboarding-btn {
                 padding: 0.75rem 1.5rem;
                 font-size: 0.9rem;
-            }
-
-            .lang-toggle {
-                top: 0.5rem;
-                right: 0.5rem;
-                padding: 0.4rem 0.6rem;
             }
 
             .university-card {
@@ -2136,103 +2031,51 @@
                 border-radius: 12px;
             }
 
-            .lang-toggle {
-                padding: 0.3rem 0.5rem;
             }
-
-            .lang-toggle span {
-                font-size: 0.75rem;
-            }
-        }
     </style>
 </head>
 <body>
     <!-- Onboarding Process -->
     <div id="onboarding-overlay" class="onboarding-overlay">
         <div class="onboarding-container">
-            <div id="onboarding-progress" class="onboarding-progress">
-                <div class="onboarding-dot active" data-step="1"></div>
-                <div class="onboarding-dot" data-step="2"></div>
-            </div>
-
-            <!-- Step 1: Language Selection -->
+            <!-- Step 1: Grade Selection -->
             <div id="onboarding-step-1" class="onboarding-step">
-                <div class="onboarding-icon">
-                    <i data-lucide="globe-2"></i>
-                </div>
-                <div class="onboarding-header">
-                    <h1>Welcome</h1>
-                    <p>Choose your preferred language</p>
-                </div>
-                <div class="language-options">
-                    <div class="option-card" onclick="selectLanguage('en')" data-lang="en">
-                        <i data-lucide="globe"></i>
-                        <div class="option-text">
-                            <h3>English</h3>
-                            <p>Continue in English</p>
-                        </div>
-                    </div>
-                    <div class="option-card" onclick="selectLanguage('zh')" data-lang="zh">
-                        <i data-lucide="languages"></i>
-                        <div class="option-text">
-                            <h3>中文</h3>
-                            <p>继续使用中文</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="onboarding-next">
-                    <button id="lang-next-btn" class="onboarding-btn" onclick="goToGradeStep()" disabled>
-                        Continue
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 2: Grade Selection -->
-            <div id="onboarding-step-2" class="onboarding-step" style="display: none;">
                 <div class="onboarding-icon">
                     <i data-lucide="graduation-cap"></i>
                 </div>
                 <div class="onboarding-header">
-                    <h1 id="grade-title">Which Year Are You In?</h1>
-                    <p id="grade-subtitle">Select your current academic year</p>
+                    <h1>Which Year Are You In?</h1>
+                    <p>Select your current academic year</p>
                 </div>
                 <div class="grade-options">
                     <div class="grade-card" onclick="selectGrade('1')" data-grade="1">
                         <div class="grade-icon"><i data-lucide="compass"></i></div>
                         <h3>Year 1</h3>
-                        <p id="year1-desc">Explore universities on the map</p>
+                        <p>Explore universities on the map</p>
                     </div>
                     <div class="grade-card" onclick="selectGrade('2')" data-grade="2">
                         <div class="grade-icon"><i data-lucide="sparkles"></i></div>
                         <h3>Year 2</h3>
-                        <p id="year2-desc">Quiz to help you choose</p>
+                        <p>Quiz to help you choose</p>
                     </div>
                     <div class="grade-card" onclick="selectGrade('3')" data-grade="3">
                         <div class="grade-icon"><i data-lucide="award"></i></div>
                         <h3>Year 3</h3>
-                        <p id="year3-desc">Achievement & AI Analysis</p>
+                        <p>Achievement & AI Analysis</p>
                     </div>
                     <div class="grade-card" onclick="selectGrade('4')" data-grade="4">
                         <div class="grade-icon"><i data-lucide="list-checks"></i></div>
                         <h3>Year 4</h3>
-                        <p id="year4-desc">Application to-do list</p>
+                        <p>Application to-do list</p>
                     </div>
                 </div>
                 <div class="onboarding-next">
-                    <button class="onboarding-btn onboarding-back" onclick="goToLangStep()">
-                        Back
-                    </button>
                     <button id="grade-next-btn" class="onboarding-btn" onclick="finishOnboarding()" disabled>
                         Let's Go!
                     </button>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="lang-toggle" id="lang-toggle">
-        <i data-lucide="globe"></i>
-        <span id="lang-label">EN</span>
     </div>
 
     <div class="container">
@@ -3808,7 +3651,7 @@
             updateApiDisplay();
         }
 
-        // Language System
+        // Language System - English only
         const translations = {
             en: {
                 // Navigation
@@ -3916,143 +3759,8 @@
                 "About Project": "About Project",
                 "Your Personalized Study Abroad Planning Assistant": "Your Personalized Study Abroad Planning Assistant",
                 "XJTLU Treasure Map for Study Abroad": "XJTLU Treasure Map for Study Abroad"
-            },
-            zh: {
-                // Navigation
-                "Explore": "探索",
-                "Recommend": "推荐",
-                "Support": "支持",
-                "Account": "账户",
-                "My Account": "我的账户",
-
-                // Map Section
-                "University Map": "大学地图",
-                "Top Universities": "顶尖大学",
-                "University Details": "大学详情",
-                "World Rank": "世界排名",
-                "Region": "地区",
-
-                // University Recommendation Quiz
-                "University Recommendation Quiz": "大学推荐问卷",
-                "Find your perfect university match": "找到最适合你的大学",
-                "Start Quiz": "开始测试",
-                "Retake Quiz": "重新测试",
-                "Your Profile Summary": "你的画像总结",
-                "Recommended Universities": "推荐大学",
-                "Your Personalized Recommendations": "你的个性化推荐",
-                "Next": "下一题",
-                "Previous": "上一题",
-                "Submit": "提交",
-                "Get Recommendations": "获取推荐",
-
-                // AI Features
-                "Unlock AI Features": "解锁AI功能",
-                "Enter your API key for personalized recommendations.": "输入API密钥获取个性化推荐",
-                "Go to API Settings": "前往API设置",
-                "Please configure your API key in Account settings to enable AI chat.": "请在账户设置中配置API密钥以启用AI聊天",
-
-                // AI Advisor
-                "AI University Advisor": "AI大学顾问",
-                "AI Assistant": "AI助手",
-                "Ask about universities, majors, or application tips...": "咨询大学、专业或申请建议...",
-                "Ask me anything about universities, majors, or application strategies!": "问我任何关于大学、专业或申请策略的问题！",
-                "Hello! I'm your AI university advisor. Ask me about universities, majors, or application strategies!": "你好！我是你的AI大学顾问。问我关于大学、专业或申请策略的问题！",
-
-                // Application Evaluation
-                "Application Evaluation": "申请评估",
-                "Evaluate My Application": "评估我的申请",
-                "Select a university and click evaluate to see your application chances": "选择一所大学并点击评估以查看你的申请概率",
-
-                // Support Section
-                "Emotional Support": "情感支持",
-                "Emotion Support": "情感支持",
-                "How are you feeling today?": "今天感觉怎么样？",
-                "Happy": "开心",
-                "Excited": "兴奋",
-                "Worried": "担忧",
-                "Stressed": "压力",
-                "Sad": "难过",
-
-                // Achievements
-                "Achievements": "成就",
-                "My Achievements": "我的成就",
-                "Add Achievement": "添加成就",
-                "Add to Favorites": "添加到收藏",
-                "Achievement Title": "成就标题",
-                "Date": "日期",
-                "Description (optional)": "描述（可选）",
-                "Save": "保存",
-                "Cancel": "取消",
-
-                // Favorites
-                "Favorites": "收藏",
-                "My Favorites": "我的收藏",
-
-                // Application Tracker
-                "Application Process Tracker": "申请进度追踪",
-                "Add New Task": "添加新任务",
-                "Task Title": "任务标题",
-                "Due Date": "截止日期",
-                "No tasks yet. Add your first task!": "暂无任务，添加你的第一个任务！",
-                "Mark Complete": "标记完成",
-                "Delete": "删除",
-
-                // University Info
-                "University Information": "大学信息",
-                "Overview": "概述",
-                "Academic Strengths": "学术优势",
-                "Admission Requirements": "录取要求",
-                "Application Tips": "申请建议",
-
-                // Progress
-                "Progress": "进度",
-                "First University Explored": "首次探索大学",
-
-                // Account
-                "XJTLU Student": "西浦学生",
-                "Year 3 Student": "大三学生",
-                "API Configuration": "API配置",
-                "This Session": "本次会话",
-                "Remember Me": "记住我",
-                "Clear API Key": "清除API密钥",
-                "Active": "已激活",
-                "Not Configured": "未配置",
-
-                // Other
-                "Close": "关闭",
-                "About Project": "关于项目",
-                "Your Personalized Study Abroad Planning Assistant": "你的个性化留学规划助手",
-                "XJTLU Treasure Map for Study Abroad": "西浦留学宝藏地图"
             }
         };
-
-        let currentLang = localStorage.getItem('language') || 'en';
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            document.getElementById('lang-label').textContent = lang.toUpperCase();
-            
-            // 简单直接的翻译
-            const t = translations[currentLang];
-            if (!t) return;
-            
-            document.querySelectorAll('h1, h2, h3, h4, p, span, button, label').forEach(el => {
-                const text = el.textContent.trim();
-                if (text && t[text]) {
-                    el.textContent = t[text];
-                }
-            });
-            
-            lucide.createIcons();
-        }
-
-        document.getElementById('lang-toggle').addEventListener('click', function() {
-            setLanguage(currentLang === 'en' ? 'zh' : 'en');
-        });
-
-        // Initialize language
-        setLanguage(currentLang);
 
         // API key save - temporary (5 min after close)
         document.getElementById('submit-api').addEventListener('click', function() {
@@ -4069,17 +3777,18 @@
             lucide.createIcons();
         });
 
-        // API key save - permanent (1 hour)
+        // API key save - 仅在当前会话有效（关闭页面自动失效）
         document.getElementById('save-api-permanent').addEventListener('click', function() {
             const apiKey = document.getElementById('api-key-input').value.trim();
             if (!apiKey) {
                 alert('Please enter an API key');
                 return;
             }
-            localStorage.setItem('api_key', apiKey);
-            localStorage.setItem('api_key_time', Date.now());
-            sessionStorage.removeItem('api_key');
-            sessionStorage.removeItem('api_key_time');
+            // 仅使用sessionStorage，关闭页面后自动清除
+            sessionStorage.setItem('api_key', apiKey);
+            sessionStorage.setItem('api_key_time', Date.now());
+            localStorage.removeItem('api_key');
+            localStorage.removeItem('api_key_time');
             updateApiDisplay();
             lucide.createIcons();
         });
@@ -4095,68 +3804,7 @@
         }
 
         // ========== ONBOARDING PROCESS ==========
-        let selectedLanguage = null;
         let selectedGrade = null;
-        let onboardingLang = {
-            en: {
-                "Welcome": "Welcome",
-                "Choose your preferred language": "Choose your preferred language",
-                "English": "English",
-                "Continue in English": "Continue in English",
-                "中文": "中文",
-                "继续使用中文": "Continue in Chinese",
-                "Continue": "Continue",
-                "Which Year Are You In?": "Which Year Are You In?",
-                "Select your current academic year": "Select your current academic year",
-                "Year 1": "Year 1",
-                "Explore universities on the map": "Explore universities on the map",
-                "Year 2": "Year 2",
-                "Quiz to help you choose": "Quiz to help you choose",
-                "Year 3": "Year 3",
-                "Application to-do list": "Achievement & AI Analysis",
-                "Year 4": "Year 4",
-                "Back": "Back",
-                "Let's Go!": "Let's Go!"
-            },
-            zh: {
-                "Welcome": "欢迎",
-                "Choose your preferred language": "选择你的首选语言",
-                "English": "English",
-                "Continue in English": "继续使用英文",
-                "中文": "中文",
-                "继续使用中文": "继续使用中文",
-                "Continue": "继续",
-                "Which Year Are You In?": "你现在大几？",
-                "Select your current academic year": "选择你当前的年级",
-                "Year 1": "大一",
-                "Explore universities on the map": "在地图上探索大学",
-                "Year 2": "大二",
-                "Quiz to help you choose": "问卷帮你选择",
-                "Year 3": "大三",
-                "Application to-do list": "成就管理与AI分析",
-                "Year 4": "大四",
-                "Back": "返回",
-                "Let's Go!": "开始吧！"
-            }
-        };
-
-        function updateOnboardingText(lang) {
-            const t = onboardingLang[lang];
-            document.querySelectorAll('.onboarding-step h1, .onboarding-step h3, .onboarding-step p, .onboarding-step button').forEach(el => {
-                const text = el.textContent.trim();
-                if (text && t[text]) {
-                    el.textContent = t[text];
-                }
-            });
-        }
-
-        function selectLanguage(lang) {
-            selectedLanguage = lang;
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            document.querySelector(`[data-lang="${lang}"]`).classList.add('selected');
-            document.getElementById('lang-next-btn').disabled = false;
-            setLanguage(lang);
-        }
 
         function selectGrade(grade) {
             selectedGrade = grade;
@@ -4165,38 +3813,8 @@
             document.getElementById('grade-next-btn').disabled = false;
         }
 
-        function goToGradeStep() {
-            if (!selectedLanguage) return;
-            
-            document.getElementById('onboarding-step-1').style.display = 'none';
-            document.getElementById('onboarding-step-2').style.display = 'block';
-            
-            document.querySelectorAll('.onboarding-dot').forEach(dot => {
-                dot.classList.remove('active');
-                if (dot.dataset.step === '1') dot.classList.add('completed');
-                if (dot.dataset.step === '2') dot.classList.add('active');
-            });
-            
-            updateOnboardingText(selectedLanguage);
-            lucide.createIcons();
-        }
-
-        function goToLangStep() {
-            document.getElementById('onboarding-step-2').style.display = 'none';
-            document.getElementById('onboarding-step-1').style.display = 'block';
-            
-            document.querySelectorAll('.onboarding-dot').forEach(dot => {
-                dot.classList.remove('active', 'completed');
-                if (dot.dataset.step === '1') dot.classList.add('active');
-            });
-        }
-
         function finishOnboarding() {
-            if (!selectedLanguage || !selectedGrade) return;
-            
-            localStorage.setItem('onboarding_completed', 'true');
-            localStorage.setItem('user_grade', selectedGrade);
-            localStorage.setItem('language', selectedLanguage);
+            if (!selectedGrade) return;
             
             document.getElementById('onboarding-overlay').style.display = 'none';
             
@@ -4350,23 +3968,11 @@ Format your response in a clear, easy-to-read way with headings and bullet point
             }
         }
 
-        function checkOnboarding() {
-            const completed = localStorage.getItem('onboarding_completed');
-            if (completed === 'true') {
-                document.getElementById('onboarding-overlay').style.display = 'none';
-                const savedGrade = localStorage.getItem('user_grade');
-                if (savedGrade) {
-                    navigateByGrade(savedGrade);
-                }
-            }
-        }
-
         // Initialize progress
         updateProgress();
         loadTodos();
         loadAchievements();
         updateApiDisplay();
-        checkOnboarding();
         lucide.createIcons();
     </script>
 
