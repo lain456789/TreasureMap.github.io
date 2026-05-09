@@ -519,6 +519,17 @@
             color: white;
         }
 
+        .api-status-badge.warning {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+            animation: pulse-warning 2s infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .api-status-badge.not-configured {
             background: var(--bg-secondary);
             color: var(--text-muted);
@@ -2450,14 +2461,9 @@
                     </div>
                 </div>
                 <input type="password" id="api-key-input" placeholder="Enter your API Key...">
-                <div class="api-buttons">
-                    <button class="btn-primary" id="submit-api">
-                        <i data-lucide="clock" style="width:18px;"></i> This Session
-                    </button>
-                    <button class="btn-secondary" id="save-api-permanent">
-                        <i data-lucide="bookmark" style="width:18px;"></i> Remember Me
-                    </button>
-                </div>
+                <button class="btn-primary" id="submit-api" style="width: 100%;">
+                    <i data-lucide="key" style="width:18px;"></i> Save API Key
+                </button>
                 <button class="btn-danger" id="clear-api" onclick="clearApiKey()" style="width:100%; margin-top:0.75rem;">
                     <i data-lucide="trash-2" style="width:18px;"></i> Clear API Key
                 </button>
@@ -2734,7 +2740,7 @@
             if (!uni) return;
 
             const modalBody = document.getElementById('map-info-body');
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             const hasApiKey = apiKey && apiKey.trim() !== '';
 
             // Always show header, stats, and ai-content area
@@ -2908,7 +2914,7 @@
 
         // Fetch university information using AI
         async function fetchUniversityInfo(uni) {
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             
             // Try API first
             if (apiKey) {
@@ -3453,32 +3459,34 @@
             chatBox.innerHTML += `<div class="chat-msg user"><div class="msg">${message}</div></div>`;
             input.value = '';
 
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             const loadingMsg = `<div class="chat-msg ai" id="chat-loading"><div class="msg"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0;"></div></div></div>`;
             chatBox.innerHTML += loadingMsg;
             chatBox.scrollTop = chatBox.scrollHeight;
 
             if (!apiKey) {
-                document.getElementById('chat-loading').outerHTML = `<div class="chat-msg ai"><div class="msg">Please configure your API key in Account settings to enable AI chat. <button class="btn-secondary" style="margin-top:0.5rem;" onclick="navigateToAccount()"><i data-lucide="settings" style="width:14px;"></i> Go to API Settings</button></div></div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-                lucide.createIcons();
+                setTimeout(() => {
+                    document.getElementById('chat-loading').outerHTML = `<div class="chat-msg ai"><div class="msg">Please configure your API key in Account settings to enable AI chat. <button class="btn-secondary" style="margin-top:0.5rem;" onclick="navigateToAccount()"><i data-lucide="settings" style="width:14px;"></i> Go to API Settings</button></div></div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    lucide.createIcons();
+                }, 500);
                 return;
             }
 
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch('https://api.deepseek.com/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: 'deepseek-chat',
                         messages: [{
                             role: 'user',
-                            content: `You are an AI study abroad advisor for XJTLU students. Answer this question helpfully: ${message}`
+                            content: `You are an AI study abroad advisor for XJTLU students. Answer this question helpfully and concisely: ${message}`
                         }],
-                        max_tokens: 300
+                        temperature: 0.3
                     })
                 });
 
@@ -3796,29 +3804,99 @@
 
         // API Key Management
         const API_KEY_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
+        const API_KEY_WARNING_MS = 10 * 60 * 1000; // 10 minutes warning before expiry
+        
+        let apiExpiryTimer = null;
 
         function isApiKeyValid() {
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
-            const savedTime = sessionStorage.getItem('api_key_time') || localStorage.getItem('api_key_time');
+            const apiKey = sessionStorage.getItem('api_key');
+            const savedTime = sessionStorage.getItem('api_key_time');
             if (!apiKey || !savedTime) return false;
             const elapsed = Date.now() - parseInt(savedTime);
             return elapsed < API_KEY_EXPIRY_MS;
         }
 
+        function getApiKeyRemainingTime() {
+            const savedTime = sessionStorage.getItem('api_key_time');
+            if (!savedTime) return null;
+            const elapsed = Date.now() - parseInt(savedTime);
+            const remaining = API_KEY_EXPIRY_MS - elapsed;
+            return remaining > 0 ? remaining : 0;
+        }
+
+        function formatTimeRemaining(ms) {
+            if (ms <= 0) return 'Expired';
+            const hours = Math.floor(ms / (1000 * 60 * 60));
+            const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            } else if (minutes > 0) {
+                return `${minutes}m ${seconds}s`;
+            } else {
+                return `${seconds}s`;
+            }
+        }
+
         function updateApiDisplay() {
             const statusBadge = document.getElementById('api-status');
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const expiryDisplay = document.getElementById('api-expiry');
+            const apiKey = sessionStorage.getItem('api_key');
 
-            if (apiKey) {
-                statusBadge.textContent = 'Active';
-                statusBadge.className = 'api-status-badge active';
-            } else {
+            if (!apiKey) {
                 statusBadge.textContent = 'Not Configured';
                 statusBadge.className = 'api-status-badge not-configured';
+                if (expiryDisplay) expiryDisplay.style.display = 'none';
+                stopApiExpiryTimer();
+                return;
+            }
+
+            const remaining = getApiKeyRemainingTime();
+            
+            if (remaining === null || remaining <= 0) {
+                statusBadge.textContent = 'Expired';
+                statusBadge.className = 'api-status-badge expired';
+                clearApiKey();
+                if (expiryDisplay) expiryDisplay.style.display = 'none';
+                stopApiExpiryTimer();
+                return;
+            }
+
+            const isWarning = remaining <= API_KEY_WARNING_MS;
+            
+            if (isWarning) {
+                statusBadge.textContent = 'Expiring Soon';
+                statusBadge.className = 'api-status-badge warning';
+            } else {
+                statusBadge.textContent = 'Active';
+                statusBadge.className = 'api-status-badge active';
+            }
+
+            if (expiryDisplay) {
+                expiryDisplay.style.display = 'block';
+                expiryDisplay.querySelector('.api-status-time').textContent = formatTimeRemaining(remaining);
+            }
+
+            startApiExpiryTimer();
+        }
+
+        function startApiExpiryTimer() {
+            stopApiExpiryTimer();
+            apiExpiryTimer = setInterval(() => {
+                updateApiDisplay();
+            }, 1000);
+        }
+
+        function stopApiExpiryTimer() {
+            if (apiExpiryTimer) {
+                clearInterval(apiExpiryTimer);
+                apiExpiryTimer = null;
             }
         }
 
         function clearApiKey() {
+            stopApiExpiryTimer();
             sessionStorage.removeItem('api_key');
             sessionStorage.removeItem('api_key_time');
             localStorage.removeItem('api_key');
@@ -3952,32 +4030,6 @@
             updateApiDisplay();
             lucide.createIcons();
         });
-
-        // API key save - 仅在当前会话有效（关闭页面自动失效）
-        document.getElementById('save-api-permanent').addEventListener('click', function() {
-            const apiKey = document.getElementById('api-key-input').value.trim();
-            if (!apiKey) {
-                alert('Please enter an API key');
-                return;
-            }
-            // 仅使用sessionStorage，关闭页面后自动清除
-            sessionStorage.setItem('api_key', apiKey);
-            sessionStorage.setItem('api_key_time', Date.now());
-            localStorage.removeItem('api_key');
-            localStorage.removeItem('api_key_time');
-            updateApiDisplay();
-            lucide.createIcons();
-        });
-
-        // Check expiration on page load (5 min after close = localStorage check)
-        const savedTime = localStorage.getItem('api_key_time');
-        if (savedTime) {
-            const elapsed = Date.now() - parseInt(savedTime);
-            if (elapsed >= API_KEY_EXPIRY_MS) {
-                localStorage.removeItem('api_key');
-                localStorage.removeItem('api_key_time');
-            }
-        }
 
         // ========== ONBOARDING PROCESS ==========
         let selectedGrade = null;
@@ -4325,7 +4377,7 @@
                 return;
             }
             
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             if (!apiKey) {
                 showApiHintModal('Please configure your OpenAI API key to use the AI analysis feature.');
                 return;
