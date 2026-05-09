@@ -2179,11 +2179,6 @@
                 </div>
                 <select id="university-select">
                     <option value="">Select a favorite university</option>
-                    <option value="Cambridge">University of Cambridge</option>
-                    <option value="Imperial">Imperial College London</option>
-                    <option value="MIT">MIT</option>
-                    <option value="Oxford">University of Oxford</option>
-                    <option value="UCL">UCL</option>
                 </select>
                 <button class="btn-primary" id="evaluate-btn" onclick="evaluateApplication()">
                     <i data-lucide="sparkles" style="width:18px;"></i> Evaluate My Application
@@ -3682,10 +3677,22 @@
         function loadFavorites() {
             const favList = document.getElementById('fav-list');
             const statFav = document.getElementById('stat-fav');
+            const uniSelect = document.getElementById('university-select'); 
             
             if (!favList) {
                 console.error('fav-list element not found');
                 return;
+            }
+
+            // 更新评估下拉菜单
+            if (uniSelect) {
+                uniSelect.innerHTML = '<option value="">Select a favorite university</option>';
+                favorites.forEach(favName => {
+                    const option = document.createElement('option');
+                    option.value = favName;
+                    option.textContent = favName;
+                    uniSelect.appendChild(option);
+                });
             }
             
             if (favorites.length === 0) {
