@@ -519,6 +519,17 @@
             color: white;
         }
 
+        .api-status-badge.warning {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+            animation: pulse-warning 2s infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .api-status-badge.not-configured {
             background: var(--bg-secondary);
             color: var(--text-muted);
@@ -2079,6 +2090,50 @@
         </div>
     </div>
 
+    <!-- Guided Flow Modal -->
+    <div id="guided-flow-overlay" class="modal-overlay">
+        <div class="modal" style="max-width: 550px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+                <h2 id="guided-flow-title" style="color: var(--primary-light);">
+                    <i data-lucide="sparkles" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>
+                    Welcome!
+                </h2>
+            </div>
+            
+            <!-- Progress Dots -->
+            <div id="guided-flow-progress" class="onboarding-progress" style="margin: 1.5rem 0;">
+                <div class="onboarding-dot active" data-step="1"></div>
+                <div class="onboarding-dot" data-step="2"></div>
+                <div class="onboarding-dot" data-step="3"></div>
+            </div>
+            
+            <div class="modal-body" style="text-align: left;">
+                <div id="guided-flow-icon" style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i data-lucide="key" style="width:36px; height:36px; color: white;"></i>
+                </div>
+                
+                <h3 id="guided-flow-step-title" style="text-align: center; margin-bottom: 1rem; font-size: 1.3rem;">Step 1: Configure API</h3>
+                
+                <div id="guided-flow-description" style="color: var(--text-muted); text-align: center; margin-bottom: 1.5rem; line-height: 1.6;">
+                    <p>To use AI-powered features, you need to configure your OpenAI API key first.</p>
+                </div>
+                
+                <div id="guided-flow-content" style="background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <!-- Dynamic content based on step -->
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button id="guided-flow-skip" class="btn-secondary" style="flex: 1;" onclick="skipGuidedFlow()">
+                    Skip for now
+                </button>
+                <button id="guided-flow-next" class="btn-primary" style="flex: 2;" onclick="nextGuidedStep()">
+                    Let's Go
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <div class="nav-brand">
@@ -2406,14 +2461,9 @@
                     </div>
                 </div>
                 <input type="password" id="api-key-input" placeholder="Enter your API Key...">
-                <div class="api-buttons">
-                    <button class="btn-primary" id="submit-api">
-                        <i data-lucide="clock" style="width:18px;"></i> This Session
-                    </button>
-                    <button class="btn-secondary" id="save-api-permanent">
-                        <i data-lucide="bookmark" style="width:18px;"></i> Remember Me
-                    </button>
-                </div>
+                <button class="btn-primary" id="submit-api" style="width: 100%;">
+                    <i data-lucide="key" style="width:18px;"></i> Save API Key
+                </button>
                 <button class="btn-danger" id="clear-api" onclick="clearApiKey()" style="width:100%; margin-top:0.75rem;">
                     <i data-lucide="trash-2" style="width:18px;"></i> Clear API Key
                 </button>
@@ -2690,7 +2740,7 @@
             if (!uni) return;
 
             const modalBody = document.getElementById('map-info-body');
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             const hasApiKey = apiKey && apiKey.trim() !== '';
 
             // Always show header, stats, and ai-content area
@@ -2864,7 +2914,7 @@
 
         // Fetch university information using AI
         async function fetchUniversityInfo(uni) {
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             
             // Try API first
             if (apiKey) {
@@ -3274,6 +3324,14 @@
 
             document.getElementById('quiz-result').innerHTML = resultHTML;
             lucide.createIcons();
+            
+            // If in guided flow, show next step after a delay
+            if (guidedFlowInProgress) {
+                setTimeout(() => {
+                    guidedFlowInProgress = false;
+                    showGuidedStep(1);
+                }, 1500);
+            }
         }
 
         function generateRecommendations() {
@@ -3401,32 +3459,34 @@
             chatBox.innerHTML += `<div class="chat-msg user"><div class="msg">${message}</div></div>`;
             input.value = '';
 
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             const loadingMsg = `<div class="chat-msg ai" id="chat-loading"><div class="msg"><div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0;"></div></div></div>`;
             chatBox.innerHTML += loadingMsg;
             chatBox.scrollTop = chatBox.scrollHeight;
 
             if (!apiKey) {
-                document.getElementById('chat-loading').outerHTML = `<div class="chat-msg ai"><div class="msg">Please configure your API key in Account settings to enable AI chat. <button class="btn-secondary" style="margin-top:0.5rem;" onclick="navigateToAccount()"><i data-lucide="settings" style="width:14px;"></i> Go to API Settings</button></div></div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-                lucide.createIcons();
+                setTimeout(() => {
+                    document.getElementById('chat-loading').outerHTML = `<div class="chat-msg ai"><div class="msg">Please configure your API key in Account settings to enable AI chat. <button class="btn-secondary" style="margin-top:0.5rem;" onclick="navigateToAccount()"><i data-lucide="settings" style="width:14px;"></i> Go to API Settings</button></div></div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    lucide.createIcons();
+                }, 500);
                 return;
             }
 
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch('https://api.deepseek.com/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: 'deepseek-chat',
                         messages: [{
                             role: 'user',
-                            content: `You are an AI study abroad advisor for XJTLU students. Answer this question helpfully: ${message}`
+                            content: `You are an AI study abroad advisor for XJTLU students. Answer this question helpfully and concisely: ${message}`
                         }],
-                        max_tokens: 300
+                        temperature: 0.3
                     })
                 });
 
@@ -3651,6 +3711,14 @@
             loadFavorites();
             alert(`${name} added to your favorites!`);
             closeModal();
+            
+            // If in guided flow for favorites step, continue to next step
+            if (guidedFlowInProgress && guidedFlowStep === 1) {
+                setTimeout(() => {
+                    guidedFlowInProgress = false;
+                    showGuidedStep(2);
+                }, 500);
+            }
         }
 
         function removeFavorite(button) {
@@ -3736,29 +3804,99 @@
 
         // API Key Management
         const API_KEY_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
+        const API_KEY_WARNING_MS = 10 * 60 * 1000; // 10 minutes warning before expiry
+        
+        let apiExpiryTimer = null;
 
         function isApiKeyValid() {
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
-            const savedTime = sessionStorage.getItem('api_key_time') || localStorage.getItem('api_key_time');
+            const apiKey = sessionStorage.getItem('api_key');
+            const savedTime = sessionStorage.getItem('api_key_time');
             if (!apiKey || !savedTime) return false;
             const elapsed = Date.now() - parseInt(savedTime);
             return elapsed < API_KEY_EXPIRY_MS;
         }
 
+        function getApiKeyRemainingTime() {
+            const savedTime = sessionStorage.getItem('api_key_time');
+            if (!savedTime) return null;
+            const elapsed = Date.now() - parseInt(savedTime);
+            const remaining = API_KEY_EXPIRY_MS - elapsed;
+            return remaining > 0 ? remaining : 0;
+        }
+
+        function formatTimeRemaining(ms) {
+            if (ms <= 0) return 'Expired';
+            const hours = Math.floor(ms / (1000 * 60 * 60));
+            const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            } else if (minutes > 0) {
+                return `${minutes}m ${seconds}s`;
+            } else {
+                return `${seconds}s`;
+            }
+        }
+
         function updateApiDisplay() {
             const statusBadge = document.getElementById('api-status');
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const expiryDisplay = document.getElementById('api-expiry');
+            const apiKey = sessionStorage.getItem('api_key');
 
-            if (apiKey) {
-                statusBadge.textContent = 'Active';
-                statusBadge.className = 'api-status-badge active';
-            } else {
+            if (!apiKey) {
                 statusBadge.textContent = 'Not Configured';
                 statusBadge.className = 'api-status-badge not-configured';
+                if (expiryDisplay) expiryDisplay.style.display = 'none';
+                stopApiExpiryTimer();
+                return;
+            }
+
+            const remaining = getApiKeyRemainingTime();
+            
+            if (remaining === null || remaining <= 0) {
+                statusBadge.textContent = 'Expired';
+                statusBadge.className = 'api-status-badge expired';
+                clearApiKey();
+                if (expiryDisplay) expiryDisplay.style.display = 'none';
+                stopApiExpiryTimer();
+                return;
+            }
+
+            const isWarning = remaining <= API_KEY_WARNING_MS;
+            
+            if (isWarning) {
+                statusBadge.textContent = 'Expiring Soon';
+                statusBadge.className = 'api-status-badge warning';
+            } else {
+                statusBadge.textContent = 'Active';
+                statusBadge.className = 'api-status-badge active';
+            }
+
+            if (expiryDisplay) {
+                expiryDisplay.style.display = 'block';
+                expiryDisplay.querySelector('.api-status-time').textContent = formatTimeRemaining(remaining);
+            }
+
+            startApiExpiryTimer();
+        }
+
+        function startApiExpiryTimer() {
+            stopApiExpiryTimer();
+            apiExpiryTimer = setInterval(() => {
+                updateApiDisplay();
+            }, 1000);
+        }
+
+        function stopApiExpiryTimer() {
+            if (apiExpiryTimer) {
+                clearInterval(apiExpiryTimer);
+                apiExpiryTimer = null;
             }
         }
 
         function clearApiKey() {
+            stopApiExpiryTimer();
             sessionStorage.removeItem('api_key');
             sessionStorage.removeItem('api_key_time');
             localStorage.removeItem('api_key');
@@ -3893,32 +4031,6 @@
             lucide.createIcons();
         });
 
-        // API key save - 仅在当前会话有效（关闭页面自动失效）
-        document.getElementById('save-api-permanent').addEventListener('click', function() {
-            const apiKey = document.getElementById('api-key-input').value.trim();
-            if (!apiKey) {
-                alert('Please enter an API key');
-                return;
-            }
-            // 仅使用sessionStorage，关闭页面后自动清除
-            sessionStorage.setItem('api_key', apiKey);
-            sessionStorage.setItem('api_key_time', Date.now());
-            localStorage.removeItem('api_key');
-            localStorage.removeItem('api_key_time');
-            updateApiDisplay();
-            lucide.createIcons();
-        });
-
-        // Check expiration on page load (5 min after close = localStorage check)
-        const savedTime = localStorage.getItem('api_key_time');
-        if (savedTime) {
-            const elapsed = Date.now() - parseInt(savedTime);
-            if (elapsed >= API_KEY_EXPIRY_MS) {
-                localStorage.removeItem('api_key');
-                localStorage.removeItem('api_key_time');
-            }
-        }
-
         // ========== ONBOARDING PROCESS ==========
         let selectedGrade = null;
 
@@ -3934,8 +4046,284 @@
             
             document.getElementById('onboarding-overlay').style.display = 'none';
             
-            // 根据年级导航到对应的功能
-            navigateByGrade(selectedGrade);
+            // Start guided flow for all grades
+            startGuidedFlow(selectedGrade);
+        }
+
+        // ========== GUIDED FLOW SYSTEM ==========
+        let guidedFlowStep = 0;
+        let guidedFlowGrade = null;
+        let guidedFlowTotalSteps = 0;
+        let guidedFlowInProgress = false;
+
+        function startGuidedFlow(grade) {
+            guidedFlowGrade = grade;
+            guidedFlowStep = 0;
+            guidedFlowInProgress = false;
+            
+            if (grade === '1') {
+                // Year 1: API → AI Chat → Complete
+                guidedFlowTotalSteps = 3;
+                showGuidedStep(0);
+            } else if (grade === '2' || grade === '3') {
+                // Year 2-3: Quiz → Favorites → Achievements + AI Analysis
+                guidedFlowTotalSteps = 3;
+                showGuidedStep(0);
+            } else {
+                // Year 4: Skip guided flow, go directly
+                navigateByGrade(grade);
+            }
+        }
+
+        function showGuidedStep(step) {
+            const overlay = document.getElementById('guided-flow-overlay');
+            const title = document.getElementById('guided-flow-title');
+            const stepTitle = document.getElementById('guided-flow-step-title');
+            const description = document.getElementById('guided-flow-description');
+            const content = document.getElementById('guided-flow-content');
+            const nextBtn = document.getElementById('guided-flow-next');
+            const skipBtn = document.getElementById('guided-flow-skip');
+            const progressDots = document.querySelectorAll('#guided-flow-progress .onboarding-dot');
+            
+            // Update progress dots
+            progressDots.forEach((dot, i) => {
+                dot.classList.remove('active', 'completed');
+                if (i < step) dot.classList.add('completed');
+                if (i === step) dot.classList.add('active');
+            });
+            
+            if (guidedFlowGrade === '1') {
+                // Year 1 Guided Flow
+                switch(step) {
+                    case 0:
+                        // Step 1: API Configuration
+                        title.innerHTML = '<i data-lucide="key" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>API Configuration';
+                        stepTitle.textContent = 'Step 1: Configure Your API Key';
+                        description.innerHTML = '<p>To use AI-powered features like chatting with our University Advisor AI, you need to configure your OpenAI API key first.</p>';
+                        content.innerHTML = `
+                            <div style="text-align: left;">
+                                <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="info" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>How to get your API key:</h4>
+                                <ol style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.25rem;">
+                                    <li>Visit <a href="https://platform.openai.com" target="_blank" style="color: var(--primary-light);">platform.openai.com</a></li>
+                                    <li>Create an account or sign in</li>
+                                    <li>Go to API Keys section</li>
+                                    <li>Generate a new secret key</li>
+                                </ol>
+                                <div class="form-group" style="margin-top: 1rem;">
+                                    <input type="password" id="guided-api-key" placeholder="Paste your API key here..." style="width: 100%;">
+                                </div>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'Configure & Continue';
+                        nextBtn.onclick = () => {
+                            const apiKey = document.getElementById('guided-api-key').value.trim();
+                            if (apiKey) {
+                                sessionStorage.setItem('api_key', apiKey);
+                                sessionStorage.setItem('api_key_time', Date.now());
+                                updateApiDisplay();
+                            }
+                            showGuidedStep(1);
+                        };
+                        skipBtn.textContent = 'Skip (Use AI Chat without API)';
+                        skipBtn.onclick = () => showGuidedStep(1);
+                        break;
+                        
+                    case 1:
+                        // Step 2: AI Chat
+                        title.innerHTML = '<i data-lucide="message-circle" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>AI University Advisor';
+                        stepTitle.textContent = 'Step 2: Chat with AI Advisor';
+                        description.innerHTML = '<p>Now you can chat with our AI-powered University Advisor to get personalized guidance for your study abroad journey!</p>';
+                        content.innerHTML = `
+                            <div style="text-align: left;">
+                                <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="message-square" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>Try asking:</h4>
+                                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.25rem;">
+                                    <li>"What universities should I consider for Computer Science?"</li>
+                                    <li>"What are the requirements for UK universities?"</li>
+                                    <li>"How can I improve my application?"</li>
+                                </ul>
+                                <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: center;">
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">Click "Go to AI Chat" to start chatting with the AI advisor.</p>
+                                </div>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'Go to AI Chat';
+                        nextBtn.onclick = () => {
+                            navigateByGrade('1');
+                            setTimeout(() => {
+                                const aiCard = document.getElementById('ai-chat-card');
+                                if (aiCard) aiCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                            overlay.classList.remove('active');
+                        };
+                        skipBtn.textContent = 'Maybe Later';
+                        skipBtn.onclick = () => {
+                            navigateByGrade('1');
+                            overlay.classList.remove('active');
+                        };
+                        break;
+                        
+                    case 2:
+                        // Step 3: Complete
+                        title.innerHTML = '<i data-lucide="check-circle" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>You\'re All Set!';
+                        stepTitle.textContent = 'Setup Complete!';
+                        description.innerHTML = '<p>Congratulations! Your account is configured. Start exploring universities and chatting with our AI advisor.</p>';
+                        content.innerHTML = `
+                            <div style="text-align: center; padding: 1rem;">
+                                <i data-lucide="compass" style="width:60px; height:60px; color: var(--success); margin-bottom: 1rem;"></i>
+                                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Quick Tips:</h4>
+                                <ul style="color: var(--text-secondary); text-align: left; line-height: 1.8;">
+                                    <li>Explore the map to discover universities</li>
+                                    <li>Click on markers to see details</li>
+                                    <li>Use AI Chat for personalized advice</li>
+                                </ul>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'Start Exploring';
+                        nextBtn.onclick = () => {
+                            navigateByGrade('1');
+                            overlay.classList.remove('active');
+                        };
+                        skipBtn.style.display = 'none';
+                        break;
+                }
+            } else if (guidedFlowGrade === '2' || guidedFlowGrade === '3') {
+                // Year 2-3 Guided Flow
+                switch(step) {
+                    case 0:
+                        // Step 1: Quiz
+                        title.innerHTML = '<i data-lucide="clipboard-list" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>University Quiz';
+                        stepTitle.textContent = 'Step 1: Take the Recommendation Quiz';
+                        description.innerHTML = '<p>Answer a few questions to get personalized university recommendations based on your profile.</p>';
+                        content.innerHTML = `
+                            <div style="text-align: left;">
+                                <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="sparkles" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>What you\'ll get:</h4>
+                                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.25rem;">
+                                    <li>Personalized university recommendations</li>
+                                    <li>Match percentage for each university</li>
+                                    <li>Detailed reasoning for each suggestion</li>
+                                </ul>
+                                <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                                    <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center;">The quiz takes about 2-3 minutes to complete.</p>
+                                </div>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'Start Quiz';
+                        nextBtn.onclick = () => {
+                            guidedFlowInProgress = true;
+                            navigateByGrade(guidedFlowGrade);
+                            setTimeout(() => {
+                                document.querySelector('[data-section="recommend"]').click();
+                                document.getElementById('quiz-intro').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                setTimeout(() => {
+                                    const startBtn = document.querySelector('#quiz-intro button');
+                                    if (startBtn) startBtn.click();
+                                }, 300);
+                            }, 100);
+                            overlay.classList.remove('active');
+                        };
+                        skipBtn.textContent = 'Skip Quiz';
+                        skipBtn.onclick = () => showGuidedStep(1);
+                        break;
+                        
+                    case 1:
+                        // Step 2: Favorites - from Recommendations
+                        title.innerHTML = '<i data-lucide="heart" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>Save Favorites';
+                        stepTitle.textContent = 'Step 2: Add Recommended Universities';
+                        description.innerHTML = '<p>From your quiz results, select your favorite universities to add them to your favorites list.</p>';
+                        content.innerHTML = `
+                            <div style="text-align: left;">
+                                <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="bookmark" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>How to add from recommendations:</h4>
+                                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.25rem;">
+                                    <li>View your personalized recommendations</li>
+                                    <li>Click "Add to Favorites" on any university</li>
+                                    <li>Your favorites will be saved to your profile</li>
+                                </ul>
+                                <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: center;">
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">Tip: Add at least 2 recommended universities!</p>
+                                </div>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'View Recommendations';
+                        nextBtn.onclick = () => {
+                            guidedFlowInProgress = true;
+                            navigateByGrade(guidedFlowGrade);
+                            setTimeout(() => {
+                                document.querySelector('[data-section="recommend"]').click();
+                                document.getElementById('quiz-result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                            overlay.classList.remove('active');
+                        };
+                        skipBtn.textContent = 'Skip for Now';
+                        skipBtn.onclick = () => showGuidedStep(2);
+                        break;
+                        
+                    case 2:
+                        // Step 3: Achievements + AI Analysis (Combined)
+                        title.innerHTML = '<i data-lucide="trophy" style="width:24px; vertical-align: middle; margin-right: 8px;"></i>Complete Your Profile';
+                        stepTitle.textContent = 'Step 3: Add Achievements & Get AI Analysis';
+                        description.innerHTML = '<p>Showcase your accomplishments and get AI-powered feedback on your application materials!</p>';
+                        content.innerHTML = `
+                            <div style="text-align: left;">
+                                <div style="margin-bottom: 1.5rem;">
+                                    <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="award" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>Add Your Achievements</h4>
+                                    <ul style="color: var(--text-secondary); line-height: 1.6; padding-left: 1.25rem;">
+                                        <li>Academic awards and scholarships</li>
+                                        <li>Sports or arts achievements</li>
+                                        <li>Volunteer experience</li>
+                                        <li>Research projects</li>
+                                        <li>Leadership roles</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 style="color: var(--primary-light); margin-bottom: 0.75rem;"><i data-lucide="cpu" style="width:16px; vertical-align: middle; margin-right: 4px;"></i>AI Application Analysis</h4>
+                                    <ul style="color: var(--text-secondary); line-height: 1.6; padding-left: 1.25rem;">
+                                        <li>Academic background & GPA evaluation</li>
+                                        <li>English proficiency assessment</li>
+                                        <li>Personal statement analysis</li>
+                                        <li>Overall admission chances</li>
+                                    </ul>
+                                </div>
+                                <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: center;">
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">💡 Tip: Add achievements first, then use AI Analysis!</p>
+                                </div>
+                            </div>
+                        `;
+                        nextBtn.textContent = 'Go to Profile';
+                        nextBtn.onclick = () => {
+                            navigateByGrade(guidedFlowGrade);
+                            setTimeout(() => {
+                                document.querySelector('[data-section="account"]').click();
+                                document.getElementById('ach-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                openAddAchievementModal();
+                            }, 100);
+                            overlay.classList.remove('active');
+                        };
+                        skipBtn.textContent = 'Finish';
+                        skipBtn.onclick = () => {
+                            navigateByGrade(guidedFlowGrade);
+                            overlay.classList.remove('active');
+                        };
+                        break;
+                }
+            }
+            
+            lucide.createIcons();
+            overlay.classList.add('active');
+        }
+
+        function skipGuidedFlow() {
+            document.getElementById('guided-flow-overlay').classList.remove('active');
+            navigateByGrade(guidedFlowGrade);
+        }
+
+        function nextGuidedStep() {
+            if (guidedFlowStep < guidedFlowTotalSteps - 1) {
+                guidedFlowStep++;
+                showGuidedStep(guidedFlowStep);
+            } else {
+                document.getElementById('guided-flow-overlay').classList.remove('active');
+                navigateByGrade(guidedFlowGrade);
+            }
         }
 
         function navigateByGrade(grade) {
@@ -3989,7 +4377,7 @@
                 return;
             }
             
-            const apiKey = sessionStorage.getItem('api_key') || localStorage.getItem('api_key');
+            const apiKey = sessionStorage.getItem('api_key');
             if (!apiKey) {
                 showApiHintModal('Please configure your OpenAI API key to use the AI analysis feature.');
                 return;

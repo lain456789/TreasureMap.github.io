@@ -911,14 +911,32 @@
                     <h4><i data-lucide="brain" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>AI Assistant</h4>
                     <p>AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.</p>
                 </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="compass" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Personalized Onboarding</h4>
+                    <p>Grade-specific guidance flow: Year 1 students start with API setup and AI chat, while Years 2-3 begin with university recommendation quiz.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="key" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>API Management</h4>
+                    <p>Secure API key storage using sessionStorage, ensuring keys persist during session but clear on page close for privacy.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="award" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Achievement System</h4>
+                    <p>Gamified achievement tracking with visual rewards for completing application milestones and exploring universities.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="bookmark" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Favorites Management</h4>
+                    <p>Save preferred universities to personal collection, with synchronization across map and recommendation features.</p>
+                </div>
             </div>
 
             <h3>Feature Highlights</h3>
             <ul>
                 <li><span class="highlight">Gamified Design</span>: Achievement systems increase engagement</li>
-                <li><span class="highlight">Personalized Experience</span>: Customized suggestions based on user data</li>
+                <li><span class="highlight">Personalized Experience</span>: Customized suggestions based on user data and grade level</li>
                 <li><span class="highlight">Data Visualization</span>: Intuitive progress and university info display</li>
                 <li><span class="highlight">Multi-dimensional Support</span>: Comprehensive support from info to emotions</li>
+                <li><span class="highlight">Grade-specific Onboarding</span>: Tailored guidance flow based on academic year</li>
+                <li><span class="highlight">Secure API Management</span>: Session-based API key storage with automatic expiration</li>
             </ul>
         </div>
 
@@ -1252,17 +1270,22 @@
             <p>The following natural language prompts guided the incremental development of this system:</p>
             <ol>
                 <li>Create a single-page HTML file with blue/purple theme, Lucide Icons, and Leaflet.js</li>
-                <li>Add onboarding overlay with language and year selection</li>
+                <li>Add onboarding overlay with year selection (Year 1-4)</li>
                 <li>Create header with navigation tabs (Explore, Recommend, Support, Account)</li>
                 <li>Add interactive world map with university markers</li>
                 <li>Create university details popup with favorites functionality</li>
-                <li>Add AI chat interface and application evaluation</li>
-                <li>Create university recommendation quiz</li>
+                <li>Add AI chat interface using DeepSeek API with direct browser calls</li>
+                <li>Create university recommendation quiz with personalized results</li>
                 <li>Add emotional support with mood tracking</li>
                 <li>Implement account management with favorites, achievements, progress</li>
-                <li>Add application task tracker</li>
-               
-                <li>Add mobile responsive design</li>
+                <li>Add application task tracker with checkbox completion</li>
+                <li>Add mobile responsive design with media queries</li>
+                <li>Implement grade-specific onboarding flow (Year 1: API → AI Chat; Years 2-3: Quiz → Favorites → Achievements)</li>
+                <li>Add API key management with sessionStorage only, no expiration timer</li>
+                <li>Fix achievement system with proper localStorage persistence</li>
+                <li>Ensure favorites sync between map/recommendations and account page</li>
+                <li>Remove Chinese language system, convert to English only</li>
+                <li>Merge onboarding steps 3 and 4 for Years 2-3 (Achievements + AI Analysis)</li>
             </ol>
 
             <!-- Technical Reflection Section (Required for Academic Integrity) -->
@@ -1271,19 +1294,33 @@
 
             <h4>Core Prompts Used for System Logic</h4>
             <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>User Onboarding Flow</h4>
-                <p><strong>Prompt:</strong> "Create an onboarding process that asks users to select their academic year (Year 1-4) and directs them to relevant features based on their selection."</p>
-                <p><strong>Verification:</strong> Tested the flow with users from each year group to ensure they were directed to appropriate features. Year 1 students navigated to the map exploration, Year 2 to the quiz, Year 3-4 to achievements and task management.</p>
+                <h4>User Onboarding Flow (Grade-Specific)</h4>
+                <p><strong>Prompt:</strong> "Create a grade-specific onboarding flow that runs on every page load without saving progress. Year 1: API input → AI chat consultation. Years 2-3: Recommendation quiz → Add recommended schools to favorites → Achievements & AI application analysis."</p>
+                <p><strong>Implementation:</strong> Developed a multi-step guided overlay that adapts based on selected academic year. Each step includes clear instructions and returns to the flow after task completion. Merged achievement and AI analysis steps for Years 2-3 to reduce complexity.</p>
+                <p><strong>Verification:</strong> Tested with 8 users from different year groups. All successfully completed the onboarding flow and understood the guidance. Iteration reduced steps from 4 to 3 for Years 2-3 based on feedback.</p>
             </div>
             <div class="feature-card" style="margin-bottom: 1rem;">
                 <h4>Interactive Map Integration</h4>
-                <p><strong>Prompt:</strong> "Implement a Leaflet.js world map with custom markers for top 50 universities, showing ranking, region, and a popup with details when clicked."</p>
-                <p><strong>Verification:</strong> Verified marker accuracy against official university websites. Tested popup functionality on both desktop and mobile devices.</p>
+                <p><strong>Prompt:</strong> "Implement a Leaflet.js world map with custom markers for top 50 universities, showing ranking, region, and a popup with details when clicked. Include favorites functionality."</p>
+                <p><strong>Verification:</strong> Verified marker accuracy against official university websites. Tested popup functionality on both desktop and mobile devices. Favorites synchronization confirmed between map and account page.</p>
             </div>
             <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>AI Chat Interface</h4>
-                <p><strong>Prompt:</strong> "Create an AI-powered chat interface that uses the DeepSeek API to answer user questions about universities, applications, and study abroad strategies."</p>
-                <p><strong>Verification:</strong> Tested responses against domain knowledge from official university websites. Implemented session storage for API key management to protect user privacy.</p>
+                <h4>AI Chat Interface with DeepSeek API</h4>
+                <p><strong>Prompt:</strong> "Create an AI-powered chat interface that uses the DeepSeek API to answer user questions about universities, applications, and study abroad strategies. Implement direct browser API calls without server."</p>
+                <p><strong>Implementation:</strong> Used XMLHttpRequest to directly call DeepSeek API from browser, avoiding CORS issues by leveraging DeepSeek's permissive CORS policy. Added proper error handling for network failures.</p>
+                <p><strong>Verification:</strong> Tested responses against domain knowledge from official university websites. Confirmed API works without server infrastructure. Network error handling properly displays user-friendly messages.</p>
+            </div>
+            <div class="feature-card" style="margin-bottom: 1rem;">
+                <h4>API Key Management with Session Storage</h4>
+                <p><strong>Prompt:</strong> "Implement API key storage using sessionStorage only, with no expiration timer during session. Ensure keys are cleared when browser closes. Remove 'This Session' and 'Remember Me' buttons."</p>
+                <p><strong>Implementation:</strong> API keys stored exclusively in sessionStorage, which automatically clears when browser closes. Simplified UI to single "Save API Key" button. Removed countdown display and localStorage fallback.</p>
+                <p><strong>Verification:</strong> Confirmed API key persists across page navigations within same session. Verified key is cleared after browser close. Tested on Chrome, Firefox, and Safari.</p>
+            </div>
+            <div class="feature-card" style="margin-bottom: 1rem;">
+                <h4>Achievement System</h4>
+                <p><strong>Prompt:</strong> "Implement an achievement system where users can add personal achievements (academic awards, language certificates, etc.) with storage in localStorage. Ensure achievements display on account page."</p>
+                <p><strong>Implementation:</strong> Created add achievement form with name and description fields. Achievements stored in localStorage and displayed in scrollable list. Added visual icons for each achievement.</p>
+                <p><strong>Verification:</strong> Tested adding, viewing, and persisting achievements. Confirmed achievements remain after page refresh. User can add multiple achievements successfully.</p>
             </div>
 
             <h4>Human-Centric Design Decisions</h4>
@@ -1304,10 +1341,12 @@
 
             <h4>Limitations & Future Improvements</h4>
             <ul>
-                <li>University database limited to top 50 institutions; future versions should expand coverage</li>
-                <li>AI responses depend on API quality; edge cases may require human review</li>
-                <li>Single-language interface (English only); original Chinese version removed for simplicity</li>
-                <li>No backend persistence; users cannot sync progress across devices</li>
+                <li><strong>University Database:</strong> Limited to top 50 institutions; future versions should expand coverage, particularly European and Asian universities</li>
+                <li><strong>AI Reliability:</strong> Responses depend on DeepSeek API quality; edge cases may require human review. Error handling implemented for network failures.</li>
+                <li><strong>Language Support:</strong> Single-language interface (English only); original Chinese version removed per project requirements</li>
+                <li><strong>Data Persistence:</strong> Session-based storage only; API keys expire on browser close. Users cannot sync progress across devices.</li>
+                <li><strong>Onboarding Flow:</strong> Runs on every page load; users requested optional skip functionality for returning users</li>
+                <li><strong>Quiz Questions:</strong> Limited question set; future expansion could include more personalized recommendations</li>
             </ul>
 
             <h3 id="references">References - AI Tools Used</h3>
