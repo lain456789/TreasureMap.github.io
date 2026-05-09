@@ -712,35 +712,40 @@
             
             <p>Treasure Map for Study Abroad is a planning and application assistance system designed specifically for Xi'an Jiaotong-Liverpool University (XJTLU) students.</p>
 
-            <h3>Project Background</h3>
-            <p>With globalization, more Chinese students choose to study abroad. However, the application process is complex, involving school selection, material preparation, language exams, and submission. Many students feel lost and stressed without effective tools.</p>
+            <h3>Motivation: The Why</h3>
+            <p>We chose the <strong>Social Connectivity & Student Development</strong> track because navigating the study abroad application process is exceptionally isolating and stressful for XJTLU students. Despite having abundant resources, students often struggle with information overload and application anxiety. Our motivation is to transform this high-pressure journey into an engaging, manageable, and emotionally supported experience.</p>
 
-            <h3>Research Methodology</h3>
-            <p>We conducted semi-structured interviews with 24 XJTLU students (6 from each year) and distributed questionnaires to 89 students to understand their pain points and needs during the study abroad application process.</p>
-
-            <h3>Requirements Analysis (R1-R5)</h3>
+            <h3>Research: The Gap</h3>
+            <p>We reviewed 4 academic papers and 4 commercial products to identify current design gaps:</p>
+            
             <div class="feature-grid">
                 <div class="feature-card">
-                    <h4>R1 - Information Access</h4>
-                    <p>Students need intuitive access to global university information, rankings, admission requirements, and program details.</p>
+                    <h4>Academic Research</h4>
+                    <ul>
+                        <li><strong>Paper 1 (Gamification in Ed):</strong><br><span style="color:var(--success);">Pros:</span> High engagement, clear goals, visual rewards.<br><span style="color:var(--danger);">Cons:</span> Ignores emotional stress, complex UI, lacks personalized AI.</li>
+                        <li><strong>Paper 2 (AI Matching Systems):</strong><br><span style="color:var(--success);">Pros:</span> Data-driven, reduces bias, fast processing.<br><span style="color:var(--danger);">Cons:</span> Overwhelming data, lacks human touch, poor bilingual UX.</li>
+                        <li><strong>Paper 3 (Stress Management):</strong><br><span style="color:var(--success);">Pros:</span> Good mood tracking, calming UI, clinical backing.<br><span style="color:var(--danger);">Cons:</span> Disconnected from actual tasks, boring over time, no peer interaction.</li>
+                        <li><strong>Paper 4 (Info Architecture):</strong><br><span style="color:var(--success);">Pros:</span> Comprehensive data, accurate rankings, good filters.<br><span style="color:var(--danger);">Cons:</span> Text-heavy, not mobile-friendly, ignores application timelines.</li>
+                    </ul>
                 </div>
                 <div class="feature-card">
-                    <h4>R2 - Planning Management</h4>
-                    <p>Students require tools to track application progress, manage deadlines, and organize preparation tasks systematically.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R3 - Personalized Guidance</h4>
-                    <p>Students need AI-powered personalized recommendations based on their academic background and preferences.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R4 - Emotional Support</h4>
-                    <p>Application anxiety is common; students need emotional support and stress-relief features.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R5 - Multilingual Support</h4>
-                    <p>XJTLU's bilingual environment requires seamless Chinese/English language switching.</p>
+                    <h4>Commercial Products</h4>
+                    <ul>
+                        <li><strong>Agency Portals (e.g., IDP):</strong><br><span style="color:var(--success);">Pros:</span> Authoritative data, established processes, direct links.<br><span style="color:var(--danger);">Cons:</span> Rigid interface, zero emotional support, unplayful.</li>
+                        <li><strong>Forums (e.g., ChaseDream):</strong><br><span style="color:var(--success);">Pros:</span> Rich peer experience, real-world tips, high trust.<br><span style="color:var(--danger);">Cons:</span> Unstructured data, hard to track progress, anxiety-inducing.</li>
+                        <li><strong>Notion Templates:</strong><br><span style="color:var(--success);">Pros:</span> Highly customizable, free, clear task lists.<br><span style="color:var(--danger);">Cons:</span> Manual updates required, no AI suggestions, visually dry.</li>
+                        <li><strong>AI Essay Tools:</strong><br><span style="color:var(--success);">Pros:</span> Instant feedback, grammar checks, writing tips.<br><span style="color:var(--danger);">Cons:</span> Lacks holistic planning context, generic advice, no visual progress.</li>
+                    </ul>
                 </div>
             </div>
+
+            <h3>Requirements: The 3 "Must-Haves" for a Playful Experience</h3>
+            <p>To ensure our system is not just another boring tool, we defined three core requirements to make it "Playful":</p>
+            <ul>
+                <li><span class="highlight">Interactive Visual Exploration:</span> Instead of reading dry lists, users must be able to visually "travel" the globe via an interactive map to discover universities.</li>
+                <li><span class="highlight">Gamified Task Tracking:</span> Completing stressful application steps (like passing IELTS) must trigger visual rewards, unlocking achievements to boost dopamine and motivation.</li>
+                <li><span class="highlight">Emotion-Driven AI Interactions:</span> The system must track user moods and provide quirky, empathetic micro-interactions (like supportive quotes or virtual high-fives) to alleviate anxiety.</li>
+            </ul>
 
             <h3>Ethical Considerations</h3>
             <p><span class="highlight">Informed Consent:</span> All user testing participants signed informed consent forms, understanding data usage and privacy policies.</p>
@@ -1107,28 +1112,33 @@
                 <li>Mobile Adaptation: Responsive design tested on iOS/Android</li>
             </ul>
 
-            <h3>Iterations Based on Feedback</h3>
-            <div class="process-steps">
-                <div class="step">
-                    <div class="step-number">V1</div>
-                    <div class="step-content">
-                        <h4>Initial Prototype</h4>
-                        <p>Basic map and task features; users reported navigation confusion</p>
-                    </div>
+           <h3>Project Background</h3>
+            <p>With globalization, more Chinese students choose to study abroad. However, the application process is complex, involving school selection, material preparation, language exams, and submission. Many students feel lost and stressed without effective tools.</p>
+
+            <h3>Research Methodology</h3>
+            <p>We conducted semi-structured interviews with 24 XJTLU students (6 from each year) and distributed questionnaires to 89 students to understand their pain points and needs during the study abroad application process.</p>
+
+            <h3>Requirements Analysis (R1-R5)</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>R1 - Information Access</h4>
+                    <p>Students need intuitive access to global university information, rankings, admission requirements, and program details.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">V2</div>
-                    <div class="step-content">
-                        <h4>Redesigned Navigation</h4>
-                        <p>Added bottom navigation bar, improved onboarding flow</p>
-                    </div>
+                <div class="feature-card">
+                    <h4>R2 - Planning Management</h4>
+                    <p>Students require tools to track application progress, manage deadlines, and organize preparation tasks systematically.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">V3</div>
-                    <div class="step-content">
-                        <h4>Enhanced Features</h4>
-                        <p>Added AI advisor, improved mobile responsiveness</p>
-                    </div>
+                <div class="feature-card">
+                    <h4>R3 - Personalized Guidance</h4>
+                    <p>Students need AI-powered personalized recommendations based on their academic background and preferences.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>R4 - Emotional Support</h4>
+                    <p>Application anxiety is common; students need emotional support and stress-relief features.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>R5 - Multilingual Support</h4>
+                    <p>XJTLU's bilingual environment requires seamless Chinese/English language switching.</p>
                 </div>
             </div>
         </div>
@@ -1166,28 +1176,38 @@
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-avatar"><i data-lucide="user"></i></div>
-                    <div class="member-name">Haocheng Tang</div>
-                    <div class="member-role">Project Leader & Frontend Developer</div>
-                </div>
-                <div class="team-member">
-                    <div class="member-avatar"><i data-lucide="user"></i></div>
-                    <div class="member-name">Liqun Su</div>
-                    <div class="member-role">UI/UX Designer</div>
-                </div>
-                <div class="team-member">
-                    <div class="member-avatar"><i data-lucide="user"></i></div>
-                    <div class="member-name">Jinyu Zhu</div>
-                    <div class="member-role">AI Integration Specialist</div>
-                </div>
-                <div class="team-member">
-                    <div class="member-avatar"><i data-lucide="user"></i></div>
-                    <div class="member-name">Xiangyu Lou</div>
-                    <div class="member-role">Quality Assurance</div>
-                </div>
-            </div>
+         <h3>Team Contributions</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-muted);">
+                <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; text-align: left;">
+                    <tr>
+                        <th style="padding: 1rem;">Member Name</th>
+                        <th style="padding: 1rem;">Primary Role</th>
+                        <th style="padding: 1rem;">Specific Contributions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 1rem; font-weight: 600;">Haocheng Tang</td>
+                        <td style="padding: 1rem;">Project Leader & Dev</td>
+                        <td style="padding: 1rem;">Managed project timeline, led the Vibe Coding process, integrated Leaflet.js map.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted); background: rgba(255,255,255,0.02);">
+                        <td style="padding: 1rem; font-weight: 600;">Liqun Su</td>
+                        <td style="padding: 1rem;">UI/UX Designer</td>
+                        <td style="padding: 1rem;">Created low-fi and high-fi Figma prototypes, designed user journey map, styled CSS variables.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 1rem; font-weight: 600;">Jinyu Zhu</td>
+                        <td style="padding: 1rem;">AI Integration Specialist</td>
+                        <td style="padding: 1rem;">Implemented DeepSeek API, designed AI advisor prompts, built the university recommendation algorithm.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; font-weight: 600;">Xiangyu Lou</td>
+                        <td style="padding: 1rem;">Quality Assurance & Testing</td>
+                        <td style="padding: 1rem;">Conducted SUS usability testing, gathered user feedback, ensured mobile responsiveness.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="content-panel" id="vibe-panel">
