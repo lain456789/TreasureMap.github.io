@@ -2345,33 +2345,7 @@
                     <h2><i data-lucide="bookmark"></i> My Favorites</h2>
                 </div>
                 <div class="fav-list" id="fav-list">
-                    <div class="fav-item">
-                        <div>
-                            <div class="fav-name">University of Cambridge</div>
-                            <div class="fav-meta">United Kingdom • Top 10</div>
-                        </div>
-                        <button class="icon-btn" onclick="removeFavorite(this)">
-                            <i data-lucide="x" style="width:16px;"></i>
-                        </button>
-                    </div>
-                    <div class="fav-item">
-                        <div>
-                            <div class="fav-name">Imperial College London</div>
-                            <div class="fav-meta">United Kingdom • Engineering</div>
-                        </div>
-                        <button class="icon-btn" onclick="removeFavorite(this)">
-                            <i data-lucide="x" style="width:16px;"></i>
-                        </button>
-                    </div>
-                    <div class="fav-item">
-                        <div>
-                            <div class="fav-name">MIT</div>
-                            <div class="fav-meta">USA • Science & Technology</div>
-                        </div>
-                        <button class="icon-btn" onclick="removeFavorite(this)">
-                            <i data-lucide="x" style="width:16px;"></i>
-                        </button>
-                    </div>
+                    <!-- Dynamically loaded from localStorage -->
                 </div>
             </div>
 
@@ -2986,54 +2960,99 @@
             document.querySelector('.main-content').scrollTop = 0;
         }
 
-        // Achievement System
-        let achievements = JSON.parse(localStorage.getItem('achievements')) || [
-            { id: 1, title: 'First University Explored', date: '2026-01-15', desc: '' },
-            { id: 2, title: 'Added 5 Favorites', date: '2026-02-20', desc: '' }
-        ];
+        // Achievement System - Optimized with error handling
+        let achievements = [];
+        try {
+            const savedAchievements = localStorage.getItem('achievements');
+            if (savedAchievements) {
+                achievements = JSON.parse(savedAchievements);
+                // Validate data format
+                if (!Array.isArray(achievements)) {
+                    achievements = [];
+                }
+            }
+        } catch (e) {
+            console.error('Failed to load achievements:', e);
+            achievements = [];
+        }
+        // Initialize with default achievements if empty
+        if (achievements.length === 0) {
+            achievements = [
+                { id: 1, title: 'First University Explored', date: '2026-01-15', desc: '' },
+                { id: 2, title: 'Added 5 Favorites', date: '2026-02-20', desc: '' }
+            ];
+            localStorage.setItem('achievements', JSON.stringify(achievements));
+        }
 
         function loadAchievements() {
             const achList = document.getElementById('ach-list');
             const statAch = document.getElementById('stat-ach');
-            if (!achList) return;
             
-            achList.innerHTML = achievements.map(ach => `
-                <div class="ach-item" data-id="${ach.id}">
-                    <div class="ach-icon"><i data-lucide="award" style="width:20px;"></i></div>
-                    <div class="ach-content">
-                        <div class="ach-name">${ach.title}</div>
-                        <div class="ach-date">${ach.date}</div>
-                        ${ach.desc ? `<div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">${ach.desc}</div>` : ''}
+            if (!achList) {
+                console.error('ach-list element not found');
+                return;
+            }
+            
+            if (achievements.length === 0) {
+                achList.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">No achievements yet. Add your first one!</div>';
+            } else {
+                achList.innerHTML = achievements.map(ach => `
+                    <div class="ach-item" data-id="${ach.id}">
+                        <div class="ach-icon"><i data-lucide="award" style="width:20px;"></i></div>
+                        <div class="ach-content">
+                            <div class="ach-name">${ach.title || 'Untitled Achievement'}</div>
+                            <div class="ach-date">${ach.date || 'No date'}</div>
+                            ${ach.desc ? `<div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">${ach.desc}</div>` : ''}
+                        </div>
+                        <button class="icon-btn" onclick="deleteAchievement(${ach.id})" title="Delete achievement">
+                            <i data-lucide="trash-2" style="width:16px;"></i>
+                        </button>
                     </div>
-                    <button class="icon-btn" onclick="deleteAchievement(${ach.id})">
-                        <i data-lucide="trash-2" style="width:16px;"></i>
-                    </button>
-                </div>
-            `).join('');
+                `).join('');
+            }
             
             if (statAch) statAch.textContent = achievements.length;
             lucide.createIcons();
         }
 
         function openAddAchievementModal() {
-            document.getElementById('ach-title').value = '';
-            document.getElementById('ach-date').value = new Date().toISOString().split('T')[0];
-            document.getElementById('ach-desc').value = '';
-            document.getElementById('achievement-modal').classList.add('active');
+            const modal = document.getElementById('achievement-modal');
+            if (!modal) {
+                console.error('achievement-modal element not found');
+                return;
+            }
+            
+            const titleInput = document.getElementById('ach-title');
+            const dateInput = document.getElementById('ach-date');
+            const descInput = document.getElementById('ach-desc');
+            
+            if (titleInput) titleInput.value = '';
+            if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+            if (descInput) descInput.value = '';
+            
+            modal.classList.add('active');
             lucide.createIcons();
         }
 
         function closeAchievementModal() {
-            document.getElementById('achievement-modal').classList.remove('active');
+            const modal = document.getElementById('achievement-modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
 
         function saveAchievement() {
-            const title = document.getElementById('ach-title').value.trim();
-            const date = document.getElementById('ach-date').value;
-            const desc = document.getElementById('ach-desc').value.trim();
+            const titleInput = document.getElementById('ach-title');
+            const dateInput = document.getElementById('ach-date');
+            const descInput = document.getElementById('ach-desc');
+            
+            const title = titleInput ? titleInput.value.trim() : '';
+            const date = dateInput ? dateInput.value : '';
+            const desc = descInput ? descInput.value.trim() : '';
             
             if (!title) {
                 alert('Please enter an achievement title');
+                if (titleInput) titleInput.focus();
                 return;
             }
             
@@ -3591,16 +3610,105 @@
             document.getElementById('stat-progress').textContent = percent;
         }
 
-        // Favorites
+        // Favorites System - Optimized with localStorage persistence
+        let favorites = [];
+        
+        function initFavorites() {
+            try {
+                const savedFavorites = localStorage.getItem('favorites');
+                if (savedFavorites) {
+                    favorites = JSON.parse(savedFavorites);
+                    if (!Array.isArray(favorites)) {
+                        favorites = [];
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load favorites:', e);
+                favorites = [];
+            }
+            // Initialize with default favorites if empty
+            if (favorites.length === 0) {
+                favorites = [
+                    'University of Cambridge',
+                    'Imperial College London',
+                    'MIT'
+                ];
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            }
+            loadFavorites();
+        }
+
         function addToFavorites(name) {
+            if (!name) {
+                console.error('University name is required');
+                return;
+            }
+            
+            if (favorites.includes(name)) {
+                alert(`${name} is already in your favorites!`);
+                closeModal();
+                return;
+            }
+            
+            favorites.push(name);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            loadFavorites();
             alert(`${name} added to your favorites!`);
             closeModal();
         }
 
         function removeFavorite(button) {
-            button.parentElement.remove();
-            const favCount = document.querySelectorAll('.fav-item').length;
-            document.getElementById('stat-fav').textContent = favCount;
+            const favItem = button.parentElement;
+            const favName = favItem.querySelector('.fav-name').textContent;
+            
+            if (confirm(`Remove ${favName} from favorites?`)) {
+                favorites = favorites.filter(fav => fav !== favName);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                favItem.remove();
+                
+                const favCount = document.querySelectorAll('.fav-item').length;
+                const statFav = document.getElementById('stat-fav');
+                if (statFav) statFav.textContent = favCount;
+                
+                // Show empty state if no favorites
+                const favList = document.getElementById('fav-list');
+                if (favList && favCount === 0) {
+                    favList.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">No favorites yet. Add universities from the map!</div>';
+                }
+            }
+        }
+
+        function loadFavorites() {
+            const favList = document.getElementById('fav-list');
+            const statFav = document.getElementById('stat-fav');
+            
+            if (!favList) {
+                console.error('fav-list element not found');
+                return;
+            }
+            
+            if (favorites.length === 0) {
+                favList.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">No favorites yet. Add universities from the map!</div>';
+            } else {
+                favList.innerHTML = favorites.map(favName => {
+                    const uni = universities.find(u => u.name === favName);
+                    const meta = uni ? `${uni.country} • ${uni.rank || 'Unranked'}` : 'Unknown';
+                    return `
+                        <div class="fav-item">
+                            <div>
+                                <div class="fav-name">${favName}</div>
+                                <div class="fav-meta">${meta}</div>
+                            </div>
+                            <button class="icon-btn" onclick="removeFavorite(this)" title="Remove from favorites">
+                                <i data-lucide="x" style="width:16px;"></i>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            if (statFav) statFav.textContent = favorites.length;
+            lucide.createIcons();
         }
 
         // Application evaluation
@@ -3968,12 +4076,27 @@ Format your response in a clear, easy-to-read way with headings and bullet point
             }
         }
 
-        // Initialize progress
-        updateProgress();
-        loadTodos();
-        loadAchievements();
-        updateApiDisplay();
-        lucide.createIcons();
+        // Initialize progress - Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, initializing...');
+            initFavorites();
+            updateProgress();
+            loadTodos();
+            loadAchievements();
+            updateApiDisplay();
+            lucide.createIcons();
+            console.log('Initialization complete');
+        });
+        
+        // Also initialize immediately in case DOM is already loaded
+        if (document.readyState !== 'loading') {
+            initFavorites();
+            updateProgress();
+            loadTodos();
+            loadAchievements();
+            updateApiDisplay();
+            lucide.createIcons();
+        }
     </script>
 
     <!-- University Detail Overlay (Full Screen) -->
