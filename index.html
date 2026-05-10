@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -2575,7 +2575,7 @@
             <hr style="border: 1px solid var(--border-muted); margin: 2.5rem 0;">
 
             <h3>5.4 Technical Reflection: AI-Assisted Development</h3>
-            <p>This project utilized "Vibe Coding" methodology, using natural language to guide incremental development via AI tools.</p>
+            <p>This project utilized "Vibe Coding" methodology, using natural language to guide incremental development via AI tools. Throughout the development process, we maintained a systematic approach to AI-assisted coding, documenting prompts and outcomes for reproducibility.</p>
 
             <div class="feature-grid">
                 <div class="feature-card">
@@ -2586,6 +2586,10 @@
                     <h4><i data-lucide="cpu" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> GPT-4 / Cursor</h4>
                     <p>Natural-language prompting for code iteration, feature generation, and documentation.</p>
                 </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="git-commit" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> GitHub AI Log</h4>
+                    <p>All AI prompts used in development are documented in the <code>ailog/</code> directory of our repository.</p>
+                </div>
             </div>
 
             <h4>P–O–A Case: AI Chat Interface Integration</h4>
@@ -2594,6 +2598,9 @@
                 <p style="margin-bottom: 0.5rem;"><strong>O (Outcome):</strong> Successfully implemented CORS-enabled browser calls, but initial error handling for invalid keys was missing.</p>
                 <p style="margin-bottom: 0;"><strong>A (Action):</strong> Refined implementation to include specific error messages for rate limits and invalid API formats.</p>
             </div>
+
+            <h4>AI Prompt Documentation</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">All prompts used during development, including those for feature implementation, UI design, and documentation, are archived in the GitHub repository at <code>ailog/prompts.md</code>. This allows for full transparency and reproducibility of our AI-assisted development process.</p>
 
             <h3>5.5 AI Tools References</h3>
             <div style="font-size: 0.85rem; color: var(--text-muted); background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
@@ -2686,11 +2693,8 @@
 
             <h3>3.3 Low-Fidelity Prototype (Figma)</h3>
             <p>Our low-fidelity prototype was created in Figma to validate core interaction patterns before development. Replace <code>REPLACE_WITH_TEAM_FILE</code> in the link below with your team’s clickable Figma prototype (Proto or presentation URL).</p>
-            <div style="background: var(--bg-secondary); border-radius: 12px; padding: 2rem; text-align: center; margin: 1rem 0; border: 2px dashed var(--border-muted);">
-                <i data-lucide="figma" style="width: 64px; height: 64px; color: var(--primary-light); margin-bottom: 1rem;"></i>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Screens: Onboarding → Map Explore → University Detail → AI Chat → Quiz → Achievements → Account</p>
-                <a href="https://www.figma.com/file/REPLACE_WITH_TEAM_FILE" target="_blank" rel="noopener noreferrer" class="btn" style="font-size: 0.9rem; padding: 0.7rem 1.5rem;">Open Figma prototype</a>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem;">URL template: <code>https://www.figma.com/proto/...</code></p>
+            <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; text-align: center; margin: 1rem 0;">
+                <img src="images/figma.png" alt="Figma Low-Fidelity Prototype" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
             <h3>3.4 Technical Architecture (Early Sketch)</h3>
