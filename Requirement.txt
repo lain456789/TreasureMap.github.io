@@ -1,0 +1,107 @@
+Please find some general suggestions when preparing for your portfolio and video submissions:
+1.	Please document your requirement, design, prototyping, and evaluation process clearly in the portfolio. You may include a timeline to better illustrate your progress and iterations.
+2.	Try to align your requirement, design, prototype, and evaluation when you design your portfolio. For example, number the R1, R2, R3, and map them clearly to the Design Goal 1, 2, 3, and then System Feature 1, 2, 3.
+3.	Informed consent should be obtained prior to any data collection. Please remember to acknowledge the ethical considerations in your portfolio and demo video.
+4.	When introducing your design, in addition to what you did, think about why you did it and how they relate to each other & others’ work.
+5.	When recording the demo video, do not just show the sequence of use (what), show a logical structure (why and how).
+6.	If you haven't conducted any evaluations, try to collect more user feedback, document / record them well, and use them as evidence to improve your design. 
+7.	Remember to explain your vibe coding process in the portfolio. In addition to an overview about the tools used, it would be good to discuss what worked and what didn't.
+Final notes:
+1.	The poster exhibition will end on 30 April - please take advantage of the public display and learn from each other's good works. If you want to keep the poster for yourself. you may take it down on Thursday.
+2.	I have taken some pictures at the end of our presentation day, you may find them here: https://box.xjtlu.edu.cn/d/449eb9794cf849899579/
+3.	It was a pity that I did not have a chance to take pictures of your presentation moments - if you have taken any good photos that you'd like to share, I'd really love to see them! Please upload them here: https://box.xjtlu.edu.cn/d/daffe74c467c4020833f/
+4.	If any of you want to further develop your projects into academic papers or really deploy them, please feel free to send me an email and we can meet to discuss about it.
+This announcement includes some important QAs about the final submission.
+1.	What to submit and how?
+o	What? Three files using the naming conventions as specified on the coursework specification:
+	CPT208_GroupA1-1_ProjectName_Portfolio.zip - this is the zip file of your GitHub repository
+	CPT208_GroupA1-1_ProjectName_DemoSystem.zip - this is the zip file of your system development folder
+	CPT208_GroupA1-1_ProjectName_DemoVideo.mp4 - this is your 2-min system demo video
+o	How?
+	Files here: https://core.xjtlu.edu.cn/mod/assign/view.php?id=87534
+	Links here: https://core.xjtlu.edu.cn/mod/questionnaire/view.php?id=131735
+	Your web link should work without needing to sign up / log in. If really needed, please ensure a default user account that we can access with the username cpt208 and password cpt208.
+2.	Submission of files exceeding learning mall size limit?
+o	If you can submit your files in learning mall without issue, great, go with it.
+o	Otherwise, please upload MP4 video only on learning mall, and use this box link for the two zip files: https://box.xjtlu.edu.cn/u/d/fb82911f6cc141069cf5/
+3.	Do I need backend? Should I deploy the system to a cloud server?
+o	No, cloud server is not a must-have.
+o	If you have deployed this, ensure link access til 30 June.
+4.	How to show my system function without a cloud server?
+o	Run locally and record the video demo.
+5.	How long is the video?
+o	Max 2 mins.
+6.	Video demo - can I use AI? voice?
+o	You may use AI to generate some visuals, but this should always be noted. Acknowledge tools used in the corner (e.g., Visual effect generated using xxx) & reference in the end (see example below).
+o	You may use AI-generated voice for the narration (voiceover). Again, acknowledge and reference this in the end.
+o	Example of acknowledging AI in the end:
+	This video includes AI-generated content. The footage from 00:00 to 00:05 was generated using xxx; the VoiceOver was generated using xxx; ...
+o	Example of referencing AI:
+	Claude 3.5 Sonnet, v1.0, accessed on 2026-02-24, available at https://claude.ai. Used for refining the user persona descriptions and generating the initial storyboard script for the Video Demo.
+7.	Technical Reflection on AI use in the portfolio, what to write?
+o	Reflect on two specific examples.
+o	Try to think in this way:
+P (Prompt): The specific natural language instruction + context provided.
+O (Outcome): What did the AI provide? What worked and what didn't? (Success, Buggy, or Irrelevant)
+A (Action): What did you do next? (Modified the code about xxx, refined the prompt to xxx, or discarded the "vibe").
+For the Portfolio, System & Video Demo submissions, students may make substantive use of AI, including advanced AI integration to help you build functional web-based prototypes. However, the core design logic and the "human-centric" justification must be your own.
+
+Permitted AI Uses for System & Video
+- Vibe Coding & Assisted Scripting: You may use LLMs to generate code snippets, debug logic, or scaffold your web application.  
+- Video Post-Production: You may use AI for generating voiceovers, cleaning audio, or assisting with video transitions to achieve a professional finish.  
+
+The use of AI tools beyond the scope outlined above would constitute a breach of the University Academic Integrity Policy and will result in penalties, which may include an overall mark of zero for the assignment and a formal notification of academic misconduct. If you are unsure on whether a specific use of AI is allowed or not, please consult the module leader.
+
+Mandatory Requirements
+- Reflection in Portfolio: If you use "vibe coding" to build your system, you must include a "Technical Reflection" section in your Process Portfolio. You must explain:
+- What prompts were used to generate the core logic.
+- How you verified the code met your user requirements.  
+- Any ethical considerations regarding AI-generated code (e.g., accessibility or bias).  
+- Mandatory Citation: Every tool used must be documented in your portfolio's reference list.  
+
+Citation Example
+In your portfolio's reference list, please use the following format:
+[1] Claude 3.5 Sonnet, v1.0, accessed on 2026-02-24, available at [https://claude.ai](https://claude.ai/). Used for refining the user persona descriptions and generating the initial storyboard script for the Video Demo.
+[2] Cursor, v0.40, accessed on 2026-02-24, available at [https://cursor.com](https://cursor.com/). Used for vibe coding the system's backend API and debugging the CSS layout for mobile responsiveness.
+
+Instructions for the Process Portfolio
+In this submission, you should present your work with a focus on the followings:
+1. Demonstrate an iterative design, prototyping, and evaluation process
+2. Explain the prototypes used in the design process, with comparisons of alternatives
+3. Use appropriate methods to evaluate the design alternatives
+4. Show a valid collection and analysis of data from the correct target user
+demographics with reasonable sample sizes
+5. Demonstrate a good discussion on the evaluation results and design implications
+Specifically, the Process Portfolio should be a window to showcase your work. You should
+cover the following content in your portfolio:
+1. Motivation & Research
+• The Why: A 200-word statement on why your group chose your specific track
+(Heritage, Social, or Active).
+• The Gap: Summarize 4 academic papers and 4 commercial products. Instead of a
+summary, list 3 things they did well and 3 things they missed.
+• The Stakeholders: Define primary and secondary users with distinct Personas.
+2. User Requirements
+• User Journey Map: A visual map showing the current pain points of your target
+users.
+• Requirements List: A bulleted list of 3 must-haves for the system to be considered
+“Playful”.
+• Evidence of Life: Upload 5 photos or short clip videos of your group interviewing a
+potential user or observing the site (e.g., Suzhou Grand Canal).
+3. Ideation & Alternatives
+• The “Crazy Eights”: Photos of 8 rapid hand-drawn sketches of different UI ideas.
+• Design Alternatives: Compare at least 2-3 different ways the system could work and
+explain why you chose one over the other(s).
+• Low-Fi Prototype: A link to a clickable Figma prototype.
+4. Technical Implementation
+• System Architecture: A diagram showing how your Web App handles data.
+• High-Fi Prototype: Ideally a URL to the hosted system (e.g., yourproject.github.io or
+yourproject.vercel.app).
+• Individual Contributions: A table showing exactly what each of the 4 members built
+(Code, UI Design, Content, or Testing, etc.).
+5. Evaluation & Reflection
+• Usability Testing: Results from testing your “Alpha” version with 3 real people.
+• Iterative Refinement: “Before and After” screenshots showing a change you made
+based on user feedback.
+• Final Reflection: A brief discussion on the social/ethical implications of your design,
+and the use of AI in this project (check more details in the Generative AI Permissions
+section).

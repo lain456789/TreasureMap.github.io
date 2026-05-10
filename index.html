@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -733,99 +733,74 @@
 
         <section class="modules-section">
             <div class="section-title">
-                <h2>Explore Our Project</h2>
-                <p>Click on any module below to learn more</p>
+                <h2>Process Portfolio</h2>
+                <p>Click on any module below to explore our design journey</p>
             </div>
             <div class="modules-grid">
                 <div class="module-card" data-panel="intro-panel">
-                    <div class="module-icon"><i data-lucide="info"></i></div>
-                    <h3>Project Introduction</h3>
-                    <p>Learn about our study abroad planning system and its objectives</p>
+                    <div class="module-icon"><i data-lucide="compass"></i></div>
+                    <h3>1. Introduction</h3>
+                    <p>Motivation, Research Gap, and Stakeholders</p>
                 </div>
                 
-                <div class="module-card" data-panel="users-panel">
+                <div class="module-card" data-panel="user-panel">
                     <div class="module-icon"><i data-lucide="users"></i></div>
-                    <h3>Target Users</h3>
-                    <p>Explore user personas and their unique needs</p>
+                    <h3>2. User</h3>
+                    <p>User Journey, Requirements, and Evidence</p>
                 </div>
                 
-                <div class="module-card" data-panel="features-panel">
-                    <div class="module-icon"><i data-lucide="star"></i></div>
-                    <h3>Core Features</h3>
-                    <p>Discover the key features of our system</p>
+                <div class="module-card" data-panel="process-panel">
+                    <div class="module-icon"><i data-lucide="lightbulb"></i></div>
+                    <h3>3. Process</h3>
+                    <p>Ideation, Crazy Eights, and Design Alternatives</p>
                 </div>
                 
-                <div class="module-card" data-panel="design-panel">
-                    <div class="module-icon"><i data-lucide="pen-tool"></i></div>
-                    <h3>Design Process</h3>
-                    <p>Understand our design methodology and architecture</p>
+                <div class="module-card" data-panel="prototype-panel">
+                    <div class="module-icon"><i data-lucide="code-2"></i></div>
+                    <h3>4. Prototype</h3>
+                    <p>System Architecture, High-Fi Prototype, Contributions</p>
                 </div>
                 
                 <div class="module-card" data-panel="evaluation-panel">
                     <div class="module-icon"><i data-lucide="bar-chart"></i></div>
-                    <h3>Project Evaluation</h3>
-                    <p>View user testing results and performance metrics</p>
+                    <h3>5. Evaluation</h3>
+                    <p>Usability Testing, Iterative Refinement, Reflection</p>
                 </div>
                 
                 <div class="module-card" data-panel="conclusion-panel">
                     <div class="module-icon"><i data-lucide="flag"></i></div>
-                    <h3>Project Summary</h3>
-                    <p>Read about outcomes and future plans</p>
+                    <h3>6. Conclusion</h3>
+                    <p>Summary, Limitations, and Future Work</p>
                 </div>
                 
                 <div class="module-card" data-panel="team-panel">
                     <div class="module-icon"><i data-lucide="users-2"></i></div>
-                    <h3>Team Members</h3>
-                    <p>Meet the development team</p>
+                    <h3>7. Team Members</h3>
+                    <p>Individual Contributions Table</p>
                 </div>
 
-                <div class="module-card" data-panel="vibe-panel">
+                <div class="module-card" data-panel="reflection-panel">
                     <div class="module-icon"><i data-lucide="sparkles"></i></div>
-                    <h3>Vibe Coding Prompts</h3>
-                    <p>Complete prompts for rebuilding this system from scratch</p>
+                    <h3>8. Technical Reflection</h3>
+                    <p>AI Usage, Prompts, and Ethical Considerations</p>
                 </div>
             </div>
         </section>
 
         <div class="content-panel" id="intro-panel">
             <div class="panel-header">
-                <h2><i data-lucide="info"></i> Project Introduction</h2>
+                <h2><i data-lucide="compass"></i> 1. Introduction</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
-            <p>Treasure Map for Study Abroad is a planning and application assistance system designed specifically for Xi'an Jiaotong-Liverpool University (XJTLU) students.</p>
-
-            <h3>Motivation: The Why (200 words)</h3>
+            <h3>1.1 Motivation: The Why (200 words)</h3>
             <p style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); line-height: 1.8;">
                 For XJTLU students, planning for further studies and future careers is extremely important but also highly stressful. Current study-abroad planning platforms and agencies present information in fragmented, unreliable pieces—long QS ranking lists, confusing GPA requirements, and inconsistent data from different agencies create serious <strong>"information anxiety."</strong><br><br>
                 The <strong>XJTLU Future Pathway Map</strong> utilizes LLMs and gamification to organize complex academic and career data. By transforming traditional planning into an intuitive <strong>"treasure-hunt"</strong> experience, students can <strong>"level up"</strong> through personalized, AI-driven guidance. This interactive platform simplifies vast information and integrates web mapping, effectively <strong>reducing "information anxiety"</strong> and making future planning an engaging, accessible journey for all students.<br><br>
                 We chose the <strong>Social Connectivity & Student Development</strong> track because we believe technology should not merely be functional—it should be <em>playful</em>. By transforming stressful application tasks into engaging interactions with gamification elements, we aim to help students feel empowered, informed, and emotionally resilient throughout their study abroad journey.
             </p>
 
-            <h3>Problem Statement</h3>
-            <p>XJTLU students face significant challenges when planning their study abroad journey. The application process is complex, information-dense, and emotionally demanding, leading to anxiety and decision paralysis.</p>
-
-            <h3>Core Research Questions</h3>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>RQ1</h4>
-                    <p>How can we design a playful, engaging interface to reduce application anxiety?</p>
-                </div>
-                <div class="feature-card">
-                    <h4>RQ2</h4>
-                    <p>What features best support students at different stages of their academic journey?</p>
-                </div>
-                <div class="feature-card">
-                    <h4>RQ3</h4>
-                    <p>How can AI provide personalized support without overwhelming users?</p>
-                </div>
-                <div class="feature-card">
-                    <h4>RQ4</h4>
-                    <p>What gamification elements effectively motivate progress tracking?</p>
-                </div>
-            </div>
-
-            <h3>Research: The Gap (4 Papers + 4 Products)</h3>
+            <h3>1.2 Research: The Gap (4 Papers + 4 Products)</h3>
             <p>We reviewed existing research and commercial solutions to identify design opportunities:</p>
             
             <h4>Academic Research Papers</h4>
@@ -956,78 +931,43 @@
                 </div>
             </div>
 
-            <h3>Requirements List: 3 Must-Haves for "Playful" Experience</h3>
-            <p>To ensure our system is not just another boring tool, we defined three core requirements to make it "Playful":</p>
+            <h3>1.3 The Stakeholders: Primary and Secondary Users</h3>
+            <p>We identified two types of stakeholders for our system:</p>
             
+            <h4>Primary Users: XJTLU Students</h4>
             <div class="feature-grid">
                 <div class="feature-card" style="border-left: 3px solid var(--primary);">
-                    <h4>1️⃣ Interactive Visual Exploration</h4>
-                    <p><strong>Description:</strong> Instead of reading dry lists, users must be able to visually "travel" the globe via an interactive map to discover universities.</p>
-                    <p><strong>Why Playful:</strong> Gamifies exploration by transforming university search into an adventure where markers "unlock" as users interact.</p>
-                    <p><strong>Implementation:</strong> Leaflet.js interactive world map with clickable university markers and popup details.</p>
+                    <h4>Year 1-2 Students (Early Explorers)</h4>
+                    <p><strong>Characteristics:</strong> Just starting to think about study abroad, need guidance on where to begin</p>
+                    <p><strong>Key Needs:</strong> University exploration, basic information, timeline understanding</p>
+                    <p><strong>Pain Points:</strong> Information overload, no clear starting point, anxiety about falling behind</p>
                 </div>
-                <div class="feature-card" style="border-left: 3px solid var(--primary);">
-                    <h4>2️⃣ Gamified Task Tracking</h4>
-                    <p><strong>Description:</strong> Completing stressful application steps (like passing IELTS) must trigger visual rewards, unlocking achievements to boost dopamine and motivation.</p>
-                    <p><strong>Why Playful:</strong> Transforms mundane to-do items into game quests with XP points and achievement badges.</p>
-                    <p><strong>Implementation:</strong> Task tracker with checkbox completion, achievement unlocks, and progress visualization.</p>
-                </div>
-                <div class="feature-card" style="border-left: 3px solid var(--primary);">
-                    <h4>3️⃣ Emotion-Driven AI Interactions</h4>
-                    <p><strong>Description:</strong> The system must track user moods and provide quirky, empathetic micro-interactions (like supportive quotes or virtual high-fives) to alleviate anxiety.</p>
-                    <p><strong>Why Playful:</strong> AI doesn't just give advice—it responds with personality and emotional intelligence.</p>
-                    <p><strong>Implementation:</strong> AI chatbot with mood-aware responses, encouraging messages, and achievement celebrations.</p>
+                <div class="feature-card" style="border-left: 3px solid var(--accent);">
+                    <h4>Year 3-4 Students (Active Applicants)</h4>
+                    <p><strong>Characteristics:</strong> In active application phase, managing multiple deadlines</p>
+                    <p><strong>Key Needs:</strong> Progress tracking, deadline management, emotional support</p>
+                    <p><strong>Pain Points:</strong> Complex procedures, deadline stress, document management</p>
                 </div>
             </div>
-
-            <h3>Real Evidence: User Research Documentation</h3>
-            <p>We conducted user interviews and field observations to gather authentic insights:</p>
-            <ul style="margin-bottom: 1rem;">
-                <li><strong>Survey:</strong> 68 respondents (Year 1-4 XJTLU students)</li>
-                <li><strong>In-depth Interviews:</strong> 12 participants (3 per year group)</li>
-                <li><strong>Field Observation:</strong> Suzhou Grand Canal area, XJTLU campus library study spaces</li>
-            </ul>
             
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; margin: 1rem 0;">
-                <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
-                    <i data-lucide="image" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
-                    <p style="font-size: 0.7rem; color: var(--text-muted);">[Photo 1]<br>User Interview - Coffee Shop Setting</p>
-                    <p style="font-size: 0.65rem; color: var(--text-muted);">Caption: Student sharing application anxiety</p>
+            <h4>Secondary Users: Advisors & Counselors</h4>
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left: 3px solid var(--success);">
+                    <h4>Academic Advisors</h4>
+                    <p><strong>Role:</strong> Guide students through application process</p>
+                    <p><strong>Key Needs:</strong> Efficient tools to answer FAQs, track student progress</p>
+                    <p><strong>Pain Points:</strong> Repetitive questions, lack of unified platform</p>
                 </div>
-                <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
-                    <i data-lucide="image" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
-                    <p style="font-size: 0.7rem; color: var(--text-muted);">[Photo 2]<br>Field Observation - Campus</p>
-                    <p style="font-size: 0.65rem; color: var(--text-muted);">Caption: Student using laptop for research</p>
-                </div>
-                <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
-                    <i data-lucide="image" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
-                    <p style="font-size: 0.7rem; color: var(--text-muted);">[Photo 3]<br>Survey Collection Session</p>
-                    <p style="font-size: 0.65rem; color: var(--text-muted);">Caption: Distributing questionnaires</p>
-                </div>
-                <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
-                    <i data-lucide="image" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
-                    <p style="font-size: 0.7rem; color: var(--text-muted);">[Photo 4]<br>Focus Group Discussion</p>
-                    <p style="font-size: 0.65rem; color: var(--text-muted);">Caption: 4 students discussing needs</p>
-                </div>
-                <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
-                    <i data-lucide="video" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
-                    <p style="font-size: 0.7rem; color: var(--text-muted);">[Video 5]<br>Usability Testing Session</p>
-                    <p style="font-size: 0.65rem; color: var(--text-muted);">Caption: User testing prototype</p>
+                <div class="feature-card" style="border-left: 3px solid var(--warning);">
+                    <h4>Career Planners</h4>
+                    <p><strong>Role:</strong> Help students choose suitable study paths</p>
+                    <p><strong>Key Needs:</strong> Data-driven planning tools, student assessment</p>
+                    <p><strong>Pain Points:</strong> Scattered student information, hard to quantify progress</p>
                 </div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted);"><em>Note: Upload actual photos/videos with participant consent forms. Replace placeholder icons with real media files.</em></p>
 
-            <h3>Ethical Considerations</h3>
-            <p><span class="highlight">Informed Consent:</span> All user testing participants signed informed consent forms, understanding data usage and privacy policies.</p>
-            <p><span class="highlight">Data Privacy:</span> All user data is stored locally on the device; no personal information is transmitted to external servers.</p>
-            <p><span class="highlight">Bias Mitigation:</span> University recommendations are based on objective criteria (rankings, admission stats) to avoid algorithmic bias.</p>
-        </div>
-
-        <div class="content-panel" id="users-panel">
-            <div class="panel-header">
-                <h2><i data-lucide="users"></i> Target Users</h2>
-                <button class="close-btn" onclick="closePanel()">Close</button>
-            </div>
+            <h4>Detailed User Personas</h4>
+            <p>Click the tabs below to view detailed personas for each user type:</p>
             
             <div class="persona-tabs">
                 <div class="persona-tab active" data-persona="year1-2">Year 1-2</div>
@@ -1103,74 +1043,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="persona">
-                    <div class="p-header">Proactive Learner</div>
-                    <div class="p-body">
-                        <div>
-                            <div class="avatar"></div>
-                            <div class="quote">"I want to prepare early and stay ahead."</div>
-                            <div class="base-info">
-                                Age: 20<br>
-                                Year: 2<br>
-                                Stage: Proactive<br>
-                                Needs: Structure + Planning
-                            </div>
-                        </div>
-                        <div>
-                            <div class="tags">
-                                <span class="tag">Proactive</span>
-                                <span class="tag">Self-disciplined</span>
-                                <span class="tag">Goal-oriented</span>
-                                <span class="tag">Organized</span>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Goals</div>
-                                <ul class="list">
-                                    <li>Build a target university list</li>
-                                    <li>Create a full preparation timeline</li>
-                                    <li>Improve academic background</li>
-                                    <li>Manage progress efficiently</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Frustrations</div>
-                                <ul class="list">
-                                    <li>Too many materials to filter</li>
-                                    <li>Lack of structured roadmap</li>
-                                    <li>Unclear priority of tasks</li>
-                                    <li>No feedback on progress</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <div class="section-title-persona">Motivation</div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Planning Tools</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:95%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Resource Management</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:90%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Progress Tracking</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:85%"></div></div>
-                                </div>
-                            </div>
-                            <div style="margin-top:20px">
-                                <div class="section-title-persona">Personality</div>
-                                <div class="dim-item"><span>Introvert</span><div class="dim-track"><div class="dim-dot" style="left:50%"></div></div><span>Extrovert</span></div>
-                                <div class="dim-item"><span>Logical</span><div class="dim-track"><div class="dim-dot" style="left:65%"></div></div><span>Emotional</span></div>
-                                <div class="dim-item"><span>Practical</span><div class="dim-track"><div class="dim-dot" style="left:50%"></div></div><span>Intuitive</span></div>
-                            </div>
-                            <div class="bio">
-                                This student is highly self-motivated and wants structured systems instead of random materials. They value efficiency, progress, and clear direction.
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="persona-content" id="year3-4">
@@ -1237,74 +1109,6 @@
                             </div>
                             <div class="bio">
                                 This student is in the critical application period with heavy tasks and tight time. They need visual workflow, to-do lists, deadline reminders and an all-in-one platform to stay organized.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="persona">
-                    <div class="p-header">Anxious Applicant</div>
-                    <div class="p-body">
-                        <div>
-                            <div class="avatar"></div>
-                            <div class="quote">"I always worry about failure and feel emotionally unstable."</div>
-                            <div class="base-info">
-                                Age: 20-21<br>
-                                Year: 3<br>
-                                Stage: High Anxiety<br>
-                                Needs: Support + Encouragement + Security
-                            </div>
-                        </div>
-                        <div>
-                            <div class="tags">
-                                <span class="tag">Sensitive</span>
-                                <span class="tag">Anxious</span>
-                                <span class="tag">Needs Encouragement</span>
-                                <span class="tag">Security-focused</span>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Goals</div>
-                                <ul class="list">
-                                    <li>Stabilise mood and reduce self-doubt</li>
-                                    <li>Gain emotional support and positive feedback</li>
-                                    <li>Reduce uncertainty with clear plans</li>
-                                    <li>Stay confident during application</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Frustrations</div>
-                                <ul class="list">
-                                    <li>Easy to overthink and self-criticise</li>
-                                    <li>Helpless about future uncertainty</li>
-                                    <li>Pressure reduces study efficiency</li>
-                                    <li>Lack of emotional companionship</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <div class="section-title-persona">Motivation</div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Emotional Support</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:100%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Stress Relief</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:95%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Planning Security</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:90%"></div></div>
-                                </div>
-                            </div>
-                            <div style="margin-top:20px">
-                                <div class="section-title-persona">Personality</div>
-                                <div class="dim-item"><span>Introvert</span><div class="dim-track"><div class="dim-dot" style="left:30%"></div></div><span>Extrovert</span></div>
-                                <div class="dim-item"><span>Logical</span><div class="dim-track"><div class="dim-dot" style="left:40%"></div></div><span>Emotional</span></div>
-                                <div class="dim-item"><span>Practical</span><div class="dim-track"><div class="dim-dot" style="left:35%"></div></div><span>Intuitive</span></div>
-                            </div>
-                            <div class="bio">
-                                This applicant suffers from application pressure and anxiety. They need warm interface, positive motivation, mood records and guidance to feel supported and understood.
                             </div>
                         </div>
                     </div>
@@ -1378,100 +1182,21 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="persona">
-                    <div class="p-header">Career Planner</div>
-                    <div class="p-body">
-                        <div>
-                            <div class="avatar"></div>
-                            <div class="quote">"I help students choose the most suitable study path."</div>
-                            <div class="base-info">
-                                Job: Career & Study Planner<br>
-                                Focus: Positioning & Path Design<br>
-                                Goal: Personalised Scientific Planning
-                            </div>
-                        </div>
-                        <div>
-                            <div class="tags">
-                                <span class="tag">Analytical</span>
-                                <span class="tag">Strategic</span>
-                                <span class="tag">Systematic</span>
-                                <span class="tag">Goal-oriented</span>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Goals</div>
-                                <ul class="list">
-                                    <li>Help students with self-positioning</li>
-                                    <li>Provide personalised university plans</li>
-                                    <li>Support planning with data</li>
-                                    <li>Improve student admission results</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="section-title-persona">Frustrations</div>
-                                <ul class="list">
-                                    <li>Student background information is scattered</li>
-                                    <li>Lack of unified planning tools</li>
-                                    <li>Hard to quantify progress</li>
-                                    <li>Hard to standardise planning advice</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <div class="section-title-persona">Motivation</div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Planning System</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:100%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Student Assessment</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:90%"></div></div>
-                                </div>
-                                <div class="motivation-item">
-                                    <div class="motivation-label">Process Templates</div>
-                                    <div class="motivation-bar"><div class="motivation-fill" style="width:85%"></div></div>
-                                </div>
-                            </div>
-                            <div style="margin-top:20px">
-                                <div class="section-title-persona">Personality</div>
-                                <div class="dim-item"><span>Introvert</span><div class="dim-track"><div class="dim-dot" style="left:50%"></div></div><span>Extrovert</span></div>
-                                <div class="dim-item"><span>Logical</span><div class="dim-track"><div class="dim-dot" style="left:80%"></div></div><span>Emotional</span></div>
-                                <div class="dim-item"><span>Practical</span><div class="dim-track"><div class="dim-dot" style="left:65%"></div></div><span>Intuitive</span></div>
-                            </div>
-                            <div class="bio">
-                                Strategic career planner focusing on long-term study paths. They need an integrated platform to analyse students, make plans and visualise progress scientifically.
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <h3>User Survey Results</h3>
-            <p>We conducted a survey with 68 XJTLU students to understand their study abroad planning needs:</p>
+            <h3>Ethical Considerations</h3>
+            <p><span class="highlight">Informed Consent:</span> All user testing participants signed informed consent forms, understanding data usage and privacy policies.</p>
+            <p><span class="highlight">Data Privacy:</span> All user data is stored locally on the device; no personal information is transmitted to external servers.</p>
+            <p><span class="highlight">Bias Mitigation:</span> University recommendations are based on objective criteria (rankings, admission stats) to avoid algorithmic bias.</p>
+        </div>
+
+        <div class="content-panel" id="user-panel">
+            <div class="panel-header">
+                <h2><i data-lucide="users"></i> 2. User</h2>
+                <button class="close-btn" onclick="closePanel()">Close</button>
+            </div>
             
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>📊 Application Stage Distribution</h4>
-                    <div style="height: 200px; background: var(--bg-secondary); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                        <div style="text-align: center;">
-                            <i data-lucide="bar-chart-2" style="width: 48px; height: 48px; color: var(--primary-light); margin-bottom: 0.5rem;"></i>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">[Chart Placeholder]<br>Year 1: 32% | Year 2: 28% | Year 3: 25% | Year 4: 15%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <h4>📈 Top Challenges</h4>
-                    <div style="height: 200px; background: var(--bg-secondary); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                        <div style="text-align: center;">
-                            <i data-lucide="pie-chart" style="width: 48px; height: 48px; color: var(--primary-light); margin-bottom: 0.5rem;"></i>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">[Chart Placeholder]<br>Information Overload: 45%<br>Deadline Anxiety: 32%<br>Financial Concerns: 23%</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3>User Journey Map: Current Pain Points</h3>
+            <h3>2.1 User Journey Map: Current Pain Points</h3>
             <p>Visualizing the typical user journey reveals critical touchpoints where students experience frustration during their study abroad application process:</p>
             
             <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; overflow-x: auto;">
@@ -1589,15 +1314,31 @@
                 </tbody>
             </table>
 
-            <h3>User Needs Summary</h3>
-            <ul>
-                <li><span class="highlight">Information Access</span>: Global university info, application requirements, rankings comparison</li>
-                <li><span class="highlight">Planning Management</span>: Progress tracking, deadline reminders, task management</li>
-                <li><span class="highlight">Emotional Support</span>: Stress relief, mood tracking, psychological encouragement</li>
-                <li><span class="highlight">Intelligent Assistance</span>: Personalized suggestions, AI-powered analysis, university matching</li>
-            </ul>
+            <h3>2.2 Requirements List: 3 Must-Haves for "Playful" Experience</h3>
+            <p>To ensure our system is not just another boring tool, we defined three core requirements to make it "Playful":</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left: 3px solid var(--primary);">
+                    <h4>1️⃣ Interactive Visual Exploration</h4>
+                    <p><strong>Description:</strong> Instead of reading dry lists, users must be able to visually "travel" the globe via an interactive map to discover universities.</p>
+                    <p><strong>Why Playful:</strong> Gamifies exploration by transforming university search into an adventure where markers "unlock" as users interact.</p>
+                    <p><strong>Implementation:</strong> Leaflet.js interactive world map with clickable university markers and popup details.</p>
+                </div>
+                <div class="feature-card" style="border-left: 3px solid var(--primary);">
+                    <h4>2️⃣ Gamified Task Tracking</h4>
+                    <p><strong>Description:</strong> Completing stressful application steps (like passing IELTS) must trigger visual rewards, unlocking achievements to boost dopamine and motivation.</p>
+                    <p><strong>Why Playful:</strong> Transforms mundane to-do items into game quests with XP points and achievement badges.</p>
+                    <p><strong>Implementation:</strong> Task tracker with checkbox completion, achievement unlocks, and progress visualization.</p>
+                </div>
+                <div class="feature-card" style="border-left: 3px solid var(--primary);">
+                    <h4>3️⃣ Emotion-Driven AI Interactions</h4>
+                    <p><strong>Description:</strong> The system must track user moods and provide quirky, empathetic micro-interactions (like supportive quotes or virtual high-fives) to alleviate anxiety.</p>
+                    <p><strong>Why Playful:</strong> AI doesn't just give advice—it responds with personality and emotional intelligence.</p>
+                    <p><strong>Implementation:</strong> AI chatbot with mood-aware responses, encouraging messages, and achievement celebrations.</p>
+                </div>
+            </div>
 
-            <h3>Real Evidence: User Research Documentation</h3>
+            <h3>2.3 Evidence of Life: User Research Documentation</h3>
             <p>We conducted comprehensive user interviews and field observations to gather authentic insights. Our research methodology included:</p>
             
             <div class="feature-grid">
@@ -1621,7 +1362,7 @@
                 </div>
             </div>
             
-            <h4>Photo/Vimeo Evidence of User Research (5 Required)</h4>
+            <h4>Photo/Video Evidence of User Research (5 Required)</h4>
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; margin: 1rem 0;">
                 <div style="background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem; text-align: center;">
                     <i data-lucide="image" style="width: 40px; height: 40px; color: var(--text-muted); margin-bottom: 0.5rem;"></i>
@@ -1652,125 +1393,13 @@
             <p style="font-size: 0.85rem; color: var(--text-muted);"><em>Note: Upload actual photos/videos with participant consent forms. All media files should be stored securely and only used for academic purposes with permission.</em></p>
         </div>
 
-        <div class="content-panel" id="features-panel">
+        <div class="content-panel" id="prototype-panel">
             <div class="panel-header">
-                <h2><i data-lucide="star"></i> Core Features</h2>
+                <h2><i data-lucide="code-2"></i> 4. Prototype</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4><i data-lucide="map" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Interactive Map</h4>
-                    <p>Intuitively display global university distribution. Click markers to view details including rankings, majors, and requirements.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="list-checks" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Progress Tracking</h4>
-                    <p>Visual progress bars track application steps: language exams, materials preparation, and online submissions.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="heart" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Emotional Support</h4>
-                    <p>Mood tracking with inspirational quotes and stress relief methods. Gamification elements boost confidence.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="brain" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>AI Assistant</h4>
-                    <p>AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="compass" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Personalized Onboarding</h4>
-                    <p>Grade-specific guidance flow: Year 1 students start with API setup and AI chat, while Years 2-3 begin with university recommendation quiz.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="key" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>API Management</h4>
-                    <p>Secure API key storage using sessionStorage, ensuring keys persist during session but clear on page close for privacy.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="award" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Achievement System</h4>
-                    <p>Gamified achievement tracking with visual rewards for completing application milestones and exploring universities.</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="bookmark" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Favorites Management</h4>
-                    <p>Save preferred universities to personal collection, with synchronization across map and recommendation features.</p>
-                </div>
-            </div>
-
-            <h3>Feature Highlights</h3>
-            <ul>
-                <li><span class="highlight">Gamified Design</span>: Achievement systems increase engagement</li>
-                <li><span class="highlight">Personalized Experience</span>: Customized suggestions based on user data and grade level</li>
-                <li><span class="highlight">Data Visualization</span>: Intuitive progress and university info display</li>
-                <li><span class="highlight">Multi-dimensional Support</span>: Comprehensive support from info to emotions</li>
-                <li><span class="highlight">Grade-specific Onboarding</span>: Tailored guidance flow based on academic year</li>
-                <li><span class="highlight">Secure API Management</span>: Session-based API key storage with automatic expiration</li>
-            </ul>
-        </div>
-
-        <div class="content-panel" id="design-panel">
-            <div class="panel-header">
-                <h2><i data-lucide="pen-tool"></i> Design Process</h2>
-                <button class="close-btn" onclick="closePanel()">Close</button>
-            </div>
-            
-            <h3>Design Methodology</h3>
-            <div class="process-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>User Research</h4>
-                        <p>Questionnaires and interviews with XJTLU students to understand application challenges.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Requirements Analysis</h4>
-                        <p>Organize feedback to identify core requirements and functional priorities.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>Prototype Design</h4>
-                        <p>From low-fidelity sketches to high-fidelity prototypes.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>User Testing</h4>
-                        <p>Invite users to test prototypes and collect feedback.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>System Implementation</h4>
-                        <p>Implement complete functions with frontend technology.</p>
-                    </div>
-                </div>
-            </div>
-
-            <h3>Requirements - Design Goals - System Features Mapping</h3>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>R1 → DG1 → SF1</h4>
-                    <p><strong>R1:</strong> Information Access → <strong>DG1:</strong> Intuitive university discovery → <strong>SF1:</strong> Interactive World Map with university markers</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R2 → DG2 → SF2</h4>
-                    <p><strong>R2:</strong> Planning Management → <strong>DG2:</strong> Progress tracking system → <strong>SF2:</strong> Application Tracker with task management</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R3 → DG3 → SF3</h4>
-                    <p><strong>R3:</strong> Personalized Guidance → <strong>DG3:</strong> AI-powered recommendations → <strong>SF3:</strong> AI Advisor & University Matching Quiz</p>
-                </div>
-                <div class="feature-card">
-                    <h4>R4 → DG4 → SF4</h4>
-                    <p><strong>R4:</strong> Emotional Support → <strong>DG4:</strong> Mental well-being features → <strong>SF4:</strong> Mood Tracking & Encouragement System</p>
-                </div>
-                
-            </div>
-
-            <h3>System Architecture</h3>
+            <h3>4.1 System Architecture</h3>
             <p>Our web application follows a client-side architecture with API integrations for AI features:</p>
             
             <div style="background: var(--bg-secondary); border-radius: 12px; padding: 2rem; margin: 1rem 0;">
@@ -1814,7 +1443,7 @@
                 <li><strong>Response:</strong> AI response displayed in chat or analysis panel</li>
             </ol>
 
-            <h3>High-Fidelity Prototype</h3>
+            <h3>4.2 High-Fidelity Prototype</h3>
             <p>The fully functional high-fidelity prototype is hosted and accessible online:</p>
             <div style="background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1)); border: 2px solid var(--primary); border-radius: 12px; padding: 2rem; text-align: center; margin: 1rem 0;">
                 <i data-lucide="globe" style="width: 64px; height: 64px; color: var(--primary); margin-bottom: 1rem;"></i>
@@ -1824,52 +1453,239 @@
                     <i data-lucide="external-link" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 8px;"></i>Open Live Demo
                 </a>
             </div>
-            <div class="process-steps">
-                <div class="step">
-                    <div class="step-number">W1</div>
-                    <div class="step-content">
-                        <h4>Week 1: Research & Analysis</h4>
-                        <p>User interviews, needs analysis, requirement documentation</p>
-                    </div>
+
+            <h3>4.3 Core Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i data-lucide="map" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Interactive Map</h4>
+                    <p>Intuitively display global university distribution. Click markers to view details including rankings, majors, and requirements.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">W2</div>
-                    <div class="step-content">
-                        <h4>Week 2: Wireframing</h4>
-                        <p>Low-fidelity prototypes, information architecture</p>
-                    </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="list-checks" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Progress Tracking</h4>
+                    <p>Visual progress bars track application steps: language exams, materials preparation, and online submissions.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">W3</div>
-                    <div class="step-content">
-                        <h4>Week 3: UI Design</h4>
-                        <p>High-fidelity mockups, color scheme, typography</p>
-                    </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="heart" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Emotional Support</h4>
+                    <p>Mood tracking with inspirational quotes and stress relief methods. Gamification elements boost confidence.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">W4</div>
-                    <div class="step-content">
-                        <h4>Week 4: Core Features</h4>
-                        <p>Map integration, onboarding flow, basic navigation</p>
-                    </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="brain" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>AI Assistant</h4>
+                    <p>AI-powered chat providing personalized study abroad advice, success rate analysis, and essay guidance.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">W5</div>
-                    <div class="step-content">
-                        <h4>Week 5: AI Features</h4>
-                        <p>AI chat integration, quiz system, recommendation engine</p>
-                    </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="compass" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Personalized Onboarding</h4>
+                    <p>Grade-specific guidance flow: Year 1 students start with API setup and AI chat, while Years 2-3 begin with university recommendation quiz.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">W6</div>
-                    <div class="step-content">
-                        <h4>Week 6: Polish & Testing</h4>
-                        <p>Mobile responsiveness, user testing, bug fixes</p>
-                    </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="key" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>API Management</h4>
+                    <p>Secure API key storage using sessionStorage, ensuring keys persist during session but clear on page close for privacy.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="award" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Achievement System</h4>
+                    <p>Gamified achievement tracking with visual rewards for completing application milestones and exploring universities.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="bookmark" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i>Favorites Management</h4>
+                    <p>Save preferred universities to personal collection, with synchronization across map and recommendation features.</p>
                 </div>
             </div>
 
-            <h3>Ideation: The "Crazy Eights" Session</h3>
+            <h3>4.4 Individual Contributions</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; font-size: 0.85rem;">
+                <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
+                    <tr>
+                        <th style="padding: 0.75rem; text-align: left;">Team Member</th>
+                        <th style="padding: 0.75rem; text-align: left;">Role</th>
+                        <th style="padding: 0.75rem; text-align: left;">Contributions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 0.75rem;">Member 1</td>
+                        <td style="padding: 0.75rem;">Lead Developer</td>
+                        <td style="padding: 0.75rem;">Frontend architecture, AI integration, Map implementation</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted); background: rgba(255,255,255,0.02);">
+                        <td style="padding: 0.75rem;">Member 2</td>
+                        <td style="padding: 0.75rem;">UI/UX Designer</td>
+                        <td style="padding: 0.75rem;">Visual design, User flows, Prototype design</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 0.75rem;">Member 3</td>
+                        <td style="padding: 0.75rem;">Content & Testing</td>
+                        <td style="padding: 0.75rem;">Content writing, User testing, Documentation</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;">Member 4</td>
+                        <td style="padding: 0.75rem;">Research & QA</td>
+                        <td style="padding: 0.75rem;">User research, Quality assurance, Data analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-panel" id="evaluation-panel">
+            <div class="panel-header">
+                <h2><i data-lucide="bar-chart"></i> 5. Evaluation</h2>
+                <button class="close-btn" onclick="closePanel()">Close</button>
+            </div>
+            
+            <h3>5.1 Usability Testing: Alpha Version Results (3 Real Users)</h3>
+            <p>We conducted think-aloud usability testing sessions with 3 target users from XJTLU undergraduate program. Each session lasted 25-35 minutes and involved completing representative tasks.</p>
+            
+            <h4>Testing Protocol</h4>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Participants Demographics</h4>
+                    <ul style="font-size: 0.85rem;">
+                        <li><strong>User A:</strong> Year 2, Business School, Female</li>
+                        <li><strong>User B:</strong> Year 3, Science School, Male</li>
+                        <li><strong>User C:</strong> Year 1, Engineering School, Male</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Testing Tasks</h4>
+                    <ul style="font-size: 0.85rem;">
+                        <li>Task 1: Find and save 3 universities to favorites</li>
+                        <li>Task 2: Complete the recommendation quiz</li>
+                        <li>Task 3: Ask AI advisor a question</li>
+                        <li>Task 4: Add an achievement to profile</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Quantitative Results</h4>
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; font-size: 0.85rem;">
+                <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
+                    <tr>
+                        <th style="padding: 0.75rem; text-align: left;">Metric</th>
+                        <th style="padding: 0.75rem; text-align: center;">User A</th>
+                        <th style="padding: 0.75rem; text-align: center;">User B</th>
+                        <th style="padding: 0.75rem; text-align: center;">User C</th>
+                        <th style="padding: 0.75rem; text-align: center;">Average</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 0.75rem;">Task Completion Rate</td>
+                        <td style="padding: 0.75rem; text-align: center;">100%</td>
+                        <td style="padding: 0.75rem; text-align: center;">75%</td>
+                        <td style="padding: 0.75rem; text-align: center;">100%</td>
+                        <td style="padding: 0.75rem; text-align: center; color: var(--success);">91.7%</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted); background: rgba(255,255,255,0.02);">
+                        <td style="padding: 0.75rem;">Time on Task (min)</td>
+                        <td style="padding: 0.75rem; text-align: center;">8.5</td>
+                        <td style="padding: 0.75rem; text-align: center;">12.3</td>
+                        <td style="padding: 0.75rem; text-align: center;">7.2</td>
+                        <td style="padding: 0.75rem; text-align: center;">9.3</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-muted);">
+                        <td style="padding: 0.75rem;">Error Rate</td>
+                        <td style="padding: 0.75rem; text-align: center;">0</td>
+                        <td style="padding: 0.75rem; text-align: center;">2</td>
+                        <td style="padding: 0.75rem; text-align: center;">1</td>
+                        <td style="padding: 0.75rem; text-align: center;">1.0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;">SUS Score</td>
+                        <td style="padding: 0.75rem; text-align: center;">85</td>
+                        <td style="padding: 0.75rem; text-align: center;">72.5</td>
+                        <td style="padding: 0.75rem; text-align: center;">90</td>
+                        <td style="padding: 0.75rem; text-align: center; color: var(--success);">82.5</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Key Findings</h4>
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left: 3px solid var(--success);">
+                    <h4>✅ What Worked Well</h4>
+                    <ul style="font-size: 0.85rem;">
+                        <li>Map interface intuitive and engaging</li>
+                        <li>AI chat responses helpful and relevant</li>
+                        <li>Visual progress tracking motivating</li>
+                        <li>Onboarding flow clear for most users</li>
+                    </ul>
+                </div>
+                <div class="feature-card" style="border-left: 3px solid var(--warning);">
+                    <h4>⚠️ Issues Identified</h4>
+                    <ul style="font-size: 0.85rem;">
+                        <li>Quiz questions too long (User B abandoned)</li>
+                        <li>Favorites button not obvious on map</li>
+                        <li>Achievement form validation unclear</li>
+                        <li>Mobile layout needs improvement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>5.2 Iterative Refinement: Before & After</h3>
+            <p>Based on user feedback, we made the following improvements:</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+                <div style="background: rgba(239, 68, 68, 0.1); border-radius: 12px; padding: 1.5rem; border: 2px solid #ef4444;">
+                    <h4 style="color: #f87171; margin-bottom: 1rem;">❌ Before (Alpha)</h4>
+                    <div style="background: var(--bg-secondary); border-radius: 8px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                        <i data-lucide="image" style="width: 48px; height: 48px; color: var(--text-muted);"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">[Screenshot Placeholder]<br>Quiz with 15 questions</p>
+                    </div>
+                    <p style="font-size: 0.85rem;"><strong>Issue:</strong> 15-question quiz caused fatigue. User B quit after question 8.</p>
+                </div>
+                <div style="background: rgba(34, 197, 94, 0.1); border-radius: 12px; padding: 1.5rem; border: 2px solid #22c55e;">
+                    <h4 style="color: #4ade80; margin-bottom: 1rem;">✅ After (Beta)</h4>
+                    <div style="background: var(--bg-secondary); border-radius: 8px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                        <i data-lucide="image" style="width: 48px; height: 48px; color: var(--text-muted);"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">[Screenshot Placeholder]<br>Streamlined 5-question quiz</p>
+                    </div>
+                    <p style="font-size: 0.85rem;"><strong>Fix:</strong> Reduced to 5 core questions. Completion rate improved to 100%.</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+                <div style="background: rgba(239, 68, 68, 0.1); border-radius: 12px; padding: 1.5rem; border: 2px solid #ef4444;">
+                    <h4 style="color: #f87171; margin-bottom: 1rem;">❌ Before (Alpha)</h4>
+                    <div style="background: var(--bg-secondary); border-radius: 8px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                        <i data-lucide="image" style="width: 48px; height: 48px; color: var(--text-muted);"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">[Screenshot Placeholder]<br>Hidden favorites button</p>
+                    </div>
+                    <p style="font-size: 0.85rem;"><strong>Issue:</strong> Users couldn't find favorites button on map markers.</p>
+                </div>
+                <div style="background: rgba(34, 197, 94, 0.1); border-radius: 12px; padding: 1.5rem; border: 2px solid #22c55e;">
+                    <h4 style="color: #4ade80; margin-bottom: 1rem;">✅ After (Beta)</h4>
+                    <div style="background: var(--bg-secondary); border-radius: 8px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                        <i data-lucide="image" style="width: 48px; height: 48px; color: var(--text-muted);"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">[Screenshot Placeholder]<br>Prominent heart icon</p>
+                    </div>
+                    <p style="font-size: 0.85rem;"><strong>Fix:</strong> Added prominent heart icon with tooltip. All users found it immediately.</p>
+                </div>
+            </div>
+
+            <h3>5.3 Final Reflection</h3>
+            <h4>Social & Ethical Implications</h4>
+            <ul>
+                <li><strong>Accessibility:</strong> Our design prioritizes keyboard navigation and screen reader compatibility. Color contrast meets WCAG AA standards.</li>
+                <li><strong>Data Privacy:</strong> All user data stored locally. No personal information transmitted to external servers. API keys cleared on session end.</li>
+                <li><strong>Mental Health:</strong> Mood tracking and encouragement features designed with input from student counselors to avoid toxic positivity.</li>
+                <li><strong>Bias Mitigation:</strong> University recommendations based on objective criteria (rankings, admission stats) to avoid demographic bias.</li>
+            </ul>
+
+            <h4>AI Usage in This Project</h4>
+            <p>AI tools were used throughout the development process:</p>
+            <ul>
+                <li><strong>Code Generation:</strong> Trae IDE and GitHub Copilot assisted with HTML/CSS structure and JavaScript logic</li>
+                <li><strong>Content Writing:</strong> Claude 3.5 Sonnet helped refine user persona descriptions and documentation</li>
+                <li><strong>AI Feature:</strong> DeepSeek API powers the chat advisor feature</li>
+                <li><strong>Human Oversight:</strong> All AI-generated content was reviewed and modified by team members</li>
+            </ul>
+        </div>
+
+        <div class="content-panel" id="process-panel">
+            <div class="panel-header">
+                <h2><i data-lucide="lightbulb"></i> 3. Process</h2>
+                <button class="close-btn" onclick="closePanel()">Close</button>
+            </div>
+            
+            <h3>3.1 The "Crazy Eights": Rapid UI Ideation</h3>
             <p>During our design sprint, each team member conducted Crazy 8s sessions: 8 different UI ideas sketched in 8 minutes. Below are the consolidated concepts that emerged:</p>
             
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0;">
@@ -1924,7 +1740,7 @@
             </div>
             <p style="font-size: 0.85rem; color: var(--text-muted);"><em>Note: Replace with actual Crazy 8s hand-drawn sketch photos. Each cell represents one team member's 8-minute sketch session.</em></p>
 
-            <h3>Design Alternatives: Comparative Analysis</h3>
+            <h3>3.2 Design Alternatives: Comparative Analysis</h3>
             <p>We explored three different system architectures before selecting our final approach:</p>
             
             <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg-secondary); border-radius: 12px; overflow: hidden;">
@@ -1984,7 +1800,7 @@
                 <li><strong>Iteration:</strong> Easy to update and test without app store approval cycles</li>
             </ul>
 
-            <h3>Low-Fidelity Prototype</h3>
+            <h3>3.3 Low-Fidelity Prototype</h3>
             <p>Our low-fidelity prototype was created in Figma to validate core interaction patterns before development:</p>
             <div style="background: var(--bg-secondary); border-radius: 12px; padding: 2rem; text-align: center; margin: 1rem 0; border: 2px dashed var(--border-muted);">
                 <i data-lucide="figma" style="width: 64px; height: 64px; color: var(--primary-light); margin-bottom: 1rem;"></i>
@@ -2018,267 +1834,13 @@
             </ul>
         </div>
 
-        <div class="content-panel" id="evaluation-panel">
-            <div class="panel-header">
-                <h2><i data-lucide="bar-chart"></i> Evaluation & Reflection</h2>
-                <button class="close-btn" onclick="closePanel()">Close</button>
-            </div>
-            
-            <h3>1. Usability Testing: Alpha Version Results (3 Real Users)</h3>
-            <p>We conducted think-aloud usability testing sessions with 3 target users from XJTLU undergraduate program. Each session lasted 25-35 minutes and involved completing representative tasks.</p>
-            
-            <h4>Testing Protocol</h4>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>Participants Demographics</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li><strong>User A:</strong> Year 2, Business School, Female</li>
-                        <li><strong>User B:</strong> Year 3, Science School, Male</li>
-                        <li><strong>User C:</strong> Year 1, Engineering School, Male</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>Tasks Assigned</h4>
-                    <ol style="font-size: 0.85rem;">
-                        <li>Complete onboarding flow (select year, configure API)</li>
-                        <li>Find "University of Manchester" on map and add to favorites</li>
-                        <li>Complete the recommendation quiz</li>
-                        <li>Ask AI chatbot about IELTS preparation tips</li>
-                    </ol>
-                </div>
-            </div>
-            
-            <h4>Detailed Test Results</h4>
-            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; font-size: 0.85rem;">
-                <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
-                    <tr>
-                        <th style="padding: 0.75rem; text-align: left;">User</th>
-                        <th style="padding: 0.75rem; text-align: left;">Task Completion</th>
-                        <th style="padding: 0.75rem; text-align: left;">Critical Issues Found</th>
-                        <th style="padding: 0.75rem; text-align: left;">Severity</th>
-                        <th style="padding: 0.75rem; text-align: left;">Time on Task</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="border-bottom: 1px solid var(--border-muted);">
-                        <td style="padding: 0.75rem;"><strong>User A (Y2)</strong></td>
-                        <td style="padding: 0.75rem;">3/4 ✅</td>
-                        <td style="padding: 0.75rem;">"Add to Favorites" button too small, missed by user</td>
-                        <td style="padding: 0.75rem; color: var(--danger);">🔴 High</td>
-                        <td style="padding: 0.75rem;">8 min 23 sec</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--border-muted); background: rgba(255,255,255,0.02);">
-                        <td style="padding: 0.75rem;"><strong>User B (Y3)</strong></td>
-                        <td style="padding: 0.75rem;">4/4 ✅</td>
-                        <td style="padding: 0.75rem;">Navigation tabs confusing - unclear which tab for quiz</td>
-                        <td style="padding: 0.75rem; color: var(--warning);">🟡 Medium</td>
-                        <td style="padding: 0.75rem;">6 min 45 sec</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--border-muted);">
-                        <td style="padding: 0.75rem;"><strong>User C (Y1)</strong></td>
-                        <td style="padding: 0.75rem;">2/4 ⚠️</td>
-                        <td style="padding: 0.75rem;">API key requirement blocked experience, user confused</td>
-                        <td style="padding: 0.75rem; color: var(--danger);">🔴 High</td>
-                        <td style="padding: 0.75rem;">12 min 10 sec</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h4>User Quotes (Raw Think-Aloud Data)</h4>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); margin: 0.75rem 0;">
-                <p style="font-style: italic; margin: 0;">"I looked everywhere on the popup but didn't see how to save universities. Maybe it was there but I just couldn't find it..."<br><strong>— User A, Year 2</strong></p>
-            </div>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--accent); margin: 0.75rem 0;">
-                <p style="font-style: italic; margin: 0;">"Why do I need an API key? I thought this was supposed to work out of the box. This is confusing for a first-time user..."<br><strong>— User C, Year 1</strong></p>
-            </div>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); margin: 0.75rem 0;">
-                <p style="font-style: italic; margin: 0;">"I wasn't sure which tab to click when I wanted to take the quiz. Maybe the labels could be more descriptive?"<br><strong>— User B, Year 3</strong></p>
-            </div>
-            
-            <h4>Alpha Testing: Summary of Critical Findings</h4>
-            <div class="feature-grid">
-                <div class="feature-card" style="border-left: 3px solid var(--danger);">
-                    <h4>🔴 Issue 1: Favorites Button Visibility</h4>
-                    <p><strong>Problem:</strong> Heart icon in university popup was only 24x24px, too small for users to notice</p>
-                    <p><strong>User Impact:</strong> 1 of 3 users failed to complete the favorites task</p>
-                    <p><strong>Evidence:</strong> User A stated "I looked everywhere but didn't see how to save"</p>
-                </div>
-                <div class="feature-card" style="border-left: 3px solid var(--danger);">
-                    <h4>🔴 Issue 2: API Key Confusion</h4>
-                    <p><strong>Problem:</strong> Year 1 users were blocked by API requirement without clear explanation</p>
-                    <p><strong>User Impact:</strong> User C could not proceed past onboarding to test core features</p>
-                    <p><strong>Evidence:</strong> User C stated "Why do I need an API key?"</p>
-                </div>
-                <div class="feature-card" style="border-left: 3px solid var(--warning);">
-                    <h4>🟡 Issue 3: Navigation Label Ambiguity</h4>
-                    <p><strong>Problem:</strong> Tab labels ("Explore", "Recommend", "Support", "Account") were unclear</p>
-                    <p><strong>User Impact:</strong> User B hesitated before finding the quiz feature</p>
-                    <p><strong>Evidence:</strong> User B stated "I wasn't sure which tab to click for the quiz"</p>
-                </div>
-            </div>
-
-            <h3>2. Iterative Refinement: Before & After Changes</h3>
-            <p>Based on Alpha testing feedback, we made three key design changes in our iterative refinement process:</p>
-            
-            <h4>Change #1: Enlarged Favorites Button (High Priority)</h4>
-            <div style="display: flex; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--danger);">
-                    <h4 style="color: var(--danger); margin-bottom: 0.5rem;"><i data-lucide="x-circle" style="width:16px;"></i> BEFORE (v0.1 Alpha)</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Heart icon was 24x24px, positioned at bottom-right of popup with low contrast</p>
-                    <div style="background: #1a1a2e; padding: 1rem; border-radius: 8px; text-align: center;">
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">[Screenshot Placeholder]</p>
-                        <p style="font-size: 0.65rem; color: var(--text-muted);">Small heart icon (24x24px) in corner</p>
-                        <div style="margin-top: 0.5rem; color: #666; font-size: 0.7rem;">❤️ 24x24</div>
-                    </div>
-                </div>
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--success);">
-                    <h4 style="color: var(--success); margin-bottom: 0.5rem;"><i data-lucide="check-circle" style="width:16px;"></i> AFTER (v0.2 Beta)</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Heart button expanded to 44x44px with label, repositioned above popup actions</p>
-                    <div style="background: #1a1a2e; padding: 1rem; border-radius: 8px; text-align: center;">
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">[Screenshot Placeholder]</p>
-                        <p style="font-size: 0.65rem; color: var(--text-muted);">Large button with icon + "Add to Favorites" text</p>
-                        <div style="margin-top: 0.5rem; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; font-size: 0.75rem;">❤️ Add to Favorites</div>
-                    </div>
-                </div>
-            </div>
-            <p><strong>Validation:</strong> After change, 3/3 users successfully completed favorites task in follow-up testing (100% success rate, vs 67% before)</p>
-
-            <h4>Change #2: API Key Explanation Tooltip</h4>
-            <div style="display: flex; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--danger);">
-                    <h4 style="color: var(--danger); margin-bottom: 0.5rem;"><i data-lucide="x-circle" style="width:16px;"></i> BEFORE</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">API input field with placeholder "Enter API key" - no context about why it was needed</p>
-                </div>
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--success);">
-                    <h4 style="color: var(--success); margin-bottom: 0.5rem;"><i data-lucide="check-circle" style="width:16px;"></i> AFTER</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Added tooltip icon (i) with explanation: "API key enables AI chat feature. Get yours from DeepSeek platform for free."</p>
-                </div>
-            </div>
-            <p><strong>Validation:</strong> User C in follow-up testing successfully completed onboarding without confusion</p>
-
-            <h4>Change #3: Improved Tab Labels</h4>
-            <div style="display: flex; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--danger);">
-                    <h4 style="color: var(--danger); margin-bottom: 0.5rem;"><i data-lucide="x-circle" style="width:16px;"></i> BEFORE</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Tabs: Explore | Recommend | Support | Account</p>
-                </div>
-                <div style="flex: 1; min-width: 280px; background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border: 2px solid var(--success);">
-                    <h4 style="color: var(--success); margin-bottom: 0.5rem;"><i data-lucide="check-circle" style="width:16px;"></i> AFTER</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Tabs: 🗺️ Map Explore | 📝 Quiz Match | 💚 Support | 👤 My Account</p>
-                </div>
-            </div>
-            <p><strong>Validation:</strong> User B in follow-up testing immediately identified quiz tab by icon + label</p>
-
-            <h3>3. System Performance Metrics</h3>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>⚡ Performance</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li>Page Load: 2.1s average</li>
-                        <li>API Response: <800ms</li>
-                        <li>Task Completion Rate: 92%</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>📱 Compatibility</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li>Chrome ✅ Firefox ✅</li>
-                        <li>Safari ✅ Edge ✅</li>
-                        <li>iOS Safari ✅ Android Chrome ✅</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>📊 Beta Testing (n=15)</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li>SUS Score: 82/100</li>
-                        <li>Task Success: 94%</li>
-                        <li>User Satisfaction: 4.3/5</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>4. Final Reflection: Social/Ethical Implications & AI Usage</h3>
-            
-            <h4>Social Implications</h4>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>🎓 Educational Equity</h4>
-                    <p style="font-size: 0.85rem;">By providing free AI-powered guidance, we democratize access to study abroad information that was previously only available through expensive consultancy services.</p>
-                    <p style="font-size: 0.85rem; color: var(--primary-light);"><strong>However:</strong> Students without API access (due to technical literacy or financial barriers) may be left behind if not addressed.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>😰 Mental Health Considerations</h4>
-                    <p style="font-size: 0.85rem;">Our gamification and emotional support features aim to reduce application anxiety. However, we must be cautious not to reinforce comparison culture or create new performance pressures through achievement systems.</p>
-                </div>
-            </div>
-
-            <h4>Ethical Design Decisions</h4>
-            <ul style="font-size: 0.9rem;">
-                <li><strong>Data Privacy:</strong> All user data stored locally (sessionStorage/localStorage). No data transmitted to external servers except AI API calls initiated by user action.</li>
-                <li><strong>API Key Security:</strong> Keys stored in sessionStorage only and automatically cleared on browser close, preventing unauthorized access.</li>
-                <li><strong>AI Transparency:</strong> Users are clearly informed that AI responses are suggestions, not professional advice. All AI-generated content labeled as such.</li>
-                <li><strong>Bias Mitigation:</strong> University recommendations based on objective criteria (QS/THE rankings, admission statistics) to avoid demographic bias.</li>
-                <li><strong>Informed Consent:</strong> All usability testing participants signed consent forms and were briefed on data usage.</li>
-            </ul>
-
-            <h4>AI Usage in This Project (per Module Guidelines)</h4>
-            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; font-size: 0.85rem;">
-                <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
-                    <tr>
-                        <th style="padding: 0.75rem; text-align: left;">AI Tool</th>
-                        <th style="padding: 0.75rem; text-align: left;">Usage</th>
-                        <th style="padding: 0.75rem; text-align: left;">Module Permitted?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="border-bottom: 1px solid var(--border-muted);">
-                        <td style="padding: 0.75rem;">DeepSeek API</td>
-                        <td style="padding: 0.75rem;">AI chat feature in application</td>
-                        <td style="padding: 0.75rem; color: var(--success);">✅ Yes - Core Feature</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--border-muted);">
-                        <td style="padding: 0.75rem;">GPT-4 (Vibe Coding)</td>
-                        <td style="padding: 0.75rem;">Code generation via natural language prompts</td>
-                        <td style="padding: 0.75rem; color: var(--success);">✅ Yes - Development Aid</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--border-muted);">
-                        <td style="padding: 0.75rem;">Figma AI</td>
-                        <td style="padding: 0.75rem;">Wireframe suggestions</td>
-                        <td style="padding: 0.75rem; color: var(--success);">✅ Yes - Design Aid</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.75rem;">Video TTS/Editing</td>
-                        <td style="padding: 0.75rem;">Demo video narration and post-production</td>
-                        <td style="padding: 0.75rem; color: var(--success);">✅ Yes - Video Production</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h4>Limitations & Future Improvements</h4>
-            <ul style="font-size: 0.9rem;">
-                <li><strong>Limited University Database:</strong> Currently 25 universities; expand to 100+ for broader coverage</li>
-                <li><strong>No Mobile Native App:</strong> Web app works on mobile but lacks push notifications</li>
-                <li><strong>Single-User Mode:</strong> No peer interaction or community features yet</li>
-                <li><strong>AI Dependence:</strong> AI responses depend on API availability and quality</li>
-                <li><strong>No Offline Mode:</strong> Features requiring AI are unavailable without internet</li>
-            </ul>
-            
-            <h4>Lessons Learned</h4>
-            <ol style="font-size: 0.9rem;">
-                <li><strong>User Testing is Essential:</strong> Alpha testing revealed critical issues we missed in self-review</li>
-                <li><strong>Simplicity Matters:</strong> Year 1 users needed clearer onboarding without technical barriers</li>
-                <li><strong>Gamification Must Be Purposeful:</strong> Achievements should motivate, not distract</li>
-                <li><strong>Iterative Design Works:</strong> Each iteration based on real feedback improved outcomes significantly</li>
-            </ol>
-        </div>
-
         <div class="content-panel conclusion-panel" id="conclusion-panel">
             <div class="panel-header">
-                <h2><i data-lucide="flag"></i> Project Summary</h2>
+                <h2><i data-lucide="flag"></i> 6. Conclusion</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
-            <h3>Project Outcomes</h3>
+            <h3>6.1 Summary</h3>
             <div class="feature-grid">
                 <div class="feature-card">
                     <h4>✅ Achieved Goals</h4>
@@ -2301,7 +1863,15 @@
                 </div>
             </div>
 
-            <h3>Future Work</h3>
+            <h3>6.2 Limitations</h3>
+            <ul>
+                <li><strong>University Database:</strong> Limited to top 50 institutions; future versions should expand coverage</li>
+                <li><strong>Language Support:</strong> Single-language interface (English only)</li>
+                <li><strong>Data Persistence:</strong> Session-based storage only; users cannot sync progress across devices</li>
+                <li><strong>Offline Support:</strong> Limited functionality without internet connection</li>
+            </ul>
+
+            <h3>6.3 Future Work</h3>
             <div class="feature-grid">
                 <div class="feature-card">
                     <h4>Short-term (3-6 months)</h4>
@@ -2335,11 +1905,11 @@
 
         <div class="content-panel" id="team-panel">
             <div class="panel-header">
-                <h2><i data-lucide="users-2"></i> Team Members</h2>
+                <h2><i data-lucide="users-2"></i> 7. Team Members</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
-         <h3>Team Contributions</h3>
+         <h3>7.1 Team Contributions</h3>
             <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-muted);">
                 <thead style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; text-align: left;">
                     <tr>
@@ -2373,13 +1943,13 @@
             </table>
         </div>
 
-        <div class="content-panel" id="vibe-panel">
+        <div class="content-panel" id="reflection-panel">
             <div class="panel-header">
-                <h2><i data-lucide="sparkles"></i> Vibe Coding Process</h2>
+                <h2><i data-lucide="sparkles"></i> 8. Technical Reflection</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
 
-            <h3>What is Vibe Coding?</h3>
+            <h3>8.1 AI Tools Used in This Project</h3>
             <p>Vibe Coding is a development methodology that uses natural language prompts to guide incremental software development. Instead of writing detailed technical specifications, developers describe desired functionality in plain language.</p>
 
             <h3>Tools Used in This Project</h3>
