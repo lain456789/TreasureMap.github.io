@@ -2556,131 +2556,140 @@
 
         // Full university database (95 universities)
         const universities = [
-            { name: 'University of Oxford', lat: 51.7548, lng: -1.2544, rank: '#3', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Cambridge', lat: 52.2053, lng: 0.1218, rank: '#2', country: 'United Kingdom', region: 'Europe' },
-            { name: 'MIT', lat: 42.3601, lng: -71.0942, rank: '#1', country: 'United States', region: 'North America' },
-            { name: 'Stanford University', lat: 37.4275, lng: -122.1697, rank: '#4', country: 'United States', region: 'North America' },
-            { name: 'Harvard University', lat: 42.3770, lng: -71.1167, rank: '#5', country: 'United States', region: 'North America' },
-            { name: 'California Institute of Technology', lat: 34.1367, lng: -118.1254, rank: '#6', country: 'United States', region: 'North America' },
-            { name: 'Imperial College London', lat: 51.4988, lng: -0.1749, rank: '#7', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University College London', lat: 51.5226, lng: -0.1349, rank: '#9', country: 'United Kingdom', region: 'Europe' },
+            // USA - 30 universities
+            { name: 'MIT', lat: 42.3601, lng: -71.0942, rank: '#1', country: 'USA', region: 'North America' },
+            { name: 'Stanford University', lat: 37.4275, lng: -122.1697, rank: '#4', country: 'USA', region: 'North America' },
+            { name: 'Harvard University', lat: 42.3770, lng: -71.1167, rank: '#5', country: 'USA', region: 'North America' },
+            { name: 'California Institute of Technology', lat: 34.1367, lng: -118.1254, rank: '#6', country: 'USA', region: 'North America' },
+            { name: 'University of Chicago', lat: 41.7934, lng: -87.5979, rank: '#10', country: 'USA', region: 'North America' },
+            { name: 'University of Pennsylvania', lat: 39.9526, lng: -75.1953, rank: '#12', country: 'USA', region: 'North America' },
+            { name: 'University of Michigan', lat: 42.2808, lng: -83.7430, rank: '#23', country: 'USA', region: 'North America' },
+            { name: 'Cornell University', lat: 42.4439, lng: -76.4889, rank: '#14', country: 'USA', region: 'North America' },
+            { name: 'Johns Hopkins University', lat: 39.3292, lng: -76.6201, rank: '#15', country: 'USA', region: 'North America' },
+            { name: 'University of California, Berkeley', lat: 37.8715, lng: -122.2730, rank: '#11', country: 'USA', region: 'North America' },
+            { name: 'Yale University', lat: 41.3163, lng: -72.9223, rank: '#13', country: 'USA', region: 'North America' },
+            { name: 'Princeton University', lat: 40.3439, lng: -74.6513, rank: '#16', country: 'USA', region: 'North America' },
+            { name: 'University of California, Los Angeles', lat: 34.0522, lng: -118.2437, rank: '#20', country: 'USA', region: 'North America' },
+            { name: 'University of California, San Diego', lat: 32.8801, lng: -117.2340, rank: '#53', country: 'USA', region: 'North America' },
+            { name: 'University of Washington', lat: 47.6553, lng: -122.3089, rank: '#63', country: 'USA', region: 'North America' },
+            { name: 'Carnegie Mellon University', lat: 40.4432, lng: -79.9431, rank: '#22', country: 'USA', region: 'North America' },
+            { name: 'Duke University', lat: 36.0014, lng: -78.9382, rank: '#52', country: 'USA', region: 'North America' },
+            { name: 'Northwestern University', lat: 42.0564, lng: -87.6754, rank: '#47', country: 'USA', region: 'North America' },
+            { name: 'University of Texas at Austin', lat: 30.2849, lng: -97.7341, rank: '#72', country: 'USA', region: 'North America' },
+            { name: 'Georgia Institute of Technology', lat: 33.7756, lng: -84.3963, rank: '#88', country: 'USA', region: 'North America' },
+            { name: 'University of Illinois at Urbana-Champaign', lat: 40.1106, lng: -88.2272, rank: '#64', country: 'USA', region: 'North America' },
+            { name: 'Pennsylvania State University', lat: 40.8136, lng: -77.8601, rank: '#93', country: 'USA', region: 'North America' },
+            { name: 'University of Wisconsin-Madison', lat: 43.0747, lng: -89.4069, rank: '#83', country: 'USA', region: 'North America' },
+            { name: 'University of Southern California', lat: 34.0216, lng: -118.2870, rank: '#121', country: 'USA', region: 'North America' },
+            { name: 'University of Minnesota', lat: 44.9778, lng: -93.2650, rank: '#155', country: 'USA', region: 'North America' },
+            { name: 'Rice University', lat: 29.7175, lng: -95.4018, rank: '#100', country: 'USA', region: 'North America' },
+            { name: 'University of Florida', lat: 29.6450, lng: -82.3565, rank: '#163', country: 'USA', region: 'North America' },
+            { name: 'Indiana University Bloomington', lat: 39.1653, lng: -86.5264, rank: '#280', country: 'USA', region: 'North America' },
+            { name: 'University of Iowa', lat: 41.6611, lng: -91.5301, rank: '#307', country: 'USA', region: 'North America' },
+            { name: 'Virginia Tech', lat: 37.2296, lng: -80.4231, rank: '#320', country: 'USA', region: 'North America' },
+            
+            // UK - 18 universities
+            { name: 'University of Cambridge', lat: 52.2053, lng: 0.1218, rank: '#2', country: 'UK', region: 'Europe' },
+            { name: 'University of Oxford', lat: 51.7548, lng: -1.2544, rank: '#3', country: 'UK', region: 'Europe' },
+            { name: 'Imperial College London', lat: 51.4988, lng: -0.1749, rank: '#7', country: 'UK', region: 'Europe' },
+            { name: 'University College London', lat: 51.5226, lng: -0.1349, rank: '#9', country: 'UK', region: 'Europe' },
+            { name: 'University of Edinburgh', lat: 55.9486, lng: -3.1999, rank: '#29', country: 'UK', region: 'Europe' },
+            { name: 'King\'s College London', lat: 51.5094, lng: -0.1184, rank: '#31', country: 'UK', region: 'Europe' },
+            { name: 'University of Manchester', lat: 53.4631, lng: -2.2386, rank: '#35', country: 'UK', region: 'Europe' },
+            { name: 'University of Arts London', lat: 51.5154, lng: -0.1195, rank: '#34', country: 'UK', region: 'Europe' },
+            { name: 'University of Bristol', lat: 51.4545, lng: -2.5879, rank: '#62', country: 'UK', region: 'Europe' },
+            { name: 'University of Glasgow', lat: 55.8700, lng: -4.2875, rank: '#82', country: 'UK', region: 'Europe' },
+            { name: 'University of Birmingham', lat: 52.4513, lng: -1.9360, rank: '#91', country: 'UK', region: 'Europe' },
+            { name: 'University of Leeds', lat: 53.8008, lng: -1.5491, rank: '#92', country: 'UK', region: 'Europe' },
+            { name: 'University of Nottingham', lat: 52.9376, lng: -1.1958, rank: '#103', country: 'UK', region: 'Europe' },
+            { name: 'University of Sheffield', lat: 53.3811, lng: -1.4701, rank: '#104', country: 'UK', region: 'Europe' },
+            { name: 'University of Southampton', lat: 50.9360, lng: -1.3972, rank: '#97', country: 'UK', region: 'Europe' },
+            { name: 'University of York', lat: 53.9599, lng: -1.0873, rank: '#139', country: 'UK', region: 'Europe' },
+            { name: 'University of Liverpool', lat: 53.4084, lng: -2.9916, rank: '#181', country: 'UK', region: 'Europe' },
+            { name: 'University of Exeter', lat: 50.7266, lng: -3.5339, rank: '#143', country: 'UK', region: 'Europe' },
+            
+            // Europe (non-UK) - 17 universities
             { name: 'ETH Zurich', lat: 47.3769, lng: 8.5417, rank: '#8', country: 'Switzerland', region: 'Europe' },
-            { name: 'University of Chicago', lat: 41.7934, lng: -87.5979, rank: '#10', country: 'United States', region: 'North America' },
-            { name: 'University of Pennsylvania', lat: 39.9526, lng: -75.1953, rank: '#12', country: 'United States', region: 'North America' },
-            { name: 'University of Michigan', lat: 42.2808, lng: -83.7430, rank: '#23', country: 'United States', region: 'North America' },
-            { name: 'Cornell University', lat: 42.4439, lng: -76.4889, rank: '#14', country: 'United States', region: 'North America' },
-            { name: 'Johns Hopkins University', lat: 39.3292, lng: -76.6201, rank: '#15', country: 'United States', region: 'North America' },
-            { name: 'University of California, Berkeley', lat: 37.8715, lng: -122.2730, rank: '#11', country: 'United States', region: 'North America' },
-            { name: 'Yale University', lat: 41.3163, lng: -72.9223, rank: '#13', country: 'United States', region: 'North America' },
-            { name: 'Princeton University', lat: 40.3439, lng: -74.6513, rank: '#16', country: 'United States', region: 'North America' },
-            { name: 'University of California, Los Angeles', lat: 34.0522, lng: -118.2437, rank: '#20', country: 'United States', region: 'North America' },
-            { name: 'University of Toronto', lat: 43.6629, lng: -79.3957, rank: '#18', country: 'Canada', region: 'North America' },
-            { name: 'National University of Singapore', lat: 1.2921, lng: 103.8520, rank: '#19', country: 'Singapore', region: 'Asia' },
-            { name: 'The University of Hong Kong', lat: 22.2848, lng: 114.1305, rank: '#21', country: 'Hong Kong', region: 'Asia' },
-            { name: 'Chinese University of Hong Kong', lat: 22.4208, lng: 114.2116, rank: '#38', country: 'Hong Kong', region: 'Asia' },
+            { name: 'University of Zurich', lat: 47.3769, lng: 8.5417, rank: '#71', country: 'Switzerland', region: 'Europe' },
+            { name: 'EPFL', lat: 46.5197, lng: 6.5665, rank: '#36', country: 'Switzerland', region: 'Europe' },
+            { name: 'Technical University of Munich', lat: 48.1351, lng: 11.5820, rank: '#37', country: 'Germany', region: 'Europe' },
+            { name: 'Ludwig Maximilian University of Munich', lat: 48.1351, lng: 11.5820, rank: '#59', country: 'Germany', region: 'Europe' },
+            { name: 'Heidelberg University', lat: 49.4124, lng: 8.6815, rank: '#65', country: 'Germany', region: 'Europe' },
+            { name: 'University of Berlin', lat: 52.5200, lng: 13.4050, rank: '#109', country: 'Germany', region: 'Europe' },
+            { name: 'University of Paris', lat: 48.8566, lng: 2.3522, rank: '#26', country: 'France', region: 'Europe' },
+            { name: 'Ecole Polytechnique', lat: 48.7185, lng: 2.2150, rank: '#48', country: 'France', region: 'Europe' },
+            { name: 'University of Copenhagen', lat: 55.6761, lng: 12.5683, rank: '#101', country: 'Denmark', region: 'Europe' },
+            { name: 'University of Amsterdam', lat: 52.3676, lng: 4.9041, rank: '#58', country: 'Netherlands', region: 'Europe' },
+            { name: 'Delft University of Technology', lat: 52.0116, lng: 4.3572, rank: '#61', country: 'Netherlands', region: 'Europe' },
+            { name: 'University of Bologna', lat: 44.4949, lng: 11.3426, rank: '#164', country: 'Italy', region: 'Europe' },
+            { name: 'University of Rome La Sapienza', lat: 41.8933, lng: 12.4829, rank: '#153', country: 'Italy', region: 'Europe' },
+            { name: 'University of Barcelona', lat: 41.3879, lng: 2.1712, rank: '#168', country: 'Spain', region: 'Europe' },
+            { name: 'University of Stockholm', lat: 59.3293, lng: 18.0686, rank: '#148', country: 'Sweden', region: 'Europe' },
+            { name: 'KTH Royal Institute of Technology', lat: 59.3498, lng: 18.0686, rank: '#98', country: 'Sweden', region: 'Europe' },
+            
+            // Australia - 8 universities
             { name: 'University of Melbourne', lat: -37.7968, lng: 144.9631, rank: '#33', country: 'Australia', region: 'Oceania' },
             { name: 'University of Sydney', lat: -33.8908, lng: 151.2742, rank: '#41', country: 'Australia', region: 'Oceania' },
             { name: 'University of New South Wales', lat: -33.9189, lng: 151.2364, rank: '#45', country: 'Australia', region: 'Oceania' },
             { name: 'University of Queensland', lat: -27.4918, lng: 153.0237, rank: '#50', country: 'Australia', region: 'Oceania' },
             { name: 'Monash University', lat: -37.9150, lng: 145.1340, rank: '#57', country: 'Australia', region: 'Oceania' },
+            { name: 'University of Western Australia', lat: -31.9522, lng: 115.8614, rank: '#90', country: 'Australia', region: 'Oceania' },
+            { name: 'Australian National University', lat: -35.2809, lng: 149.1300, rank: '#67', country: 'Australia', region: 'Oceania' },
+            { name: 'University of Adelaide', lat: -34.9285, lng: 138.6007, rank: '#111', country: 'Australia', region: 'Oceania' },
+            
+            // Canada - 5 universities
+            { name: 'University of Toronto', lat: 43.6629, lng: -79.3957, rank: '#18', country: 'Canada', region: 'North America' },
             { name: 'University of British Columbia', lat: 49.2609, lng: -123.2460, rank: '#46', country: 'Canada', region: 'North America' },
             { name: 'McGill University', lat: 45.5017, lng: -73.5673, rank: '#60', country: 'Canada', region: 'North America' },
             { name: 'University of Waterloo', lat: 43.4723, lng: -80.5449, rank: '#152', country: 'Canada', region: 'North America' },
             { name: 'University of Alberta', lat: 53.5232, lng: -113.5264, rank: '#113', country: 'Canada', region: 'North America' },
-            { name: 'University of Manchester', lat: 53.4631, lng: -2.2386, rank: '#35', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Edinburgh', lat: 55.9486, lng: -3.1999, rank: '#29', country: 'United Kingdom', region: 'Europe' },
-            { name: 'King\'s College London', lat: 51.5094, lng: -0.1184, rank: '#31', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bristol', lat: 51.4545, lng: -2.5879, rank: '#62', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Glasgow', lat: 55.8700, lng: -4.2875, rank: '#82', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Birmingham', lat: 52.4513, lng: -1.9360, rank: '#91', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Leeds', lat: 53.8008, lng: -1.5491, rank: '#92', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Nottingham', lat: 52.9376, lng: -1.1958, rank: '#103', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Sheffield', lat: 53.3811, lng: -1.4701, rank: '#104', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Southampton', lat: 50.9360, lng: -1.3972, rank: '#97', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of York', lat: 53.9599, lng: -1.0873, rank: '#139', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Liverpool', lat: 53.4084, lng: -2.9916, rank: '#181', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Sussex', lat: 50.8789, lng: -0.0837, rank: '#246', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of East Anglia', lat: 52.6376, lng: 1.2973, rank: '#268', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Essex', lat: 51.8756, lng: 0.9108, rank: '#351', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Kent', lat: 51.2721, lng: 1.0874, rank: '#382', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Reading', lat: 51.4543, lng: -0.9781, rank: '#202', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Surrey', lat: 51.2435, lng: -0.5711, rank: '#264', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Lancaster', lat: 54.0063, lng: -2.7931, rank: '#122', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Strathclyde', lat: 55.8609, lng: -4.2514, rank: '#302', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Newcastle', lat: 54.9783, lng: -1.6178, rank: '#130', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Aberdeen', lat: 57.1497, lng: -2.0943, rank: '#168', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Dundee', lat: 56.4609, lng: -2.9779, rank: '#314', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Stirling', lat: 56.1184, lng: -3.9216, rank: '#401', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bath', lat: 51.3754, lng: -2.3616, rank: '#173', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Exeter', lat: 50.7266, lng: -3.5339, rank: '#143', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Plymouth', lat: 50.3660, lng: -4.1432, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Portsmouth', lat: 50.8198, lng: -1.0873, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Brighton', lat: 50.8214, lng: -0.1391, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Northampton', lat: 52.2442, lng: -0.9067, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bedfordshire', lat: 51.9977, lng: -0.4543, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Hertfordshire', lat: 51.7977, lng: -0.2327, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Essex', lat: 51.8756, lng: 0.9108, rank: '#351', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Lincoln', lat: 53.2311, lng: -0.5381, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Chester', lat: 53.1876, lng: -2.8932, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Chichester', lat: 50.8368, lng: -0.7713, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Worcester', lat: 52.1924, lng: -2.2250, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Gloucestershire', lat: 51.8686, lng: -2.2456, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of the West of England', lat: 51.4545, lng: -2.5879, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of the Arts London', lat: 51.5154, lng: -0.1195, rank: '#34', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Cambridge', lat: 52.2053, lng: 0.1218, rank: '#2', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Oxford', lat: 51.7548, lng: -1.2544, rank: '#3', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University College London', lat: 51.5226, lng: -0.1349, rank: '#9', country: 'United Kingdom', region: 'Europe' },
-            { name: 'Imperial College London', lat: 51.4988, lng: -0.1749, rank: '#7', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Manchester', lat: 53.4631, lng: -2.2386, rank: '#35', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Edinburgh', lat: 55.9486, lng: -3.1999, rank: '#29', country: 'United Kingdom', region: 'Europe' },
-            { name: 'King\'s College London', lat: 51.5094, lng: -0.1184, rank: '#31', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bristol', lat: 51.4545, lng: -2.5879, rank: '#62', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Glasgow', lat: 55.8700, lng: -4.2875, rank: '#82', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Birmingham', lat: 52.4513, lng: -1.9360, rank: '#91', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Leeds', lat: 53.8008, lng: -1.5491, rank: '#92', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Nottingham', lat: 52.9376, lng: -1.1958, rank: '#103', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Sheffield', lat: 53.3811, lng: -1.4701, rank: '#104', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Southampton', lat: 50.9360, lng: -1.3972, rank: '#97', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of York', lat: 53.9599, lng: -1.0873, rank: '#139', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Liverpool', lat: 53.4084, lng: -2.9916, rank: '#181', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Sussex', lat: 50.8789, lng: -0.0837, rank: '#246', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of East Anglia', lat: 52.6376, lng: 1.2973, rank: '#268', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Essex', lat: 51.8756, lng: 0.9108, rank: '#351', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Kent', lat: 51.2721, lng: 1.0874, rank: '#382', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Reading', lat: 51.4543, lng: -0.9781, rank: '#202', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Surrey', lat: 51.2435, lng: -0.5711, rank: '#264', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Lancaster', lat: 54.0063, lng: -2.7931, rank: '#122', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Strathclyde', lat: 55.8609, lng: -4.2514, rank: '#302', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Newcastle', lat: 54.9783, lng: -1.6178, rank: '#130', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Aberdeen', lat: 57.1497, lng: -2.0943, rank: '#168', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Dundee', lat: 56.4609, lng: -2.9779, rank: '#314', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Stirling', lat: 56.1184, lng: -3.9216, rank: '#401', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bath', lat: 51.3754, lng: -2.3616, rank: '#173', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Exeter', lat: 50.7266, lng: -3.5339, rank: '#143', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Plymouth', lat: 50.3660, lng: -4.1432, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Portsmouth', lat: 50.8198, lng: -1.0873, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Brighton', lat: 50.8214, lng: -0.1391, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Northampton', lat: 52.2442, lng: -0.9067, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Bedfordshire', lat: 51.9977, lng: -0.4543, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Hertfordshire', lat: 51.7977, lng: -0.2327, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Lincoln', lat: 53.2311, lng: -0.5381, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Chester', lat: 53.1876, lng: -2.8932, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Chichester', lat: 50.8368, lng: -0.7713, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Worcester', lat: 52.1924, lng: -2.2250, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of Gloucestershire', lat: 51.8686, lng: -2.2456, rank: '#801', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of the West of England', lat: 51.4545, lng: -2.5879, rank: '#601', country: 'United Kingdom', region: 'Europe' },
-            { name: 'University of the Arts London', lat: 51.5154, lng: -0.1195, rank: '#34', country: 'United Kingdom', region: 'Europe' }
+            
+            // Hong Kong - 5 universities
+            { name: 'The University of Hong Kong', lat: 22.2848, lng: 114.1305, rank: '#21', country: 'Hong Kong', region: 'Asia' },
+            { name: 'Chinese University of Hong Kong', lat: 22.4208, lng: 114.2116, rank: '#38', country: 'Hong Kong', region: 'Asia' },
+            { name: 'Hong Kong University of Science and Technology', lat: 22.3394, lng: 114.2691, rank: '#40', country: 'Hong Kong', region: 'Asia' },
+            { name: 'City University of Hong Kong', lat: 22.3494, lng: 114.1747, rank: '#54', country: 'Hong Kong', region: 'Asia' },
+            { name: 'Hong Kong Polytechnic University', lat: 22.3063, lng: 114.1738, rank: '#65', country: 'Hong Kong', region: 'Asia' },
+            
+            // China - 6 universities
+            { name: 'Tsinghua University', lat: 39.9999, lng: 116.2755, rank: '#25', country: 'China', region: 'Asia' },
+            { name: 'Peking University', lat: 39.9999, lng: 116.3076, rank: '#26', country: 'China', region: 'Asia' },
+            { name: 'Fudan University', lat: 31.2304, lng: 121.4737, rank: '#34', country: 'China', region: 'Asia' },
+            { name: 'Shanghai Jiao Tong University', lat: 31.2397, lng: 121.4998, rank: '#46', country: 'China', region: 'Asia' },
+            { name: 'Zhejiang University', lat: 30.2741, lng: 120.1552, rank: '#47', country: 'China', region: 'Asia' },
+            { name: 'Nanjing University', lat: 32.0603, lng: 118.7969, rank: '#133', country: 'China', region: 'Asia' },
+            
+            // Singapore - 2 universities
+            { name: 'National University of Singapore', lat: 1.2921, lng: 103.8520, rank: '#19', country: 'Singapore', region: 'Asia' },
+            { name: 'Nanyang Technological University', lat: 1.3451, lng: 103.6826, rank: '#25', country: 'Singapore', region: 'Asia' },
+            
+            // Additional European universities
+            { name: 'University of Oslo', lat: 59.9139, lng: 10.7522, rank: '#112', country: 'Norway', region: 'Europe' },
+            { name: 'University of Helsinki', lat: 60.1699, lng: 24.9384, rank: '#110', country: 'Finland', region: 'Europe' },
+            { name: 'University of Warsaw', lat: 52.2297, lng: 21.0122, rank: '#308', country: 'Poland', region: 'Europe' },
+            { name: 'University of Vienna', lat: 48.2082, lng: 16.3738, rank: '#151', country: 'Austria', region: 'Europe' }
         ];
 
         // Initialize Map after DOM is ready
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
-                var map = L.map('map').setView([20, 0], 2);
+                // Create map with zoom and boundary restrictions
+                var map = L.map('map', {
+                    maxBounds: [
+                        [-85, -180],  // South-West corner
+                        [85, 180]      // North-East corner
+                    ],
+                    maxBoundsViscosity: 0.5,  // Smooth boundary resistance
+                    minZoom: 2,
+                    maxZoom: 18,
+                    zoomControl: true
+                }).setView([20, 0], 2);
                 
                 // Use a more reliable tile source
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                    maxZoom: 18
+                    maxZoom: 18,
+                    minZoom: 2
                 }).addTo(map);
 
                 // Custom icon for universities
@@ -2691,16 +2700,20 @@
                     iconAnchor: [12, 12]
                 });
 
+                // Create feature group for universities
+                var universityLayer = L.featureGroup();
+
                 // Add university markers with fly-to animation
                 universities.forEach(uni => {
                     var marker = L.marker([uni.lat, uni.lng], { icon: uniIcon })
-                        .addTo(map)
+                        .addTo(universityLayer)
                         .bindPopup(`<strong>${uni.name}</strong><br>Rank: ${uni.rank}<br>${uni.country}`);
                     
                     // Add click event for fly-to animation and detail modal
                     marker.on('click', function(e) {
-                        // Smooth fly-to animation
-                        map.flyTo([uni.lat, uni.lng], 10, {
+                        // Smooth fly-to animation with zoom limit
+                        var targetZoom = Math.min(14, map.getMaxZoom());
+                        map.flyTo([uni.lat, uni.lng], targetZoom, {
                             animate: true,
                             duration: 1.5,
                             easeLinearity: 0.2,
@@ -2720,8 +2733,37 @@
                     });
                 });
 
+                // Add university layer to map
+                universityLayer.addTo(map);
+
+                // Auto-fit map to show all universities on load
+                setTimeout(function() {
+                    map.fitBounds(universityLayer.getBounds(), {
+                        padding: [50, 50],
+                        maxZoom: 4
+                    });
+                }, 500);
+
+                // Handle window resize for responsive map
+                var resizeTimer;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function() {
+                        // Refresh map size
+                        map.invalidateSize();
+                        // Re-fit bounds if zoom is at minimum
+                        if (map.getZoom() <= 2) {
+                            map.fitBounds(universityLayer.getBounds(), {
+                                padding: [50, 50],
+                                maxZoom: 4
+                            });
+                        }
+                    }, 250);
+                });
+
                 window.mapInstance = map;
                 window.universitiesData = universities;
+                window.universityLayer = universityLayer;
             }, 300);
         });
 
