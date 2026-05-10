@@ -2421,21 +2421,11 @@
                     <h2><i data-lucide="brain"></i> AI Application Analysis</h2>
                 </div>
                 
-                <!-- Select Target University -->
+                <!-- Enter Target University -->
                 <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Select Target University</label>
-                    <select id="target-university" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-muted); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary);">
-                        <option value="">Select a university...</option>
-                        <option value="University of Oxford">University of Oxford</option>
-                        <option value="University of Cambridge">University of Cambridge</option>
-                        <option value="MIT">MIT</option>
-                        <option value="Stanford University">Stanford University</option>
-                        <option value="Harvard University">Harvard University</option>
-                        <option value="Imperial College London">Imperial College London</option>
-                        <option value="University College London">University College London</option>
-                        <option value="University of Toronto">University of Toronto</option>
-                        <option value="National University of Singapore">National University of Singapore</option>
-                    </select>
+                    <label>Enter Target University</label>
+                    <input type="text" id="target-university" placeholder="e.g., University of Oxford, MIT, Stanford University..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-muted); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary);">
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Tip: Enter any university name for personalized analysis</p>
                 </div>
                 
                 <button class="btn-primary" onclick="analyzeApplication()" style="width: 100%; margin-bottom: 1rem;">
@@ -4423,27 +4413,34 @@ Please provide:
 Format your response in a clear, easy-to-read way with headings and bullet points.`;
 
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch('https://api.deepseek.com/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: 'deepseek-chat',
                         messages: [{
                             role: 'user',
                             content: prompt
                         }],
-                        max_tokens: 800
+                        max_tokens: 800,
+                        temperature: 0.3
                     })
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => null);
-                    let errorMsg = 'Failed to get analysis. Please try again.';
+                    let errorMsg = `HTTP Error ${response.status}`;
                     if (errorData && errorData.error && errorData.error.message) {
                         errorMsg = errorData.error.message;
+                    } else if (response.status === 401) {
+                        errorMsg = 'Invalid API key.';
+                    } else if (response.status === 403) {
+                        errorMsg = 'API key has insufficient permissions.';
+                    } else if (response.status === 429) {
+                        errorMsg = 'Rate limit exceeded.';
                     }
                     throw new Error(errorMsg);
                 }
