@@ -778,12 +778,6 @@
                     <h3>7. Team Members</h3>
                     <p>Individual Contributions Table</p>
                 </div>
-
-                <div class="module-card" data-panel="reflection-panel">
-                    <div class="module-icon"><i data-lucide="sparkles"></i></div>
-                    <h3>8. Technical Reflection</h3>
-                    <p>Vibe coding, P–O–A examples, tool citations</p>
-                </div>
             </div>
         </section>
 
@@ -2347,9 +2341,9 @@
             </div>
         </div>
 
-        <div class="content-panel" id="evaluation-panel">
+       <div class="content-panel" id="evaluation-panel">
             <div class="panel-header">
-                <h2><i data-lucide="bar-chart"></i> 5. Evaluation</h2>
+                <h2><i data-lucide="bar-chart"></i> 5. Evaluation & Technical Reflection</h2>
                 <button class="close-btn" onclick="closePanel()">Close</button>
             </div>
             
@@ -2496,14 +2490,38 @@
                 <li><strong>Bias Mitigation:</strong> University recommendations based on objective criteria (rankings, admission stats) to avoid demographic bias.</li>
             </ul>
 
-            <h4>AI Usage in This Project</h4>
-            <p>AI tools were used throughout the development process. For prompts, verification, and citations, see §8 Technical Reflection and the References section.</p>
-            <ul>
-                <li><strong>Code Generation:</strong> Trae IDE and GitHub Copilot assisted with HTML/CSS structure and JavaScript logic</li>
-                <li><strong>Content Writing:</strong> Claude 3.5 Sonnet helped refine user persona descriptions and documentation</li>
-                <li><strong>AI Feature:</strong> DeepSeek API powers the chat advisor feature</li>
-                <li><strong>Human Oversight:</strong> All AI-generated content was reviewed and modified by team members</li>
-            </ul>
+            <hr style="border: 1px solid var(--border-muted); margin: 2.5rem 0;">
+
+            <h3>5.4 Technical Reflection: AI-Assisted Development</h3>
+            <p>This project utilized "Vibe Coding" methodology, using natural language to guide incremental development via AI tools.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i data-lucide="code" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> Trae IDE</h4>
+                    <p>Primary development environment for coding and debugging CSS layouts in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i data-lucide="cpu" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> GPT-4 / Cursor</h4>
+                    <p>Natural-language prompting for code iteration, feature generation, and documentation.</p>
+                </div>
+            </div>
+
+            <h4>P–O–A Case: AI Chat Interface Integration</h4>
+            <div class="feature-card" style="margin-bottom: 1rem; border-left: 4px solid var(--primary);">
+                <p style="margin-bottom: 0.5rem;"><strong>P (Prompt):</strong> "Create an AI-powered chat interface using DeepSeek API with direct browser calls."</p>
+                <p style="margin-bottom: 0.5rem;"><strong>O (Outcome):</strong> Successfully implemented CORS-enabled browser calls, but initial error handling for invalid keys was missing.</p>
+                <p style="margin-bottom: 0;"><strong>A (Action):</strong> Refined implementation to include specific error messages for rate limits and invalid API formats.</p>
+            </div>
+
+            <h3>5.5 AI Tools References</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted); background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
+                <ul>
+                    <li><strong>Trae IDE:</strong> v1.0, accessed 2026-05-08. Primary coding environment.</li>
+                    <li><strong>DeepSeek API:</strong> v1.0. Backend LLM for chat advisor feature.</li>
+                    <li><strong>GitHub Copilot & Cursor:</strong> Code completion and structure scaffolding.</li>
+                    <li><strong>Claude 3.5 Sonnet:</strong> Used for refining user personas and documentation structuring.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="content-panel" id="process-panel">
@@ -2866,263 +2884,6 @@
             </table>
         </div>
 
-        <div class="content-panel" id="reflection-panel">
-            <div class="panel-header">
-                <h2><i data-lucide="sparkles"></i> 8. Technical Reflection</h2>
-                <button class="close-btn" onclick="closePanel()">Close</button>
-            </div>
-
-            <h3>8.1 AI Tools Used in This Project</h3>
-            <p>Vibe Coding is a development methodology that uses natural language prompts to guide incremental software development. Instead of writing detailed technical specifications, developers describe desired functionality in plain language.</p>
-
-            <h3>Tools Used in This Project</h3>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4><i data-lucide="code" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> Trae IDE</h4>
-                    <p>Integrated development environment with real-time code editing</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="cpu" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> GPT-4 / Cursor Agent</h4>
-                    <p>Natural-language prompting for code and documentation iteration</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="git-branch" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> Git & GitHub</h4>
-                    <p>Version control for tracking changes and collaboration</p>
-                </div>
-                <div class="feature-card">
-                    <h4><i data-lucide="globe" style="width:18px; height:18px; vertical-align:middle; margin-right:8px;"></i> Live Server</h4>
-                    <p>Real-time preview and testing in browser</p>
-                </div>
-            </div>
-
-            <h3>What Worked Well</h3>
-            <ul>
-                <li><span class="highlight">Rapid Prototyping:</span> Natural language prompts enabled quick iteration</li>
-                <li><span class="highlight">Flexibility:</span> Easy to modify requirements without rewriting specs</li>
-                <li><span class="highlight">Collaboration:</span> Non-technical stakeholders could contribute</li>
-                <li><span class="highlight">Incremental Development:</span> Built features step-by-step with clear milestones</li>
-            </ul>
-
-            <h3>Challenges & Lessons Learned</h3>
-            <ul>
-                <li><span class="highlight">Ambiguity:</span> Vague prompts led to misinterpretation</li>
-                <li><span class="highlight">Scope Creep:</span> Natural language can expand requirements unexpectedly</li>
-                <li><span class="highlight">Technical Debt:</span> Rapid iteration sometimes sacrificed code quality</li>
-                <li><span class="highlight">Testing:</span> Automated testing was challenging with evolving requirements</li>
-            </ul>
-
-            <h3>Best Practices for Vibe Coding</h3>
-            <ul>
-                <li>Keep prompts focused and specific</li>
-                <li>Use incremental development with clear milestones</li>
-                <li>Test each feature before moving to the next</li>
-                <li>Maintain version control with meaningful commits</li>
-                <li>Document decisions and rationale</li>
-            </ul>
-
-            <h3>Implementation Prompts Summary</h3>
-            <p>The following natural language prompts guided the incremental development of this system:</p>
-            <ol>
-                <li>Create a single-page HTML file with blue/purple theme, Lucide Icons, and Leaflet.js</li>
-                <li>Add onboarding overlay with year selection (Year 1-4)</li>
-                <li>Create header with navigation tabs (Explore, Recommend, Support, Account)</li>
-                <li>Add interactive world map with university markers</li>
-                <li>Create university details popup with favorites functionality</li>
-                <li>Add AI chat interface using DeepSeek API with direct browser calls</li>
-                <li>Create university recommendation quiz with personalized results</li>
-                <li>Add emotional support with mood tracking</li>
-                <li>Implement account management with favorites, achievements, progress</li>
-                <li>Add application task tracker with checkbox completion</li>
-                <li>Add mobile responsive design with media queries</li>
-                <li>Implement grade-specific onboarding flow (Year 1: API → AI Chat; Years 2-3: Quiz → Favorites → Achievements)</li>
-                <li>Add API key management with sessionStorage only, no expiration timer</li>
-                <li>Fix achievement system with proper localStorage persistence</li>
-                <li>Ensure favorites sync between map/recommendations and account page</li>
-                <li>Remove Chinese language system, convert to English only</li>
-                <li>Merge onboarding steps 3 and 4 for Years 2-3 (Achievements + AI Analysis)</li>
-            </ol>
-
-            <h3>Video Demo Production</h3>
-            <p>For the video demo, the following AI tools were used to achieve a professional finish:</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>🎬 Voiceover Generation</h4>
-                    <p><strong>Tool:</strong> ElevenLabs or similar TTS service</p>
-                    <p><strong>Usage:</strong> Generated natural-sounding narration for the demo video explaining system features</p>
-                </div>
-                <div class="feature-card">
-                    <h4>✂️ Video Editing</h4>
-                    <p><strong>Tool:</strong> CapCut (with AI features)</p>
-                    <p><strong>Usage:</strong> AI-assisted transitions, auto-captioning, and audio cleanup</p>
-                </div>
-            </div>
-            <p style="margin-top: 1rem;"><em>Note: Any AI used in the demo video (e.g. voiceover or editing assist) is disclosed in the References section.</em></p>
-
-            <h3 id="technical-reflection">Technical Reflection</h3>
-            <p>This section documents how AI tools were used in developing this system. All reflections follow the P–O–A format: <strong>P</strong>rompt, <strong>O</strong>utcome, and subsequent <strong>A</strong>ction.</p>
-
-            <h4>How we verified the build against user requirements</h4>
-            <ul style="font-size: 0.9rem;">
-                <li><strong>R1 / SF1 (map exploration):</strong> Task-based walkthroughs on the alpha build (find three universities via the map); success measured by completion time and think-aloud clarity.</li>
-                <li><strong>R2 / SF2 (gamified progress):</strong> Users completed checklist and achievement flows; we logged abandonment on the long quiz and iterated (see §5.2).</li>
-                <li><strong>R3 / SF3 (AI + support):</strong> Scripted prompts to the advisor and mood/support paths; checked for transparent non-advice disclaimers, error handling, and API-key edge cases.</li>
-                <li><strong>Cross-cutting:</strong> SUS after sessions; issues were triaged into UX vs. reliability fixes before the beta pass.</li>
-            </ul>
-
-            <h4>Example 1: User Onboarding Flow (Grade-Specific Guidance)</h4>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>📋 P - The Prompt</h4>
-                <p style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); margin: 0.5rem 0;">
-                    "Create a grade-specific onboarding flow that runs on every page load without saving progress. Year 1: API input → AI chat consultation. Years 2-3: Recommendation quiz → Add recommended schools to favorites → Achievements & AI application analysis. Each step should return to the flow after completion."
-                </p>
-                <p><strong>Context Provided:</strong> We needed different entry points based on user academic year. Freshmen (Year 1) need API setup to access AI features, while upperclassmen (Years 2-3) need to complete quiz first to get personalized recommendations before exploring achievements.</p>
-            </div>
-
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>🎯 O - The Outcome</h4>
-                <p><strong>Result:</strong> <span style="color: var(--warning);">⚠️ Buggy</span></p>
-                <p>The AI generated a multi-step overlay system with grade detection. However, the first version had several issues:</p>
-                <ul>
-                    <li>Onboarding status was incorrectly saved to localStorage, causing it to not run on subsequent visits</li>
-                    <li>Year 2-3 flow had 4 separate steps which users found tedious</li>
-                    <li>The "return to flow" mechanism did not work properly - completing one step closed the overlay instead of advancing</li>
-                    <li>Missing proper event listeners for the "Next" buttons</li>
-                </ul>
-                <p><strong>What Worked:</strong> The grade detection logic was correct, and the basic overlay structure was usable.</p>
-            </div>
-
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>🔧 A - The Action Taken</h4>
-                <p>After identifying the issues through user testing with 8 participants, I took the following actions:</p>
-                <ul>
-                    <li><strong>Fixed persistence bug:</strong> Modified the <code>finishOnboarding()</code> function to NOT save to localStorage, ensuring it runs fresh every page load</li>
-                    <li><strong>Refined prompt:</strong> "Merge steps 3 and 4 into one combined step for Years 2-3 - combine the achievement completion prompt with the AI application analysis prompt into a single instruction"</li>
-                    <li><strong>Fixed navigation:</strong> Updated the step progression logic to call <code>advanceGuidedFlow()</code> instead of <code>finishOnboarding()</code> when completing intermediate steps</li>
-                    <li><strong>Verified:</strong> Tested with 5 new users who all successfully completed the 3-step flow (reduced from 4 steps)</li>
-                </ul>
-            </div>
-
-            <h4>Example 2: AI Chat Interface with DeepSeek API Integration</h4>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>📋 P - The Prompt</h4>
-                <p style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); margin: 0.5rem 0;">
-                    "Create an AI-powered chat interface that uses the DeepSeek API to answer user questions about universities, applications, and study abroad strategies. Implement direct browser API calls without server. Handle network errors gracefully with user-friendly messages."
-                </p>
-                <p><strong>Context Provided:</strong> We needed AI chat functionality but could not use a backend server. Previous attempts with OpenAI API failed due to CORS restrictions. DeepSeek was suggested as an alternative with more permissive CORS policies.</p>
-            </div>
-
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>🎯 O - The Outcome</h4>
-                <p><strong>Result:</strong> <span style="color: var(--success);">✅ Successful</span></p>
-                <p>The AI provided a working implementation using XMLHttpRequest to call DeepSeek API directly from the browser:</p>
-                <ul>
-                    <li><strong>API Integration:</strong> Direct browser-to-API calls working, no server needed</li>
-                    <li><strong>Error Handling:</strong> Network errors display user-friendly messages like "Network error, please check your connection"</li>
-                    <li><strong>CORS:</strong> DeepSeek's permissive policy allowed cross-origin requests from browser</li>
-                </ul>
-                <p><strong>What Did Not Work Initially:</strong> The demo responses were still appearing even when real API responses were available. The error handling did not distinguish between "no API key" and "network failure."</p>
-            </div>
-
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>🔧 A - The Action Taken</h4>
-                <p>I refined the implementation through iterative prompts:</p>
-                <ul>
-                    <li><strong>Removed demo responses:</strong> "Remove all demo/placeholder responses. Only show AI responses when DeepSeek API returns actual data"</li>
-                    <li><strong>Improved error handling:</strong> Added specific error messages for different failure modes (invalid API key vs. network failure vs. API rate limit)</li>
-                    <li><strong>API key validation:</strong> Added check to verify API key format before making requests</li>
-                    <li><strong>Verified:</strong> Tested 20 different queries across 5 universities; all returned contextually appropriate responses within 3 seconds</li>
-                </ul>
-            </div>
-
-            <h4>Summary: AI-Assisted Development Process</h4>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>✅ Effective AI Uses</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li>Code scaffolding for HTML/CSS structure</li>
-                        <li>Debugging logic errors in JavaScript</li>
-                        <li>Generating API integration patterns</li>
-                        <li>Refining UI/UX feedback implementations</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>⚠️ Challenges Encountered</h4>
-                    <ul style="font-size: 0.85rem;">
-                        <li>Vague prompts led to misinterpretation</li>
-                        <li>AI sometimes generated non-functional demo code</li>
-                        <li>Context persistence across prompts was needed</li>
-                        <li>Human verification remained essential</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h4>Human-Centric Design Decisions (Non-AI)</h4>
-            <p>While AI assisted with implementation, the following design decisions were made through human research and reasoning:</p>
-            <ul>
-                <li><strong>Color Psychology:</strong> Selected purple/blue gradient (--primary: #4f46e5, --accent: #7c3aed) based on research showing these colors convey trust and academic prestige, appropriate for education-focused applications.</li>
-                <li><strong>Card-Based Layout:</strong> Chose card-based UI after user research indicated students preferred scanning information in discrete chunks rather than dense text blocks.</li>
-                <li><strong>Gamification Elements:</strong> Added achievement system and progress tracking based on interview feedback that students felt stressed and needed motivation boosts.</li>
-                <li><strong>Emotional Support Features:</strong> Implemented mood tracking after 18 of 24 interviewees mentioned application anxiety as a significant concern.</li>
-            </ul>
-
-            <h4>Ethical Considerations</h4>
-            <ul>
-                <li><strong>Accessibility:</strong> All interactive elements have keyboard navigation support. Color contrast ratios meet WCAG AA standards. Icons include aria-labels for screen readers.</li>
-                <li><strong>Data Privacy:</strong> API keys stored in sessionStorage only (cleared on browser close). No personal data transmitted to external servers. All user progress stored locally.</li>
-                <li><strong>Bias Mitigation:</strong> University recommendations based on objective criteria (world rankings from QS/THE, admission statistics). No demographic-based filtering.</li>
-                <li><strong>AI Transparency:</strong> Users informed that AI responses are suggestions only, not professional advice. Clear indication when AI feature is active.</li>
-            </ul>
-
-            <h4>Limitations & Future Improvements</h4>
-            <ul>
-                <li><strong>University Database:</strong> Limited to top 50 institutions; future versions should expand coverage, particularly European and Asian universities</li>
-                <li><strong>AI Reliability:</strong> Responses depend on DeepSeek API quality; edge cases may require human review. Error handling implemented for network failures.</li>
-                <li><strong>Language Support:</strong> Single-language interface (English only); original Chinese version removed per project requirements</li>
-                <li><strong>Data Persistence:</strong> Session-based storage only; API keys expire on browser close. Users cannot sync progress across devices.</li>
-                <li><strong>Onboarding Flow:</strong> Runs on every page load; users requested optional skip functionality for returning users</li>
-                <li><strong>Quiz Questions:</strong> Limited question set; future expansion could include more personalized recommendations</li>
-            </ul>
-
-            <h3 id="references">References - AI Tools Used</h3>
-            <p>AI and other tools used in this project are documented below:</p>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[1] Trae IDE</h4>
-                <p>v1.0, accessed on 2026-05-08, available at <a href="https://www.trae.ai/" style="color: var(--primary-light);">https://www.trae.ai/</a></p>
-                <p><strong>Purpose:</strong> Primary development environment for coding, debugging CSS layout issues, and managing Git version control.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[2] GitHub Copilot</h4>
-                <p>v0.40, accessed on 2026-05-08, available at <a href="https://github.com/features/copilot" style="color: var(--primary-light);">https://github.com/features/copilot</a></p>
-                <p><strong>Purpose:</strong> Code completion suggestions for JavaScript functions, CSS styling, and HTML structure scaffolding.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[3] Cursor</h4>
-                <p>Desktop agent, accessed on 2026-05-10, available at <a href="https://cursor.com" style="color: var(--primary-light);">https://cursor.com</a></p>
-                <p><strong>Purpose:</strong> Vibe coding assistance for multi-file edits, debugging layout/CSS, and refactoring the portfolio documentation pages.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[4] Claude 3.5 Sonnet</h4>
-                <p>v1.0, accessed on 2026-05-08, available at <a href="https://claude.ai/" style="color: var(--primary-light);">https://claude.ai/</a></p>
-                <p><strong>Purpose:</strong> Used for refining user persona descriptions, generating initial storyboard scripts for project documentation, and debugging complex logic issues.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[5] DeepSeek API</h4>
-                <p>v1.0, accessed on 2026-05-08, available at <a href="https://platform.deepseek.com/" style="color: var(--primary-light);">https://platform.deepseek.com/</a></p>
-                <p><strong>Purpose:</strong> Backend AI model for the chat interface, providing personalized study abroad advice and application evaluation.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[6] 1.html (Reference File)</h4>
-                <p>Reference implementation file used for DeepSeek API integration patterns. File location: <code>project-reference/1.html</code></p>
-                <p><strong>Purpose:</strong> Studied the direct browser API call implementation to understand how to integrate DeepSeek API without a backend server, avoiding CORS issues.</p>
-            </div>
-            <div class="feature-card" style="margin-bottom: 1rem;">
-                <h4>[7] External Libraries & Frameworks</h4>
-                <ul>
-                    <li><strong>Leaflet.js</strong> v1.9.4 - Interactive map library. Available at <a href="https://leafletjs.com/" style="color: var(--primary-light);">https://leafletjs.com/</a></li>
-                    <li><strong>Lucide Icons</strong> - Icon library. Available at <a href="https://lucide.dev/" style="color: var(--primary-light);">https://lucide.dev/</a></li>
-                </ul>
-            </div>
-        </div>
 
         <footer>
             <p>&copy; 2026 Treasure Map for Study Abroad | XJTLU Study Abroad Planning System</p>
